@@ -1,11 +1,52 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// schema.prisma
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+}
+
+model Company {
+  id            String       @default(cuid()) @id
+  name          String       @unique
+  code          String       @default(autoincrement())
+  password      String       
+  adminPassword String 
+  departments   Department[] 
+}
+
+model Department {
+  id            String       @default(cuid()) @id
+  name          String
+  code          String       @unique
+  company       Company      @relation(fields: [companyId], references: [id])
+  companyId     String
+  employees     Employee[]
+}
+
+model Employee {
+  id            String       @default(cuid()) @id
+  name          String
+  code          String       @unique
+  department    Department   @relation(fields: [departmentId], references: [id])
+  departmentId  String
+  company       Company      @relation(fields: [companyId], references: [id])
+  companyId     String
+  timeCard      TimeCard[]
+}
+
+model TimeCard {
+  id            String       @default(cuid()) @id
+  employee      Employee     @relation(fields: [employeeId], references: [id])
+  employeeId    String
+  timeIn        DateTime[]    
+  timeOut       DateTime[]   
+  createdAt     DateTime     @default(now()) @map(name: "created_at")
+  updatedAt     DateTime     @updatedAt @map(name: "updated_at")
 }
