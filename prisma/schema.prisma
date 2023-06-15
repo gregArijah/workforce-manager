@@ -19,6 +19,7 @@ model Company {
   password      String       
   adminPassword String 
   departments   Department[] 
+  employees     Employee[]
 }
 
 model Department {
@@ -27,7 +28,6 @@ model Department {
   code          String       @unique
   company       Company      @relation(fields: [companyId], references: [id])
   companyId     String
-  employees     Employee[]
 }
 
 model Employee {
@@ -38,7 +38,7 @@ model Employee {
   departmentId  String
   company       Company      @relation(fields: [companyId], references: [id])
   companyId     String
-  timeCard      TimeCard[]
+  timeCard      TimeCard?
 }
 
 model TimeCard {
