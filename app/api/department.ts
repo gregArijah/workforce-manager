@@ -23,10 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
 
         case "POST":
-            const { name, code, password, adminPassword } = req.body;
+            const { name, code, company, companyID } = req.body;
             try {
                 const department = await prisma.department.create({
-                    data: { name, code, password, adminPassword },
+                    data: { name, code, company, companyID },
                 });
                 res.status(201).json(department);
             }
@@ -37,10 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         case "PUT":
             try {
-                const { name, code, password, adminPassword } = req.body;
+                const { name, code, company, companyID } = req.body;
                 const updatedDepartment = await prisma.department.update({
                     where: { id },
-                    data: { name, code, password, adminPassword },
+                    data: { name, code, company, companyID },
                 });
                 res.status(200).json(updatedDepartment);
             }
