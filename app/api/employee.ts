@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (id) {
         try {
           const employee = await prisma.employee.findUnique({
-            where: { id },
+            where: { id: typeof id === 'string' ? id : undefined },
             include: { department: true, company: true, timeCard: true },
           });
           res.status(200).json(employee);
@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
         const { name, code, departmentId, companyId } = req.body;
         const updatedEmployee = await prisma.employee.update({
-          where: { id },
+          where: { id: typeof id === 'string' ? id : undefined },
           data: { name, code, departmentId, companyId },
         });
         res.status(200).json(updatedEmployee);
@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'DELETE':
       try {
         const deletedEmployee = await prisma.employee.delete({
-          where: { id },
+          where: { id: typeof id === 'string' ? id : undefined },
         });
         res.status(200).json(deletedEmployee);
       } catch (error) {

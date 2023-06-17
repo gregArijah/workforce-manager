@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (id) {
         try {
           const timeCard = await prisma.timeCard.findUnique({
-            where: { id },
+            where: { id: typeof id === 'string' ? id : undefined },
             include: { employee: true },
           });
           res.status(200).json(timeCard);
@@ -48,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
         const { timeIn, timeOut } = req.body;
         const updatedTimeCard = await prisma.timeCard.update({
-          where: { id },
+          where: { id: typeof id === 'string' ? id : undefined },
           data: {
             timeIn: { set: timeIn },
             timeOut: { set: timeOut },
@@ -63,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'DELETE':
       try {
         const deletedTimeCard = await prisma.timeCard.delete({
-          where: { id },
+          where: { id: typeof id === 'string' ? id : undefined },
         });
         res.status(200).json(deletedTimeCard);
       } catch (error) {

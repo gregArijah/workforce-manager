@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (id) {
         try {
           const company = await prisma.company.findUnique({
-            where: { id },
+            where: { id: typeof id === 'string' ? id : undefined },
             include: { departments: true, employees: true },
           });
           res.status(200).json(company);
@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
         const { name, code, password, adminPassword } = req.body;
         const updatedCompany = await prisma.company.update({
-          where: { id },
+          where: { id: typeof id === 'string' ? id : undefined},
           data: { name, code, password, adminPassword },
         });
         res.status(200).json(updatedCompany);
@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'DELETE':
       try {
         const deletedCompany = await prisma.company.delete({
-          where: { id },
+          where: { id: typeof id === 'string' ? id : undefined },
         });
         res.status(200).json(deletedCompany);
       } catch (error) {

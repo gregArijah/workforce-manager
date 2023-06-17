@@ -11,8 +11,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (id) {
                 try {
                     const department = await prisma.department.findUnique({
-                        where: { id },
-                        include: { employees: true },
+                        where: { id: typeof id === 'string' ? id : undefined },
+                        include: { Employee: true },
                     });
                     res.status(200).json(department);
                 } catch (error) {
@@ -22,10 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
 
         case "POST":
-            const { name, code, company, companyID } = req.body;
+            const { name, code, company, companyId } = req.body;
             try {
                 const department = await prisma.department.create({
-                    data: { name, code, company, companyID },
+                    data: { name, code, company, companyId },
                 });
                 res.status(201).json(department);
             }
@@ -36,10 +36,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         case "PUT":
             try {
-                const { name, code, company, companyID } = req.body;
+                const { name, code, company, companyId } = req.body;
                 const updatedDepartment = await prisma.department.update({
-                    where: { id },
-                    data: { name, code, company, companyID },
+                    where: { id: typeof id === 'string' ? id : undefined },
+                    data: { name, code, company, companyId },
                 });
                 res.status(200).json(updatedDepartment);
             }
@@ -51,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case "DELETE":
             try {
                 const deletedDepartment = await prisma.department.delete({
-                    where: { id },
+                    where: { id: typeof id === 'string' ? id : undefined },
                 });
                 res.status(200).json(deletedDepartment);
             }
