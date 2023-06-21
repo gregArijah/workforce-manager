@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
-import QueryBox from './components/querybox'
+import prisma from './lib/prisma'
+import Searchbar from './components/searchbar';
 
-
-export default function Home() {
+export default async function Home() {
  
 
+  //const company = await prisma.company.findMany(); 
+  const company = await prisma.company.findMany();
+
+  const selectedCompany = await prisma.company.findUnique({
+    where: { id: "clj3c6bq80000v25004a9pzfn" },
+    include: { departments: true, employees: true },
+  });
+
+  const allEmployees = await prisma.employee.findMany({
+    include: { department: true },
+  });
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -14,7 +25,29 @@ export default function Home() {
         </p>
        
       </div>
-      <QueryBox/>
+      <div>
+        <Searchbar />
+        <h2>Client List</h2>
+        <ul>
+          {company.map((company) => (
+            <li key={company.id}>
+              {company.name}
+            </li>
+          ))}
+        </ul>
+        <h2>Selected Client</h2>
+        <p>
+          {selectedCompany? selectedCompany.name : "No company selected"}
+        </p>
+        <h2>All Employee</h2>
+        <ul>
+          {allEmployees.map((employee) => (
+            <li key={employee.id}>
+              {employee.name}
+            </li>
+          ))}
+        </ul>
+      </div>
     
 
       

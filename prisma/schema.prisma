@@ -15,7 +15,7 @@ datasource db {
 model Company {
   id            String       @id @default(cuid())
   name          String       @unique
-  code          Int          @default(autoincrement())
+  code          Int          @default(autoincrement()) @unique
   password      String
   adminPassword String
   departments   Department[]
