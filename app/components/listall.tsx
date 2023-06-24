@@ -1,22 +1,24 @@
 'use client';
-
-
-
-export default function Listall(): JSX.Element {
+const api = '/api/company';	
 
     //get list will be a function that will call the api to list all companies
     const getlist = async() => {
         console.log("get list of all companies");
-        const res = await fetch(`/api/company`, { 
+        const res = await fetch( api, { 
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
         const json = await res.json();
+        console.log(json);
         return json;
     };
 
+
+
+export default function Listall(): JSX.Element {
+    
     return (
         <div className="listall">
             <p>test api: press this button to list all companies</p>

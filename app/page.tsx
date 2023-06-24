@@ -6,17 +6,17 @@ import ListAll from './components/listall';
 export default async function Home() {
  
 
-  //const company = await prisma.company.findMany(); 
-  const company = await prisma.company.findMany();
+  // //const company = await prisma.company.findMany(); 
+  // const company = await prisma.company.findMany();
 
-  const selectedCompany = await prisma.company.findUnique({
-    where: { id: "clj3c6bq80000v25004a9pzfn" },
-    include: { departments: true, employees: true },
-  });
+  // const selectedCompany = await prisma.company.findUnique({
+  //   where: { id: "clj3c6bq80000v25004a9pzfn" },
+  //   include: { departments: true, employees: true },
+  // });
 
-  const allEmployees = await prisma.employee.findMany({
-    include: { department: true },
-  });
+  // const allEmployees = await prisma.employee.findMany({
+  //   include: { department: true },
+  // });
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">

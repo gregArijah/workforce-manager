@@ -9,11 +9,13 @@
         headers: {
             'Content-Type': 'application/json',
         },
+
         });
 
         const json = await res.json();
-        console.log('Company Name:', json.name); // Access the company name property
-        console.log('Company Code:', json.code); // Access the company code property
+        // console.log(json[0]);
+        // console.log('Company Name:', json.name); // Access the company name property
+        // console.log('Company Code:', json.code); // Access the company code property
     };
 
     const [searchVal, setSearchVal] = useState('');
@@ -21,7 +23,7 @@
     const search = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(searchVal || 'no value');
-        testApi();
+        if (searchVal) testApi();
         setSearchVal('');
     };
 
