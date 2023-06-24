@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import prisma from './lib/prisma'
 import Searchbar from './components/searchbar';
+import ListAll from './components/listall';
 
 export default async function Home() {
  
@@ -26,27 +27,10 @@ export default async function Home() {
        
       </div>
       <div>
+        <ListAll />
         <Searchbar />
-        <h2>Client List</h2>
-        <ul>
-          {company.map((company) => (
-            <li key={company.id}>
-              {company.name}
-            </li>
-          ))}
-        </ul>
-        <h2>Selected Client</h2>
-        <p>
-          {selectedCompany? selectedCompany.name : "No company selected"}
-        </p>
-        <h2>All Employee</h2>
-        <ul>
-          {allEmployees.map((employee) => (
-            <li key={employee.id}>
-              {employee.name}
-            </li>
-          ))}
-        </ul>
+        
+        
       </div>
     
 

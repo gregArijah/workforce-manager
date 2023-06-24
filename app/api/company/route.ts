@@ -1,51 +1,63 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../lib/prisma';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
+
+    try {
+      const companies = await prisma.company.findMany();
+      res.json;
+    } catch (error) {
+      //do something
+    }
+
+    return new Response(JSON.stringify("Ok"))
+  //const { id } = req.query||null;
+
+  // try {
+  //   const company = await prisma.company.findUnique({
+  //     where: { id: typeof id === 'string' ? id : undefined },
+  //     include: { departments: true, employees: true },
+  //   });
+  //   res.status(200).json(company);
+  // } catch (error) {
+  //   res.status(500).json({ error: 'Error retrieving the company.' });
+  // }
+
+
+export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
   const { id } = req.query;
 
-  switch (method) {
-    case 'GET':
-      if (id) {
-        await handleGetRequest(req, res);
-      } else {
-        await handleGetAllRequest(req, res);
-      }
-      break;
+//   switch (method) {
+//     case 'GET':
+//       if (id) {
+//         await handleGetRequest(req, res);
+//       } else {
+//         await handleGetAllRequest(req, res);
+//       }
+//       break;
 
-    case 'POST':
-      await handlePostRequest(req, res);
-      break;
+//     case 'POST':
+//       await handlePostRequest(req, res);
+//       break;
 
-    case 'PUT':
-      await handlePutRequest(req, res);
-      break;
+//     case 'PUT':
+//       await handlePutRequest(req, res);
+//       break;
 
-    case 'DELETE':
-      await handleDeleteRequest(req, res);
-      break;
+//     case 'DELETE':
+//       await handleDeleteRequest(req, res);
+//       break;
 
-    default:
-      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
-      res.status(405).end(`Method ${method} Not Allowed`);
-      break;
-  }
-}
+//     default:
+//       res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
+//       res.status(405).end(`Method ${method} Not Allowed`);
+//       break;
+//   }
+// }
 
-async function handleGetRequest(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
 
-  try {
-    const company = await prisma.company.findUnique({
-      where: { id: typeof id === 'string' ? id : undefined },
-      include: { departments: true, employees: true },
-    });
-    res.status(200).json(company);
-  } catch (error) {
-    res.status(500).json({ error: 'Error retrieving the company.' });
-  }
-}
 
 async function handleGetAllRequest(req: NextApiRequest, res: NextApiResponse) {
   try {

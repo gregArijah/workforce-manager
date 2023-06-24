@@ -1,53 +1,49 @@
-'use client';
+    'use client';
 
-import { useState } from 'react';
+    import { useState } from 'react';
 
-export default function Searchbar() {
-
-    //test api will call function from app\api\company\route.tsx
-    //
+    export default function Searchbar(): JSX.Element {
     const testApi = async () => {
-        const res = await fetch('/api/company', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                },
-              
-                }
-            );
+        const res = await fetch(`/api/company?id=${searchVal}`, { // Pass searchVal as a parameter in the URL
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        });
+
         const json = await res.json();
-        console.log(json);
-        console.log("hello");
-    }
-    
-    const [searchVal,setSearchVal] = useState('');
+        console.log('Company Name:', json.name); // Access the company name property
+        console.log('Company Code:', json.code); // Access the company code property
+    };
 
-    const search = (e:any) => {
+    const [searchVal, setSearchVal] = useState('');
+
+    const search = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(searchVal || "no value");
+        console.log(searchVal || 'no value');
         testApi();
-        setSearchVal(''); // reset search va
-     }
+        setSearchVal('');
+    };
 
-    const handleInputChange = (e:any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchVal(e.target.value);
-    }
+    };
 
-return (
-    <div className="searchbar">
-        <text>Test the api: search db for company '001'</text>
+    return (
+        <div className="searchbar">
+        <p>Test the api: search db for company 'clj3c6bq80000v25004a9pzfn'</p>
         <div className="searchbar__container">
-            <div className="searchbar__container__input">
-                <input 
-                    name="search" 
-                    type="text" 
-                    placeholder="Search"
-                    value={searchVal}
-                    onChange={handleInputChange} />
-                <button type="submit" onClick={search}>go</button>
-            </div>
+            <form className="searchbar__container__input" onSubmit={search}>
+            <input
+                name="search"
+                type="text"
+                placeholder="Search"
+                value={searchVal}
+                onChange={handleInputChange}
+            />
+            <button type="submit">Go</button>
+            </form>
         </div>
-    </div>
-);
-
-}
+        </div>
+    );
+    }
