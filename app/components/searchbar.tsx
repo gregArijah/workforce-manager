@@ -31,7 +31,7 @@
 
     return (
         <div className="searchbar">
-        <p>Test the api: search db for company &apos clj3c6bq80000v25004a9pzfn &apos</p>
+        <p>Test the api: search db for company &apos;cljbnak570003v27oxb7a817g&apos;</p>
         <div className="searchbar__container">
             <form className="searchbar__container__input" onSubmit={search}>
             <input

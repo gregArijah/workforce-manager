@@ -28,7 +28,7 @@ model Department {
   code      String     @unique
   company   Company    @relation(fields: [companyId], references: [id])
   companyId String
-  Employee  Employee[]
+  employees  Employee[]
 }
 
 model Employee {
