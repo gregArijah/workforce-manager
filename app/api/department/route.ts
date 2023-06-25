@@ -14,14 +14,9 @@ export async function GET(req: NextRequest) {
       return new Response(JSON.stringify(department), { status: 200 });
     } else {
       const departments = await prisma.department.findMany({
-        select: {
-          id: true,
-          name: true,
-          code: true,
-          company: { select: { id: true, name: true } },
-          employees: { select: { id: true, name: true } },
+        include: { company: true },
         },
-      });
+      );
       return new Response(JSON.stringify(departments), { status: 200 });
     }
   } catch (error) {
