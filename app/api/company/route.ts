@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { NextApiRequest } from 'next';
 import prisma from '../../lib/prisma';
 
 
@@ -37,14 +36,18 @@ export async function GET(req: NextRequest) {
       return new Response( 'Error retrieving the company.',{
         status: 500
       }
-
+ 
       );
     }
   }
 
-export async function POST(req: NextApiRequest) {
-  const { name, password, adminPassword } = req.body;
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { name, password, adminPassword } = body;
+  console.log("name",name,"password",password,"adminPassword",adminPassword);
+
   try {
+      
     const company = await prisma.company.create({
       data: { name, password, adminPassword },
     });
@@ -59,44 +62,3 @@ export async function POST(req: NextApiRequest) {
     );
   }
 }
-
-// async function handlePostRequest(req: NextApiRequest, res: NextApiResponse) {
-//   const { name, code, password, adminPassword } = req.body;
-//   try {
-//     const company = await prisma.company.create({
-//       data: { name, code, password, adminPassword },
-//     });
-//     res.status(201).json(company);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Error creating the company.' });
-//   }
-// }
-
-// async function handlePutRequest(req: NextApiRequest, res: NextApiResponse) {
-//   const { id } = req.query;
-//   const { name, code, password, adminPassword } = req.body;
-
-//   try {
-//     const updatedCompany = await prisma.company.update({
-//       where: { id: typeof id === 'string' ? id : undefined },
-//       data: { name, code, password, adminPassword },
-//     });
-//     res.status(200).json(updatedCompany);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Error updating the company.' });
-//   }
-// }
-
-// async function handleDeleteRequest(req: NextApiRequest, res: NextApiResponse) {
-//   const { id } = req.query;
-
-//   try {
-//     const deletedCompany = await prisma.company.delete({
-//       where: { id: typeof id === 'string' ? id : undefined },
-//     });
-//     res.status(200).json(deletedCompany);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Error deleting the company.' });
-//   }
-// }
-// }

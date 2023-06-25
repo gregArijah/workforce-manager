@@ -13,9 +13,7 @@
         });
 
         const json = await res.json();
-        // console.log(json[0]);
-        // console.log('Company Name:', json.name); // Access the company name property
-        // console.log('Company Code:', json.code); // Access the company code property
+   
     };
 
     const [searchVal, setSearchVal] = useState('');
@@ -33,7 +31,7 @@
 
     return (
         <div className="searchbar">
-        <p>Test the api: search db for company 'clj3c6bq80000v25004a9pzfn'</p>
+        <p>Test the api: search db for company &apos clj3c6bq80000v25004a9pzfn &apos</p>
         <div className="searchbar__container">
             <form className="searchbar__container__input" onSubmit={search}>
             <input

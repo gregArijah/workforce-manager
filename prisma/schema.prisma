@@ -39,6 +39,7 @@ model Employee {
   departmentId String
   company      Company    @relation(fields: [companyId], references: [id])
   companyId    String
+  isClockedIn  Boolean    @default(false)
   timeCard     TimeCard[]
 }
 
