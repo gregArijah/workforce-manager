@@ -43,12 +43,63 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, password, adminPassword } = body;
-  console.log("name",name,"password",password,"adminPassword",adminPassword);
 
   try {
       
     const company = await prisma.company.create({
       data: { name, password, adminPassword },
+    });
+    return new Response(JSON.stringify(company),{
+      status: 200
+    })
+  } catch (error) {
+    return new Response( 'Error creating the company',{
+      status: 500
+    }
+
+    );
+  }
+}
+
+
+export async function PUT(req: NextRequest) {
+
+  const { searchParams } = new URL(req.url);
+  const  id  = searchParams.get("id")||null;
+  
+  if (!id) return new Response('Missing id', { status: 400 });
+
+  const body = await req.json();
+
+
+  try {
+      
+    const company = await prisma.company.update({
+      where: { id: id},
+      data: body,
+    });
+    return new Response(JSON.stringify(company),{
+      status: 200
+    })
+  } catch (error) {
+    return new Response( 'Error creating the company',{
+      status: 500
+    }
+
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const  id  = searchParams.get("id")||null;
+  
+  if (!id) return new Response('Missing id', { status: 400 });
+
+  try {
+      
+    const company = await prisma.company.delete({
+      where: { id: id},
     });
     return new Response(JSON.stringify(company),{
       status: 200
