@@ -39,15 +39,15 @@ model Employee {
   departmentId String
   company      Company    @relation(fields: [companyId], references: [id])
   companyId    String
-  timeCard     TimeCard?
+  timeCard     TimeCard[]
 }
 
 model TimeCard {
   id         String     @id @default(cuid())
   employee   Employee   @relation(fields: [employeeId], references: [id])
   employeeId String     @unique
-  timeIn     DateTime[]
-  timeOut    DateTime[]
+  timeIn     DateTime
+  timeOut    DateTime
   createdAt  DateTime   @default(now()) @map(name: "created_at")
   updatedAt  DateTime   @updatedAt @map(name: "updated_at")
 }

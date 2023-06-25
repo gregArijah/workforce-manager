@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest } from 'next';
 import prisma from '../../lib/prisma';
 
 
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest) {
         })
       }
         
-      if (!id) {
+      else {
         const companies = await prisma.company.findMany({
           select: {
             name: true,
@@ -40,61 +41,24 @@ export async function GET(req: NextRequest) {
       );
     }
   }
-  //const { id } = req.query||null;
 
-  // try {
-  //   const company = await prisma.company.findUnique({
-  //     where: { id: typeof id === 'string' ? id : undefined },
-  //     include: { departments: true, employees: true },
-  //   });
-  //   res.status(200).json(company);
-  // } catch (error) {
-  //   res.status(500).json({ error: 'Error retrieving the company.' });
-  // }
+export async function POST(req: NextApiRequest) {
+  const { name, password, adminPassword } = req.body;
+  try {
+    const company = await prisma.company.create({
+      data: { name, password, adminPassword },
+    });
+    return new Response(JSON.stringify(company),{
+      status: 200
+    })
+  } catch (error) {
+    return new Response( 'Error creating the company.',{
+      status: 500
+    }
 
-//   }
-// export async function handler(req: NextApiRequest, res: NextApiResponse) {
-//   const { method } = req;
-//   const { id } = req.query;
-
-// //   switch (method) {
-// //     case 'GET':
-// //       if (id) {
-// //         await handleGetRequest(req, res);
-// //       } else {
-// //         await handleGetAllRequest(req, res);
-// //       }
-// //       break;
-
-// //     case 'POST':
-// //       await handlePostRequest(req, res);
-// //       break;
-
-// //     case 'PUT':
-// //       await handlePutRequest(req, res);
-// //       break;
-
-// //     case 'DELETE':
-// //       await handleDeleteRequest(req, res);
-// //       break;
-
-// //     default:
-// //       res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
-// //       res.status(405).end(`Method ${method} Not Allowed`);
-// //       break;
-// //   }
-// // }
-
-
-
-// async function handleGetAllRequest(req: NextApiRequest, res: NextApiResponse) {
-//   try {
-//     const companies = await prisma.company.findMany();
-//     res.status(200).json(companies);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Error retrieving companies.' });
-//   }
-// }
+    );
+  }
+}
 
 // async function handlePostRequest(req: NextApiRequest, res: NextApiResponse) {
 //   const { name, code, password, adminPassword } = req.body;
