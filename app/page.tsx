@@ -6,35 +6,20 @@ import ListAll from './components/listall';
 export default async function Home() {
  
 
-  // //const company = await prisma.company.findMany(); 
-  // const company = await prisma.company.findMany();
-
-  // const selectedCompany = await prisma.company.findUnique({
-  //   where: { id: "clj3c6bq80000v25004a9pzfn" },
-  //   include: { departments: true, employees: true },
-  // });
-
-  // const allEmployees = await prisma.employee.findMany({
-  //   include: { department: true },
-  // });
-
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          NANJI - WORKFORCE MANAGER
-        </p>
-       
-      </div>
-      <div>
-        <ListAll />
-        <Searchbar />
-        
-        
-      </div>
-    
+    <div className='h-screen'> 
+      <nav className='text-right'>Navbar goes here: options for <span className='cursor-pointer text-red-700'>"login"</span> form and <span className='cursor-pointer text-red-700'>"contact"</span> form</nav>
+      <br />
+      <header className='text-left'>Header goes here: logo, name, and slogan</header>
 
-      
+        <p className="flex w-full justify-left border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl">
+          NANJI - WORKFORCE MANAGER
+        </p>  
+        <div className = "flex justify-center items-center pt-32">
+          Cool background image goes here
+        </div>
+       
+    
     </div>
   )
 }
