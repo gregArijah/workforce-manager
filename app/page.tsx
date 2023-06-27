@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
-import prisma from './lib/prisma'
-import Searchbar from './components/searchbar';
-import ListAll from './components/listall';
+'use client';
+
 
 export default async function Home() {
  
+  function loginAlert() {
+    return alert(`a login form will appear here`)
+  }
+
+  function contactAlert() {
+    return alert(`a contact form will appear here`)
+  }
+
 
   return (
     <div className='h-screen'> 
-      <nav className='text-right'>Navbar goes here: options for <span className='cursor-pointer text-red-700'>"login"</span> form and <span className='cursor-pointer text-red-700'>"contact"</span> form</nav>
+      <nav className='text-right'>Navbar goes here: options for <span className='cursor-pointer text-red-700' onClick={loginAlert} >&quot;login&quot;</span> form and <span className='cursor-pointer text-red-700' onClick={contactAlert}>&quot;contact&quot;</span> form</nav>
       <br />
       <header className='text-left'>Header goes here: logo, name, and slogan</header>
 
@@ -16,7 +22,7 @@ export default async function Home() {
           NANJI - WORKFORCE MANAGER
         </p>  
         <div className = "flex justify-center items-center pt-32">
-          Cool background image goes here
+          Cool background image goes here, and maybe some info in sliders?( about, feautues, devs, etc.)
         </div>
        
     
