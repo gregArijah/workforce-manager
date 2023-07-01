@@ -1,10 +1,10 @@
 'use client'
 
-import Header from "../components/header"
-import Navbar from "./components/navbar"
-import PunchSelect from "./components/punchSelect"
-import PunchId from "./components/punchId"
-import PunchConfirm from "./components/punchConfirm"
+import Header from "../_components/header"
+import Navbar from "./_components/navbar"
+import PunchSelect from "./_components/punchSelect"
+import PunchId from "./_components/punchId"
+import PunchConfirm from "./_components/punchConfirm"
 
 
 import { useState } from "react"

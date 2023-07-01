@@ -1,6 +1,6 @@
-import Navbar from "./components/navbar";
-import Header from "../components/header"	;
-import Coolstuff from "./components/coolstuff";
+import Navbar from "./_components/navbar";
+import Header from "../_components/header"	;
+import Coolstuff from "./_components/coolstuff";
 
 export default function Landing(): JSX.Element {
  
