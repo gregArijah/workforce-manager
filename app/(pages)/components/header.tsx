@@ -1,13 +1,23 @@
 import Link from 'next/link'
 
-export default function Header() {
+const styles = {
+  background: {
+    background: 'rgb(191, 208, 212)',
+    color: 'rgb(246, 246, 237)'
+  }
+};
 
+export default function Header() {
   return (
-      <header className='text-left'>
-        <h1>Header goes here: logo, name, and slogan</h1>
-        <Link href="/"  className= 'text-red-700'>
-            <p>WORKFORCE MANAGER</p>
-        </Link>
-      </header> 
+    // className='text-left'
+    // style={styles.background}
+    <header className="flex justify-between items-center my-2" >
+      {/* className='bold' */}
+      <Link href="/" className=" text-slate-800 px-2 py-1 rounded hover:text-slate-500 outline-none text-2xl">
+        <h1>WORKFORCE MANAGER</h1>
+      </Link>
+
+      <p >logo & slogan</p>
+    </header>
   )
-} 
+} ''

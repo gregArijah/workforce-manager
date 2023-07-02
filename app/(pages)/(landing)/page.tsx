@@ -5,7 +5,7 @@ import Coolstuff from "./components/coolstuff";
 export default async function Landing() {
  
   return (
-    <div className='h-screen p-6'>  
+    <div className='h-screen p-6 bg-slate-100'>  
       <Navbar />
       <Header />
       <Coolstuff />    
