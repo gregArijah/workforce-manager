@@ -33,7 +33,7 @@ export default function Departments() {
             </div>
           </div>
         ))}
-      change those buttons to icons, bcuz its 2023</div>
+      </div>
     </div>
   );
 }
