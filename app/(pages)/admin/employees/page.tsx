@@ -35,6 +35,11 @@ export default function Employees() {
       <Header />
 
       <div className="flex-col">
+        <div className="border p-4 mb-4">
+          <button className="bg-green-500 text-white px-4 py-2 rounded">
+            Add New
+          </button>
+        </div>
         <div className="border p-4 flex space-x-3 font-bold">
           <h2 style={{ width: "20%" }}>Name</h2>
           <h3 style={{ width: "10%" }}>Code</h3>

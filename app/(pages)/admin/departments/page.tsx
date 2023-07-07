@@ -14,6 +14,11 @@ export default function Departments() {
       <Header />
 
       <div className="flex-col">
+        <div className="border p-4 mb-4">
+          <button className="bg-green-500 text-white px-4 py-2 rounded">
+            Add New
+          </button>
+        </div>
         {/* Render each department item */}
         {departments.map((department, index) => (
           <div key={index} className="border p-4 flex space-x-3">
