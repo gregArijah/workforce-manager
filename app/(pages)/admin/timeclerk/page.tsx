@@ -31,11 +31,11 @@ export default function TimeClerk() {
     // ...
   ];
 
-  const handleFromDateChange = (e) => {
+  const handleFromDateChange = (e:any) => {
     setFromDate(e.target.value);
   };
 
-  const handleToDateChange = (e) => {
+  const handleToDateChange = (e:any) => {
     setToDate(e.target.value);
   };
 
