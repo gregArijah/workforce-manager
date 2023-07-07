@@ -1,10 +1,11 @@
 'use client'
 
+import Link from "next/link";
 import { useState } from "react";
 import Header from "../../_components/header";
 import { FaEye } from "react-icons/fa";
 
-export default function TimeClerk() {
+export default function TimeCards() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
@@ -103,9 +104,11 @@ export default function TimeClerk() {
                   <td className="px-4 py-2">{employee.code}</td>
                   <td className="px-4 py-2">{employee.totalHours}</td>
                   <td className="px-4 py-2">
-                    <button className="bg-blue-500 text-white px-2 py-1 rounded">
-                      <FaEye />
-                    </button>
+                    <Link href={`/admin/timecards/${employee.code}`}>
+                      <button className="bg-blue-500 text-white px-2 py-1 rounded">
+                        <FaEye />
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
