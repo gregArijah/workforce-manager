@@ -1,6 +1,7 @@
+'use client'
 
-
-import { useRouter } from "next/router";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Header from "@components/header";
 import { FaEye } from "react-icons/fa";
 
@@ -110,6 +111,7 @@ const employees = [
   },
 ];
 
+
 interface Employee {
   id: string;
   name: string;
@@ -133,13 +135,17 @@ interface PageProps {
 }
 
 export default function Details({ params }: { params: { id: string } }) {
-  
-  const employee = employees.find((employee) => employee.code === params.id);
+  //const router = useRouter();
+  const { id } = params;
+
+  const employee = employees.find((employee) => employee.code === id);
 
   if (!employee) {
     return <div>Employee not found</div>;
   }
 
+  const currentIndex = employees.findIndex((emp) => emp.code === id);
+  
   return (
     <div className="h-screen">
       <Header />
@@ -168,6 +174,18 @@ export default function Details({ params }: { params: { id: string } }) {
             ))}
           </tbody>
         </table>
+        <div className="mt-4">
+          <strong>Total Hours:</strong> {employee.totalHours}
+        </div>
+        
+         <div className="flex justify-between mt-4">
+          <Link href={`admin/timecards/${employees[currentIndex === 0 ? employees.length - 1 : currentIndex - 1].code}`}>
+            <button className="px-4 py-2 bg-blue-500 text-white rounded">Previous</button>
+          </Link>
+          <Link href={`admin/timecards/${employees[(currentIndex + 1) % employees.length].code}`}>
+            <button className="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
