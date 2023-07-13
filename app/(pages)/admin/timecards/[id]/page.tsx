@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Header from "@components/header";
 import { FaEye } from "react-icons/fa";
+import SelectPeriod from "../_components/selectPeriod";
 
 const employees = [
   {
@@ -145,10 +146,11 @@ export default function Details({ params }: { params: { id: string } }) {
   }
 
   const currentIndex = employees.findIndex((emp) => emp.code === id);
-  
+
   return (
     <div className="h-screen">
       <Header />
+      <SelectPeriod /> 
       <div className="flex-col">
         <h2 className="text-2xl font-bold mb-4">Details</h2>
         <h3 className="text-lg font-bold mb-2">Name: {employee.name}</h3>
