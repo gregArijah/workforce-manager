@@ -6,6 +6,8 @@ const handler = NextAuth({
     
   providers: [
     CredentialsProvider({
+      id: "credentials",
+      name: "Credentials",
       type: "credentials",
       credentials: {
         company: { label: "Company", type: "text", placeholder: "demo-name" },
