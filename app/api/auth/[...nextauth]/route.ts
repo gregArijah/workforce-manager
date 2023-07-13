@@ -1,5 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 
 const handler = NextAuth({
@@ -10,36 +13,30 @@ const handler = NextAuth({
       name: "Credentials",
       type: "credentials",
       credentials: {
-        company: { label: "Company", type: "text", placeholder: "demo-name" },
+        name: { label: "Company", type: "text", placeholder: "demo-name" },
         password: { label: "Password", type: "password" }
       },
-      authorize(credentials, req) {
-        const { company, password } = credentials as { company: string; password: string;};
-        // perform you login logic
-        // find out user from db
-        if (company !== "john@gmail.com" || password !== "1234") {
-          throw new Error("invalid credentials");
-        }
+      async authorize(credentials, req) {
 
-        // if everything is fine
-        return {
-          id: "1234",
-          name: "John Doe",
-          email: "john@gmail.com",
-          role: "admin",
-        } ;
-      },
-    }),
+        const { name, password } = credentials as { name: string; password: string;};
+       
+        const company = await prisma.company.findUnique({
+          where: { name },
+        })
+
+        if (!company || company.password !== password) return null;
+
+        console.log(company);
+
+        return { id: company.id, 
+                 name: company.name, 
+        }        
+      }
+    })
+
   ],
 
-  // pages: {
-  //   signIn: '/auth/signin',
-  //   signOut: '/auth/signout',
-  //   error: '/auth/error', // Error code passed in query string as ?error=
-  //   verifyRequest: '/auth/verify-request', // (used for check email message)
-  //   newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-  // },
-  
+ 
   callbacks: {
     async jwt({ token }) {
       token.userRole = "admin"
