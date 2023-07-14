@@ -4,6 +4,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+let role:string;
+
 
 const handler = NextAuth({
     
@@ -53,9 +55,14 @@ const handler = NextAuth({
         token.id = user.id;
         token.name = user.name;
         token.userRole = user.role;
+        role = user.role;
       }
       console.log("token: ",token);
       return token
+    },
+    async redirect({ url, baseUrl }) {    
+      role == "admin" ? url = "/admin" : url = "/punches";
+      return url;
     },
   },
 
