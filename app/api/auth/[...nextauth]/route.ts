@@ -24,22 +24,37 @@ const handler = NextAuth({
           where: { name },
         })
 
-        if (!company || company.password !== password) return null;
+        if (company && company.password == password){
+          return { id: company.id, 
+                   name: company.name,
+                   role: "employee", 
+          }
+        }
 
-        console.log(company);
+        if (company && company.adminPassword == password){
+          return { id: company.id,
+                    name: company.name,
+                    role: "admin",
+          }
+        }
 
-        return { id: company.id, 
-                 name: company.name, 
-        }        
+        return null;
+           
       }
     })
 
   ],
 
- 
+  
   callbacks: {
-    async jwt({ token }) {
-      token.userRole = "admin"
+    async jwt({ token, user }) {
+      console.log("user: ",user);
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.userRole = user.role;
+      }
+      console.log("token: ",token);
       return token
     },
   },
