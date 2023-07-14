@@ -1,47 +1,68 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+let role:string;
 
 
 const handler = NextAuth({
     
   providers: [
     CredentialsProvider({
+      id: "credentials",
+      name: "Credentials",
       type: "credentials",
       credentials: {
-        company: { label: "Company", type: "text", placeholder: "demo-name" },
+        name: { label: "Company", type: "text", placeholder: "demo-name" },
         password: { label: "Password", type: "password" }
       },
-      authorize(credentials, req) {
-        const { company, password } = credentials as { company: string; password: string;};
-        // perform you login logic
-        // find out user from db
-        if (company !== "john@gmail.com" || password !== "1234") {
-          throw new Error("invalid credentials");
+      async authorize(credentials, req) {
+
+        const { name, password } = credentials as { name: string; password: string;};
+       
+        const company = await prisma.company.findUnique({
+          where: { name },
+        })
+
+        if (company && company.password == password){
+          return { id: company.id, 
+                   name: company.name,
+                   role: "employee", 
+          }
         }
 
-        // if everything is fine
-        return {
-          id: "1234",
-          name: "John Doe",
-          email: "john@gmail.com",
-          role: "admin",
-        } ;
-      },
-    }),
+        if (company && company.adminPassword == password){
+          return { id: company.id,
+                    name: company.name,
+                    role: "admin",
+          }
+        }
+
+        return null;
+           
+      }
+    })
+
   ],
 
-  // pages: {
-  //   signIn: '/auth/signin',
-  //   signOut: '/auth/signout',
-  //   error: '/auth/error', // Error code passed in query string as ?error=
-  //   verifyRequest: '/auth/verify-request', // (used for check email message)
-  //   newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-  // },
   
   callbacks: {
-    async jwt({ token }) {
-      token.userRole = "admin"
+    async jwt({ token, user }) {
+      console.log("user: ",user);
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.userRole = user.role;
+        role = user.role;
+      }
+      console.log("token: ",token);
       return token
+    },
+    async redirect({ url, baseUrl }) {    
+      role == "admin" ? url = "/admin" : url = "/punches";
+      return url;
     },
   },
 

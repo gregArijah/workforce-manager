@@ -4,9 +4,9 @@ export default function Header() {
 
   return (
       <header className='text-left'>
-        <h1>Header goes here: logo, name, and slogan</h1>
         <Link href="/"  className= 'text-red-700'>
-            <p>WORKFORCE MANAGER</p>
+            <p className='text-lg'>WORKFORCE MANAGER  **LOGO**</p>
+            <p>slogan text</p>
         </Link>
       </header> 
   )
