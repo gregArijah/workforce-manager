@@ -17,7 +17,7 @@ export default function Navbar() {
         <nav className='text-right'>
                     
           {session && <Link href='/api/auth/signout'><button className='bg-blue-600 h-8 w-24 rounded'>Logout</button></Link>}
-          {!session && loading &&<Link href='/api/auth/signin'><button className='bg-blue-600 h-8 w-24 rounded'>Checking...</button></Link>}
+          {!session && loading &&<button className='bg-blue-600 h-8 w-24 rounded'>Checking...</button>}
           {!session && !loading && <Link href='/api/auth/signin'><button className='bg-blue-600 h-8 w-24 rounded'>Login</button></Link>}
 
         </nav>
