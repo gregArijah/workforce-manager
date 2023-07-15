@@ -1,8 +1,9 @@
 import Link from "next/link"
 
 import Header from "../_components/header"
-
-export default function Admin() {
+  
+export default async function Admin() {
+  
     return (
         <div className="h-screen">
             <Header />
@@ -15,3 +16,4 @@ export default function Admin() {
         </div>
     )
 }
+
