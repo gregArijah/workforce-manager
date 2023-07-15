@@ -26,16 +26,16 @@ const handler = NextAuth({
         })
 
         if (company && company.password == password){
+          role = "employee";
           return { id: company.id, 
-                   name: company.name,
-                   role: "employee", 
+                   name: company.name, 
           }
         }
 
         if (company && company.adminPassword == password){
+          role = "admin";
           return { id: company.id,
                     name: company.name,
-                    role: "admin",
           }
         }
 
@@ -50,15 +50,14 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.name = user.name;
-        //token.userRole = user.role;
+        token.userRole = role;
       }
       return token;
     },
-    // async session({ session, token, user }) {
-    //     return session;
-    // },
+    async session({ session, token, user }) {
+        session.user = token;
+        return session;
+    },
     async redirect({ url, baseUrl }) {
       
       url = role === "admin" ? "/admin" : "/punches";
