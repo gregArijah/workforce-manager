@@ -7,7 +7,10 @@ import { useSession } from "next-auth/react";
 
 export default function Navbar() {
   const { data: session, status  } = useSession();
-    
+
+  console.log("status",status,"session", session);
+  
+  
   return (
       <AuthContext>
         <nav className='text-right'>
