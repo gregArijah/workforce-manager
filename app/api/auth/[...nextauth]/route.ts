@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 let role:string;
 
-
 const handler = NextAuth({
     
   providers: [
@@ -50,22 +49,22 @@ const handler = NextAuth({
   
   callbacks: {
     async jwt({ token, user }) {
-      console.log("user: ",user);
       if (user) {
         token.id = user.id;
         token.name = user.name;
-        token.userRole = user.role;
-        role = user.role;
+        //token.userRole = user.role;
       }
-      console.log("token: ",token);
-      return token
+      return token;
     },
-    async redirect({ url, baseUrl }) {    
-      role == "admin" ? url = "/admin" : url = "/punches";
+    // async session({ session, token, user }) {
+    //     return session;
+    // },
+    async redirect({ url, baseUrl }) {
+      
+      url = role === "admin" ? "/admin" : "/punches";
       return url;
-    },
-  },
-
+    }
+  }
 });
 
 
