@@ -1,26 +1,16 @@
-'use client'
-
 import Link from "next/link";
-//import { useContext } from "react";
-//import AuthContext from "../../../AuthContext"
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default function Navbar() {
-  const { data: session, status  } = useSession();
-  const loading = status === "loading";
+export default async function Navbar() {
 
-  console.log("status",status,"session", session);
-  
-  
-  return (
-      //<AuthContext>
+  const session = await getServerSession(authOptions);
+
+  return (  
         <nav className='text-right'>
-                    
-          {session && <Link href='/api/auth/signout'><button className='bg-blue-600 h-8 w-24 rounded'>Logout</button></Link>}
-          {!session && loading &&<button className='bg-blue-600 h-8 w-24 rounded'>Checking...</button>}
-          {!session && !loading && <Link href='/api/auth/signin'><button className='bg-blue-600 h-8 w-24 rounded'>Login</button></Link>}
-
+            {session && <Link href='/api/auth/signout'><button className='bg-blue-600 h-8 w-24 rounded'>Logout</button></Link>}
+            {!session && <Link href='/api/auth/signin'><button className='bg-blue-600 h-8 w-24 rounded'>Login</button></Link>}
         </nav>
- //     </AuthContext>
+
     )
 }

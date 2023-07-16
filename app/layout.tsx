@@ -42,11 +42,11 @@ export default async function RootLayout({
   )
 }
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const session = await getSession(context.req.headers.cookie || '');
-//   return {
-//     props: {
-//       session,
-//     },
-//   };
-// };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context.req.headers.cookie || '');
+  return {
+    props: {
+      session,
+    },
+  };
+};
