@@ -14,7 +14,7 @@ interface Session {
   };
 }
 
-export default function sessionInfo() {
+export default function SessionInfo() {
   const {data: session, status}= useSession();
 
   return {session:session?.user,loading:status=="loading"} || null;
