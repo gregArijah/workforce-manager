@@ -15,14 +15,12 @@ interface Session {
       jti: string;
     };
   }
-export default async function AdminLayout({
+export default async function PunchesLayout({
     children,
   }: {
     children: React.ReactNode
   }) {
     const session:Session|null = await getServerSession(authOptions);
-    
-    const role = session?.user?.userRole;
     
     if (!session)  {
       console.log("no session");
