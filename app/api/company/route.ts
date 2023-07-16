@@ -1,15 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
+async function sessionInfo() {
+    const session = await getServerSession(authOptions);
+    console.log("SESSIONINFO",session);
+    return session?.user?.name;
+ 
+}
+
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const  id  = searchParams.get("id")||null;
     console.log(id);
-    
+    const matcher = await sessionInfo();
+    console.log("matcher",matcher);
     try {
       if(id) {
         const company = await prisma.company.findUnique({
-          where: { id: typeof id === 'string' ? id : undefined },
+          where: { id },
           include: { departments: true, employees: true },
         });
         console.log(company);
