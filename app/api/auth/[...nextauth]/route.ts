@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 let role:string;
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
     
   providers: [
     CredentialsProvider({
@@ -46,7 +46,6 @@ const handler = NextAuth({
 
   ],
 
-  
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -64,7 +63,8 @@ const handler = NextAuth({
       return url;
     }
   }
-});
+}
 
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST }
