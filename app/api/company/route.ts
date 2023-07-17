@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+// import { getServerSession } from 'next-auth/next';
+// import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-async function sessionInfo() {
-    const session = await getServerSession(authOptions);
-    return session?.user?.name;
+// async function sessionInfo() {
+//     const session = await getServerSession(authOptions);
+//     return session?.user?.name;
  
-}
+// }
 
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const  id  = searchParams.get("id")||null;
-    const matcher = await sessionInfo();
+    //const matcher = await sessionInfo();
     try {
       if(id) {
         const company = await prisma.company.findUnique({

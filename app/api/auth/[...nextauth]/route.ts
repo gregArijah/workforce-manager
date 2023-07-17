@@ -57,6 +57,7 @@ export const authOptions: NextAuthOptions = {
         session.user = token;
         return session;
     },
+    
     async redirect({ url, baseUrl }) {
        return "/admin";
     }

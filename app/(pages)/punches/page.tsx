@@ -1,7 +1,7 @@
 'use client'
 
 import Header from "../_components/header"
-import Navbar from "./_components/navbar"
+import Clock from "./_components/clock"
 import PunchSelect from "./_components/punchSelect"
 import PunchId from "./_components/punchId"
 import PunchConfirm from "./_components/punchConfirm"
@@ -16,8 +16,13 @@ export default function Punches(): JSX.Element {
  
     return (  
       <div className='h-screen space-y-16 p-6'> 
-        <Navbar />
-        <Header />
+        
+        <div className='flex justify-between'>
+            <Header />
+            <Clock />
+        </div>
+        
+        
         
         {visibleComponent=="punchSelect"&&
             <PunchSelect
