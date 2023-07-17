@@ -9,7 +9,7 @@ export default function SelectPeriod() {
 
     const handleView = () => {
         // Perform the desired action when the "View" button is clicked
-        console.log('View button clicked!');
+        // viewbutton clicked
         // Add your logic here to handle the view action
       };
       

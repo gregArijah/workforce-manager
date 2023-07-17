@@ -25,12 +25,12 @@ export default async function AdminLayout({
     const role = session?.user?.userRole;
     
     if (!session)  {
-      console.log("no session");
+      console.log("no session, re-directing");
       redirect("/");
     }
     if (role !== "admin")  {	
-      console.log("not admin");
-      redirect("/");
+      console.log("not admin, re-directing");
+      redirect("/punches");
     }
     return (
         <section>

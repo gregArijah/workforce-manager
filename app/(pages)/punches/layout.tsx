@@ -23,7 +23,7 @@ export default async function PunchesLayout({
     const session:Session|null = await getServerSession(authOptions);
     
     if (!session)  {
-      console.log("no session");
+      console.log("no session, re-directing");
       redirect("/");
     }
    

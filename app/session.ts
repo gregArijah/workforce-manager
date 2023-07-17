@@ -2,6 +2,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 interface Session {
   user: {
@@ -14,9 +15,8 @@ interface Session {
   };
 }
 
-export default function SessionInfo() {
+export default function sessionInfo() {
   const {data: session, status}= useSession();
-
   return {session:session?.user,loading:status=="loading"} || null;
 }
 
