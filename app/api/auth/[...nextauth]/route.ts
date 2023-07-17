@@ -53,14 +53,12 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
         session.user = token;
         return session;
     },
     async redirect({ url, baseUrl }) {
-      
-      url = role === "admin" ? "/admin" : "/punches";
-      return url;
+       return "/admin";
     }
   }
 }

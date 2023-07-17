@@ -5,7 +5,6 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 async function sessionInfo() {
     const session = await getServerSession(authOptions);
-    console.log("SESSIONINFO",session);
     return session?.user?.name;
  
 }
@@ -14,16 +13,13 @@ async function sessionInfo() {
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const  id  = searchParams.get("id")||null;
-    console.log(id);
     const matcher = await sessionInfo();
-    console.log("matcher",matcher);
     try {
       if(id) {
         const company = await prisma.company.findUnique({
           where: { id },
           include: { departments: true, employees: true },
         });
-        console.log(company);
         return new Response(JSON.stringify(company),{
           status: 200	
         })
@@ -36,7 +32,6 @@ export async function GET(req: NextRequest) {
             code: true,
           },
         });
-        console.log(companies);
         return new Response(JSON.stringify(companies),{
           status: 200
         })
