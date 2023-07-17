@@ -1,10 +1,10 @@
 'use client';
 import Link from "next/link";
-import sessionInfo from "@/app/session";
+import SessionInfo from "@/app/session";
 
 export default function Navbar() {
 
-  const {session, loading} = sessionInfo();
+  const {session, loading} = SessionInfo();
 
   return (  
         <nav className='text-right'>
