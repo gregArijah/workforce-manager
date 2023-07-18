@@ -1,26 +1,14 @@
-import React, { useState, useEffect } from "react";
+'use client'
 
-export default function Clock() {
-  const [dateTime, setDateTime] = useState(new Date());
+import React from 'react';
+import Clock from 'react-live-clock'
 
-  useEffect(() => {
-    // Update the clock every second
-    const intervalId = setInterval(() => {
-      setDateTime(new Date());
-    }, 1000);
-
-    // Clean up the interval when the component is unmounted
-    return () => clearInterval(intervalId);
-  }, []);
-
-
-
+export default function ClockDisplay() {
 
   return (
-    <nav className='text-right'>
-      <p>{dateTime.toLocaleDateString()}</p>
-      <p>{dateTime.toLocaleTimeString([], { hour12: false })}</p>
-
-    </nav>
+    <div className='flex flex-col text-right'>    
+        <Clock className='text-sm font-medium' format='dddd, MMM Do' noSsr={true} />
+        <Clock className='text-3xl' format='HH:mm:ss' ticking={true} noSsr={true} />
+    </div>
   );
 }
