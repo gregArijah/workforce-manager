@@ -1,8 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/lib/prisma";
 
 let role:string;
 
@@ -49,11 +47,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.userRole = role;
+        token.role = role;
       }
       return token;
     },
     async session({ session, token }) {
+        //console.log(session)
+        console.log(token)
         session.user = token;
         return session;
     },
