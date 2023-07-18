@@ -1,37 +1,37 @@
-import { getServerSession } from "next-auth/next" 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import { redirect } from "next/navigation"
+// import { getServerSession } from "next-auth/next" 
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+// import { redirect } from "next/navigation"
 
-import Header from "../_components/header"
+// import Header from "../_components/header"
 
-// Define the type for the session object
-interface Session {
-    user: {
-      name: string;
-      sub: string;
-      userRole: string;
-      iat: number;
-      exp: number;
-      jti: string;
-    };
-  }
+// // Define the type for the session object
+// interface Session {
+//     user: {
+//       name: string;
+//       sub: string;
+//       userRole: string;
+//       iat: number;
+//       exp: number;
+//       jti: string;
+//     };
+//   }
 export default async function AdminLayout({
     children,
   }: {
     children: React.ReactNode
   }) {
-    const session:Session|null = await getServerSession(authOptions);
+    // const session:Session|null = await getServerSession(authOptions);
     
-    const role = session?.user?.userRole;
+    // const role = session?.user?.userRole;
     
-    if (!session)  {
-      console.log("no session, re-directing");
-      redirect("/");
-    }
-    if (role !== "admin")  {	
-      console.log("not admin, re-directing");
-      redirect("/punches");
-    }
+    // if (!session)  {
+    //   console.log("no session, re-directing");
+    //   redirect("/");
+    // }
+    // if (role !== "admin")  {	
+    //   console.log("not admin, re-directing");
+    //   redirect("/punches");
+    // }
     return (
         <section>
             {children}
