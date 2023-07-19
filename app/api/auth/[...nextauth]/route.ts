@@ -1,10 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
-let role:string;
+import prisma from "@/app/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
     
@@ -26,43 +22,40 @@ export const authOptions: NextAuthOptions = {
         })
 
         if (company && company.password == password){
-          role = "employee";
-          return { id: company.id, 
-                   name: company.name, 
-          }
-        }
-
-        if (company && company.adminPassword == password){
-          role = "admin";
           return { id: company.id,
-                    name: company.name,
+                   name: company.name,
+                   role: "employee",
           }
         }
-
-        return null;
-           
+        if (company && company.adminPassword == password){
+          return { id: company.id,
+                   name: company.name, 
+                   role: "admin",
+          }
+        }
+        return null;  
       }
     })
 
   ],
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user}) {
       if (user) {
-        token.userRole = role;
+        token = user as any;
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }) { 
         session.user = token;
         return session;
     },
     
     async redirect({ url, baseUrl }) {
-       return "/admin";
+       return '/admin';
     }
   }
-}
+};
 
 const handler = NextAuth(authOptions);
 
