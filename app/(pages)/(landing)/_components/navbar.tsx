@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import SessionInfo from "@/app/session";
+import SessionInfo from "@/app/lib/clientSession";
 
 export default function Navbar() {
 
