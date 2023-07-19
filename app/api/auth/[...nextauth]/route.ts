@@ -2,8 +2,6 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/app/lib/prisma";
 
-let role:string;
-
 export const authOptions: NextAuthOptions = {
     
   providers: [
@@ -24,45 +22,40 @@ export const authOptions: NextAuthOptions = {
         })
 
         if (company && company.password == password){
-          role = "employee";
-          return { id: company.id, 
-                   name: company.name, 
-          }
-        }
-
-        if (company && company.adminPassword == password){
-          role = "admin";
           return { id: company.id,
-                    name: company.name,
+                   name: company.name,
+                   role: "employee",
           }
         }
-
-        return null;
-           
+        if (company && company.adminPassword == password){
+          return { id: company.id,
+                   name: company.name, 
+                   role: "admin",
+          }
+        }
+        return null;  
       }
     })
 
   ],
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user}) {
       if (user) {
-        token.role = role;
+        token = user as any;
       }
       return token;
     },
-    async session({ session, token }) {
-        //console.log(session)
-        console.log(token)
+    async session({ session, token }) { 
         session.user = token;
         return session;
     },
     
     async redirect({ url, baseUrl }) {
-       return "/admin";
+       return '/admin';
     }
   }
-}
+};
 
 const handler = NextAuth(authOptions);
 
