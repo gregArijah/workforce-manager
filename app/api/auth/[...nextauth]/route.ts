@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/app/lib/prisma";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     
   providers: [
     CredentialsProvider({
@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
     
     async redirect({ url, baseUrl }) {
        return '/admin';
-    }
+    },
   }
 };
 
