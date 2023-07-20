@@ -1,6 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/app/lib/prisma";
+import { JWT } from "next-auth/jwt";
 
 export const authOptions: NextAuthOptions = {
     
@@ -40,24 +41,24 @@ export const authOptions: NextAuthOptions = {
     ],
   
     callbacks: {
-      async signIn({ user, credentials }) {
+      async signIn({ user }) {
         return true;
       },
-      async jwt({ token, user, account}) {
-        console.log("token from nextauthfile", token)	;
+      async jwt({ token, user}) { 
         if (user) {
           token = user as any;
+          return user as any;
         }
         return token;
       },
       async session({ session, token }) { 
-          session.user = token;
-          return session;
+        session.user = token;
+        return session;
       },
       
-      async redirect({ url, baseUrl }) {
-         return '/admin';
-      },
+      // async redirect({ url, baseUrl }) {
+      //    return '/';
+      // },
     }
   };
   
