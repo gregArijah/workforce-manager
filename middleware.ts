@@ -1,18 +1,28 @@
+import { NextResponse }  from   'next/server'
+import type { NextRequest } from 'next/server'
+import { withAuth } from "next-auth/middleware"
 
-import { NextRequest, NextResponse } from 'next/server'
-import { getToken } from 'next-auth/jwt'
+// middleware is applied to all routes, use conditionals to select
 
-
-export async function middleware(request: NextRequest, response: NextResponse){
-    const token = await getToken({ req: request })
-    const role = await token?.role;
+export default withAuth(
+  async function middleware (req) {
+     const token = req.nextauth.token;
     
-    
-    if (request.nextUrl.pathname.startsWith('/punches') && !token) {
-        return NextResponse.redirect(new URL('/',request.url))	
+   
+    if (req.nextUrl.pathname.startsWith('/admin') && token?.role!=="admin") {
+              return NextResponse.redirect(new URL('/',req.url))
     }
-    if (request.nextUrl.pathname.startsWith('/admin') && role!=="admin") {
-        console.log("ROLE$$$$: ", role)
-        return NextResponse.redirect(new URL('/punches',request.url))
+    if (req.nextUrl.pathname.startsWith('/punches') && token?.role!=="employee") {
+              return NextResponse.redirect(new URL('/admin',req.url))
     }
-}
+  },
+  {
+    callbacks: {
+      authorized: ({ token, req }) => {
+        if (req.nextUrl.pathname.startsWith('/admin') && !token) return false;
+        if (req.nextUrl.pathname.startsWith('/punches') && !token) return false;
+        return true;
+      }
+    }
+  }
+)

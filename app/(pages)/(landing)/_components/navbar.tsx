@@ -1,18 +1,20 @@
-'use client';
+'use client'
 
-import Link from "next/link";
 import SessionInfo from "@/app/lib/clientSession";
+import { signIn, signOut } from "next-auth/react";
+
+const login = () => {signIn(undefined,{ callbackUrl:'/admin'})}
+const logout = () => {signOut({callbackUrl:'/'})}
 
 export default function Navbar() {
 
   const {session, loading} = SessionInfo();
-  console.log(session);
-
+  
   return (  
         <nav className='text-right'>
-            {session && <Link href='/api/auth/signout'><button className='bg-blue-600 h-8 w-24 rounded'>Logout</button></Link>}
+            {session && <button onClick={logout} className='bg-blue-600 h-8 w-24 rounded'>Logout</button>}
             {loading && <button className='bg-blue-600 h-8 w-24 rounded'>Verifying...</button>}
-            {!session && !loading && <Link href='/api/auth/signin'><button className='bg-blue-600 h-8 w-24 rounded'>Login</button></Link>}
+            {!session && !loading && <button onClick={login} className='bg-blue-600 h-8 w-24 rounded'>Login</button>}
         </nav>
     )
 }
