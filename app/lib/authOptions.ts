@@ -1,7 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/app/lib/prisma";
-import { JWT } from "next-auth/jwt";
 
 export const authOptions: NextAuthOptions = {
     
@@ -39,23 +38,22 @@ export const authOptions: NextAuthOptions = {
       })
   
     ],
-  
+    session: {
+      strategy: "jwt",
+    },
+
     callbacks: {
       async signIn({ user }) {
         return true;
       },
       async jwt({ token, user}) { 
-        if (user) {
-          token = user as any;
-          return user as any;
-        }
+        if (user) token = user as any;
         return token;
       },
       async session({ session, token }) { 
         session.user = token;
         return session;
-      },
-      
+      },      
       // async redirect({ url, baseUrl }) {
       //    return '/';
       // },
