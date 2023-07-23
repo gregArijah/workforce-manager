@@ -1,6 +1,6 @@
 'use client'
 
-import SessionInfo from "@/app/lib/clientSession";
+import SessionInfo from "@/app/utils/clientSession";
 import { signIn, signOut } from "next-auth/react";
 
 const login = () => {signIn(undefined,{ callbackUrl:'/admin'})}

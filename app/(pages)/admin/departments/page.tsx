@@ -1,13 +1,31 @@
-import Header from "../../_components/header";
+'use client'
+
+import { useState, useEffect } from 'react';
+import Header from '../../_components/header';
+
+const api = '/api/department';
+
+const getDepartments = async () => {
+  const res = await fetch(api, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const json = await res.json();
+  return json;
+};
 
 export default function Departments() {
-  // Assuming you have an array of department objects coming from the database
-  const departments = [
-    { name: "Department 1", code: "D001" },
-    { name: "Department 2", code: "D002" },
-    { name: "Department 3", code: "D003" },
-    // ...
-  ];
+  const [departments, setDepartments] = useState<{ name: string; code: string }[]>([]); // Explicitly specify the type
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getDepartments();
+      setDepartments(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="h-screen">
