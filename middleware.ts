@@ -10,9 +10,9 @@ export default withAuth(
      const token = req.nextauth.token;
    
     if (req.nextUrl.pathname.startsWith('/admin') && token?.role!=="admin") {
-              return NextResponse.redirect(new URL('/punches',req.url))
+              return NextResponse.redirect(new URL('/clock',req.url))
     }
-    if (req.nextUrl.pathname.startsWith('/punches') && token?.role!=="employee") {
+    if (req.nextUrl.pathname.startsWith('/clock') && token?.role!=="employee") {
               return NextResponse.redirect(new URL('/admin',req.url))
     }
   },
@@ -24,4 +24,4 @@ export default withAuth(
   }
 )
 
-export const config = { matcher: ["/admin/:path*", "/punches"] }
+export const config = { matcher: ["/admin/:path*", "/clock"] }

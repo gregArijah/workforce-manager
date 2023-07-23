@@ -1,4 +1,4 @@
-export default async function PunchesLayout({
+export default async function ClockLayout({
     children,
   }: {
     children: React.ReactNode

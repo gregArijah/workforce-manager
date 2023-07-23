@@ -7,7 +7,7 @@ import PunchSelect from "./_components/punchSelect";
 import PunchId from "./_components/punchId";
 import PunchConfirm from "./_components/punchConfirm";
 
-export default function Punches(): JSX.Element {
+export default function Clock(): JSX.Element {
   const [punchChoice, setPunchChoice] = useState("in");
   const [visibleComponent, setVisibleComponent] = useState("punchSelect");
 
