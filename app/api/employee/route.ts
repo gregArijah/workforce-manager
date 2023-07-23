@@ -43,6 +43,11 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, code, departmentId, companyId } = body;
 
+  const session = await getServerSession(authOptions);
+  const user:any = session?.user;
+
+  if (companyId != user.Id) return new Response('Error creating the employee.', { status: 500 });
+
   try {
     const employee = await prisma.employee.create({
       data: { name, code, departmentId, companyId },
@@ -57,13 +62,19 @@ export async function PUT(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const employeeId = searchParams.get('employeeId');
 
+  const session = await getServerSession(authOptions);
+  const user:any = session?.user;
+
   if (!employeeId) return new Response('Missing employeeId', { status: 400 });
 
   const body = await req.json();
 
   try {
     const employee = await prisma.employee.update({
-      where: { id: employeeId },
+      where: { 
+              id: employeeId,
+              companyId: user.id 
+            },
       data: body,
     });
     return new Response(JSON.stringify(employee), { status: 200 });
@@ -76,11 +87,17 @@ export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const employeeId = searchParams.get('employeeId');
 
+  const session = await getServerSession(authOptions);
+  const user:any = session?.user;
+
   if (!employeeId) return new Response('Missing employeeId', { status: 400 });
 
   try {
     const employee = await prisma.employee.delete({
-      where: { id: employeeId },
+      where: { 
+              id: employeeId,
+              companyId: user.id
+            },
     });
     return new Response(JSON.stringify(employee), { status: 200 });
   } catch (error) {
