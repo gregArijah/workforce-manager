@@ -39,6 +39,11 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, code, companyId } = body;
 
+  const session = await getServerSession(authOptions);
+  const user:any = session?.user;
+
+  if (companyId != user.Id) return new Response('Error creating the department.', { status: 500 });
+
   try {
     const department = await prisma.department.create({
       data: { name, code, companyId },

@@ -1,25 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
+
 export async function GET(req: NextRequest) {
+
+  const session = await getServerSession(authOptions);
+  const user:any = session?.user;
+
   const { searchParams } = new URL(req.url);
   const employeeId = searchParams.get('employeeId');
 
   try {
     if (employeeId) {
       const employee = await prisma.employee.findUnique({
-        where: { id: employeeId },
-        include: { company: true, department: true },
+        where: { 
+                  id: employeeId,
+                  companyId: user.id
+                },
+        // include: { company: true, department: true },
       });
       return new Response(JSON.stringify(employee), { status: 200 });
     } else {
       const employees = await prisma.employee.findMany({
+        where: { companyId: user.id },
         select: {
           id: true,
           name: true,
           code: true,
-          department: { select: { id: true, name: true } },
-          company: { select: { id: true, name: true } },
+          department: { select: { name: true } },
         },
       });
       return new Response(JSON.stringify(employees), { status: 200 });
