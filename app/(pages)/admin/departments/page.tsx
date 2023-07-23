@@ -6,7 +6,6 @@ import Header from '../../_components/header';
 const api = '/api/department';
 
 const getDepartments = async () => {
-  console.log('get list of all companies');
   const res = await fetch(api, {
     method: 'GET',
     headers: {
@@ -14,7 +13,6 @@ const getDepartments = async () => {
     },
   });
   const json = await res.json();
-  console.log(json);
   return json;
 };
 
