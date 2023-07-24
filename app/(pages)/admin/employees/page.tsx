@@ -1,34 +1,32 @@
 'use client'
-// export default function Employees() {
-//     return (
-//         <div className="h-screen">
-//             Employee Section
-//         </div>
-//     )
-// }
+
+import { useState, useEffect } from "react";  
 import Header from "../../_components/header";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
+const api = '/api/employee';
+
+const getEmployees = async () => {
+  const res = await fetch(api, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const json = await res.json();
+  return json;
+};
+
 export default function Employees() {
-  const employees = [
-    {
-      id: "1",
-      name: "John Doe",
-      code: "E001",
-      department: "Department 1",
-      companyId: "C001",
-      isClockedIn: false,
-    },
-    {
-      id: "2",
-      name: "Jane Smith",
-      code: "E002",
-      department: "Department 2",
-      companyId: "C001",
-      isClockedIn: true,
-    },
-    // ...
-  ];
+  const [employees, setEmployees] = useState<{ id: string; name: string; code: string; department: any ; isClockedIn: boolean }[]>([]); // Explicitly specify the type
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getEmployees();
+      setEmployees(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="h-screen">
@@ -44,7 +42,6 @@ export default function Employees() {
           <h2 style={{ width: "20%" }}>Name</h2>
           <h3 style={{ width: "10%" }}>Code</h3>
           <h3 style={{ width: "20%" }}>Dept</h3>
-          <h3 style={{ width: "20%" }}>Company ID</h3>
           <h3 style={{ width: "10%" }}>Clocked In</h3>
           <h3 style={{ width: "20%" }}>Actions</h3>
         </div>
@@ -55,8 +52,7 @@ export default function Employees() {
               {employee.name}
             </h2>
             <h3 style={{ width: "10%" }}>{employee.code}</h3>
-            <p style={{ width: "20%" }}>{employee.department}</p>
-            <p style={{ width: "20%" }}>{employee.companyId}</p>
+            <p style={{ width: "20%" }}>{employee.department.name}</p>
             <p style={{ width: "10%" }}>{employee.isClockedIn ? "Yes" : "No"}</p>
             <div className="flex space-x-2" style={{ width: "20%" }}>
               <button className="bg-blue-500 text-white px-2 py-1 rounded">
