@@ -57,10 +57,10 @@ export async function POST(req: NextRequest) {
   try {
     const timeCard = await prisma.timeCard.create({
       data: { 
-              employeeId: employeeId, 
-              timeIn: timeIn, 
-              timeOut: timeOut,
-              //employee: employee,
+               
+              timeIn, 
+              timeOut,
+              employee: { connect: { id: employeeId } },
             },
     });
     

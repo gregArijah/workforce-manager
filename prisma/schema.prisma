@@ -48,8 +48,5 @@ model TimeCard {
   employee   Employee   @relation(fields: [employeeId], references: [id])
   employeeId String    
   timeIn     DateTime
-  timeOut    DateTime
-  createdAt  DateTime   @default(now()) @map(name: "created_at")
-  updatedAt  DateTime   @updatedAt @map(name: "updated_at")
-
+  timeOut    DateTime?
 }
