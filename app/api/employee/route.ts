@@ -11,9 +11,19 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const employeeId = searchParams.get('employeeId');
+  const employeeCode = searchParams.get('code');
 
   try {
-    if (employeeId) {
+    if (employeeCode) {
+      const employee = await prisma.employee.findUnique({
+        where: { 
+                  code: employeeCode,
+                  companyId: user.id
+                },
+        // include: { company: true, department: true },
+      });
+      return new Response(JSON.stringify(employee), { status: 200 });
+    } else  if (employeeId) {
       const employee = await prisma.employee.findUnique({
         where: { 
                   id: employeeId,

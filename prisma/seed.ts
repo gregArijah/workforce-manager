@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "../lib/prisma";
 
 interface EmployeeCreateInput {
     name: string;
@@ -156,6 +156,31 @@ async function seed() {
         isClockedIn: false,
       } as EmployeeCreateInput,
     });
+
+    // Create Time Cards for Employees
+    const weeks = 8;
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - weeks * 7);
+
+    const employees = [employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8];
+
+    for (const employee of employees) {
+      for (let i = 0; i < weeks; i++) {
+        const timeIn = new Date(startDate);
+        timeIn.setDate(timeIn.getDate() + i * 7);
+        const timeOut = new Date(timeIn);
+        timeOut.setHours(timeOut.getHours() + 8); // Assuming 8 hours of work per day
+
+        await prisma.timeCard.create({
+          data: {
+            employeeId: employee.id,
+            timeIn,
+            timeOut,
+          },
+        });
+      }
+    }
+
 
     console.log('Created Company 2:', company2);
     console.log('Created Department 3:', department3);

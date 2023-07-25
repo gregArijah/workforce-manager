@@ -41,6 +41,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  
   const body = await req.json();
   const { employeeId, timeIn, timeOut } = body;
 
@@ -50,15 +51,22 @@ export async function POST(req: NextRequest) {
   const employee = await prisma.employee.findUnique({
     where: { id: employeeId },
   });
+  console.log(employee)
   if (employee?.companyId != user.id) return new Response('Error creating the time card.', { status: 500 });
-
+  
   try {
     const timeCard = await prisma.timeCard.create({
-      data: { employeeId, timeIn, timeOut },
+      data: { 
+              employeeId: employeeId, 
+              timeIn: timeIn, 
+              timeOut: timeOut,
+              //employee: employee,
+            },
     });
+    
     return new Response(JSON.stringify(timeCard), { status: 200 });
   } catch (error) {
-    return new Response('Error creating the time card.', { status: 500 });
+    throw error;//return new Response('Error creating the time card.', { status: 500 });
   }
 }
 

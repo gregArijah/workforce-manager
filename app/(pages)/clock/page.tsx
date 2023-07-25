@@ -25,7 +25,10 @@ export default function Clock(): JSX.Element {
         />
       )}
       {visibleComponent === "punchId" && (
-        <PunchId setVisibleComponent={setVisibleComponent} />
+        <PunchId 
+          punchChoice={punchChoice}
+          setVisibleComponent={setVisibleComponent} 
+        />
       )}
       {visibleComponent === "punchConfirm" && (
         <PunchConfirm
