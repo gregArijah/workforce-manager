@@ -40,15 +40,16 @@ model Employee {
   company      Company    @relation(fields: [companyId], references: [id])
   companyId    String
   isClockedIn  Boolean    @default(false)
-  timeCard     TimeCard[]
+  timeCards     TimeCard[]
 }
 
 model TimeCard {
   id         String     @id @default(cuid())
   employee   Employee   @relation(fields: [employeeId], references: [id])
-  employeeId String     @unique
+  employeeId String    
   timeIn     DateTime
   timeOut    DateTime
   createdAt  DateTime   @default(now()) @map(name: "created_at")
   updatedAt  DateTime   @updatedAt @map(name: "updated_at")
+
 }
