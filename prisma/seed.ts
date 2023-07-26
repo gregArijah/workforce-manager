@@ -182,13 +182,6 @@ async function seed() {
     }
 
 
-    console.log('Created Company 2:', company2);
-    console.log('Created Department 3:', department3);
-    console.log('Created Department 4:', department4);
-    console.log('Created Employee 5:', employee5);
-    console.log('Created Employee 6:', employee6);
-    console.log('Created Employee 7:', employee7);
-    console.log('Created Employee 8:', employee8);
   } catch (error) {
     console.error('Error seeding data:', error);
   } finally {
