@@ -76,23 +76,42 @@ const clockInAndOut = async (badge: String, punchChoice: String) => {
     //clock in  
     if(punchChoice === 'in') {
         
-        try{
-            
-        const clockIn = await fetch(timeCardApi, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                employeeId: employee.id,
-                timeIn: new Date().toISOString(),
-                timeOut: null //new Date().toISOString(),
-            }),
-        });
-        const json = await clockIn.json();
-        console.log(json);
-        return;
+        try{  
+            const clockIn = await fetch(timeCardApi, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    employeeId: employee.id,
+                    timeIn: new Date().toISOString(),
+                    timeOut: null 
+                }),
+            });
+            const json = await clockIn.json();
+            console.log(json);
+            return;
         }catch(err) {
             return new Response("error", {status: 500 })
+        }
     }
-}};
+    //clock out
+    if(punchChoice === 'out') {
+        try{  
+            const clockOut = await fetch(`${timeCardApi}?employeeId=${employee.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    timeOut: new Date().toISOString(),
+                }),
+            });
+            const json = await clockOut.json();
+            console.log(json);
+            return;
+        }catch(err) {
+            return new Response("error", {status: 500 })
+        }
+    }
+};
