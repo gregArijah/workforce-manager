@@ -48,5 +48,5 @@ model TimeCard {
   employee   Employee   @relation(fields: [employeeId], references: [id])
   employeeId String    
   timeIn     DateTime
-  timeOut    DateTime
+  timeOut    DateTime?
 }
