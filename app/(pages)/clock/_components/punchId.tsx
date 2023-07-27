@@ -6,30 +6,95 @@ import { useState } from "react";
 interface PunchIdProps {
     setVisibleComponent: (component: string) => void;
     punchChoice: string;
+    setWhoIs: (whoIs: object) => void;
 };
 
-export default function PunchId( {setVisibleComponent, punchChoice}: PunchIdProps) {
+export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: PunchIdProps) {
     
 
     const [badge, setBadge] = useState<string>('')
+    
     function handleCancel() {
         setVisibleComponent('punchSelect')
     }
+    
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         console.log(badge || 'no badge' );
-        if (badge) clockInAndOut(badge, punchChoice);
-            
+        if (badge) clockInAndOut(badge, punchChoice);  
         }
-
-
-        
-    //setVisibleComponent('punchConfirm')
-    
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBadge(e.target.value);
     };
+
+    
+
+    const clockInAndOut = async (badge: String, punchChoice: String) => {
+        const employeeApi = `/api/employee?code=${badge}`
+        const timeCardApi = '/api/timecard';
+        //check employee status, if clocked in or out
+        const getEmployees = await fetch(employeeApi, {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application-json', 
+            },
+        });
+        const employee = await getEmployees.json();
+        setWhoIs(employee);
+        console.log("employee: ",employee, "punchChoicez: ", punchChoice);
+        if(employee.isClockedIn && punchChoice === 'in') {
+            alert('already clocked in');
+            return;
+        }
+        if(!employee.isClockedIn && punchChoice === 'out') {
+            alert('already clocked out');
+            return;
+        }
+
+        //clock in  
+        if(punchChoice === 'in') {
+            
+            try{  
+                const clockIn = await fetch(timeCardApi, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        employeeId: employee.id,
+                        timeIn: new Date().toISOString(),
+                        timeOut: null 
+                    }),
+                });
+                const json = await clockIn.json();
+                console.log(json);
+                setVisibleComponent('punchConfirm') 
+            }catch(err) {
+                return new Response("error", {status: 500 })
+            }
+        }
+        //clock out
+        if(punchChoice === 'out') {
+            try{  
+                const clockOut = await fetch(`${timeCardApi}?employeeId=${employee.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        timeOut: new Date().toISOString(),
+                    }),
+                });
+                const json = await clockOut.json();
+                console.log(json);
+                setVisibleComponent('punchConfirm') 
+            }catch(err) {
+                return new Response("error", {status: 500 })
+            }
+        }
+    };
+
 
     return (
         <div>
@@ -50,68 +115,3 @@ export default function PunchId( {setVisibleComponent, punchChoice}: PunchIdProp
         </div>
     )
 }
-
-
-const clockInAndOut = async (badge: String, punchChoice: String) => {
-    const employeeApi = `/api/employee?code=${badge}`
-    const timeCardApi = '/api/timecard';
-    //check employee status, if clocked in or out
-    const getEmployees = await fetch(employeeApi, {
-        method: 'GET',
-        headers:{
-            'Content-Type': 'application-json', 
-        },
-    });
-    const employee = await getEmployees.json()
-    console.log("employee: ",employee, "punchChoicez: ", punchChoice);
-    if(employee.isClockedIn && punchChoice === 'in') {
-        alert('already clocked in');
-        return;
-    }
-    if(!employee.isClockedIn && punchChoice === 'out') {
-        alert('already clocked out');
-        return;
-    }
-
-    //clock in  
-    if(punchChoice === 'in') {
-        
-        try{  
-            const clockIn = await fetch(timeCardApi, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    employeeId: employee.id,
-                    timeIn: new Date().toISOString(),
-                    timeOut: null 
-                }),
-            });
-            const json = await clockIn.json();
-            console.log(json);
-            return;
-        }catch(err) {
-            return new Response("error", {status: 500 })
-        }
-    }
-    //clock out
-    if(punchChoice === 'out') {
-        try{  
-            const clockOut = await fetch(`${timeCardApi}?employeeId=${employee.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    timeOut: new Date().toISOString(),
-                }),
-            });
-            const json = await clockOut.json();
-            console.log(json);
-            return;
-        }catch(err) {
-            return new Response("error", {status: 500 })
-        }
-    }
-};

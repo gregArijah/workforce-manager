@@ -10,6 +10,7 @@ import PunchConfirm from "./_components/punchConfirm";
 export default function Clock(): JSX.Element {
   const [punchChoice, setPunchChoice] = useState("in");
   const [visibleComponent, setVisibleComponent] = useState("punchSelect");
+  const [whoIs, setWhoIs] = useState({})
 
   return (
     <div className="h-screen space-y-16 p-6">
@@ -28,12 +29,14 @@ export default function Clock(): JSX.Element {
         <PunchId 
           punchChoice={punchChoice}
           setVisibleComponent={setVisibleComponent} 
+          setWhoIs={setWhoIs}
         />
       )}
       {visibleComponent === "punchConfirm" && (
         <PunchConfirm
           punchChoice={punchChoice}
           setVisibleComponent={setVisibleComponent}
+          whoIs={whoIs}
         />
       )}
     </div>
