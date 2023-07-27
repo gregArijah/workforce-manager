@@ -57,11 +57,14 @@ export async function POST(req: NextRequest) {
   try {
     const timeCard = await prisma.timeCard.create({
       data: { 
-               
               timeIn, 
               timeOut,
               employee: { connect: { id: employeeId } },
             },
+    });
+    const employee = await prisma.employee.update({
+      where: { id: employeeId },
+      data: { isClockedIn: true },
     });
     
     return new Response(JSON.stringify(timeCard), { status: 200 });
@@ -72,22 +75,27 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const timeCardId = searchParams.get('timeCardId');
+  //const timeCardId = searchParams.get('timeCardId');
+  const employeeId = searchParams.get('employeeId');
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
 
-  if (!timeCardId) return new Response('Missing timeCardId', { status: 400 });
-
+  //if (!timeCardId) return new Response('Missing timeCardId', { status: 400 });
+  if (!employeeId) return new Response('Missing employeeId', { status: 400 });
+  
   const body = await req.json();
 
   try {
-    const timeCard = await prisma.timeCard.update({
-      where: { id: timeCardId,
-               employee: {
-                  companyId: user.id
-                }},
+    const timeCard = await prisma.timeCard.updateMany({
+      where: { employeeId: employeeId, //? employeeId : undefined,
+               timeOut: null,
+             },
       data: body,
+    });
+    const employee = await prisma.employee.update({
+      where: { id: employeeId },
+      data: { isClockedIn: false },
     });
     return new Response(JSON.stringify(timeCard), { status: 200 });
   } catch (error) {
