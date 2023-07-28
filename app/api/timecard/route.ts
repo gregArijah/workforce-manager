@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
           }},
         select: {
           id: true,
-          employee: { select: { id: true, name: true, companyId:true} },
+          employee: { select: { name: true, code: true, department: true, departmentId: true} },
           timeIn: true,
           timeOut: true,
         },
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   
   const body = await req.json();
-  const { employeeId, timeIn, timeOut } = body;
+  const { employeeId, timeIn, timeOut } = body; //timeout
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     const timeCard = await prisma.timeCard.create({
       data: { 
               timeIn, 
-              timeOut,
+              //timeOut,
               employee: { connect: { id: employeeId } },
             },
     });
