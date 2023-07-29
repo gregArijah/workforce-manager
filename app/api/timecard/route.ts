@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
+import { time } from 'console';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -21,18 +22,19 @@ export async function GET(req: NextRequest) {
       });
       return new Response(JSON.stringify(timeCard), { status: 200 });
     } else {
-      const timeCards = await prisma.timeCard.findMany({
+      const timeCards = await prisma.employee.findMany({
         where: { 
-          employee: {
-            companyId: user.id
-          }},
-        select: {
-          id: true,
-          employee: { select: { name: true, code: true, department: true, departmentId: true} },
-          timeIn: true,
-          timeOut: true,
-        },
-      });
+          companyId: user.id,
+          },
+          select: {
+            id: true,
+            name: true,
+            code: true,
+            department: { select: { code: true } },
+            timeCards: { select: { timeIn: true, timeOut: true, duration: true} },
+           
+          },
+        });
       return new Response(JSON.stringify(timeCards), { status: 200 });
     }
   } catch (error) {
@@ -84,7 +86,19 @@ export async function PUT(req: NextRequest) {
   //if (!timeCardId) return new Response('Missing timeCardId', { status: 400 });
   if (!employeeId) return new Response('Missing employeeId', { status: 400 });
   
+  const timeIn = await prisma.timeCard.findMany({
+    where: { employeeId: employeeId, //? employeeId : undefined,
+              timeOut: null,
+            },
+    select: { timeIn: true },
+  });
+  if (!timeIn) return new Response('Error updating the time card.', { status: 500 });
+  const thistime = timeIn[0].timeIn;
+  const duration = (new Date().getTime()-thistime.getTime())/(1000*60*60);
+
   const body = await req.json();
+  //add duration to body
+  body.duration = duration;
 
   try {
     const timeCard = await prisma.timeCard.updateMany({

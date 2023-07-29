@@ -157,29 +157,32 @@ async function seed() {
       } as EmployeeCreateInput,
     });
 
-    // Create Time Cards for Employees
-    const weeks = 8;
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - weeks * 7);
+   // Create Time Cards for Employees
+const weeks = 8;
+const hoursPerWeek = 40;
+const startDate = new Date();
+startDate.setDate(startDate.getDate() - weeks * 7);
 
-    const employees = [employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8];
+const employees = [employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8];
 
-    for (const employee of employees) {
-      for (let i = 0; i < weeks; i++) {
-        const timeIn = new Date(startDate);
-        timeIn.setDate(timeIn.getDate() + i * 7);
-        const timeOut = new Date(timeIn);
-        timeOut.setHours(timeOut.getHours() + 8); // Assuming 8 hours of work per day
+for (const employee of employees) {
+  for (let i = 0; i < weeks; i++) {
+    const timeIn = new Date(startDate);
+    timeIn.setDate(timeIn.getDate() + i * 7);
+    const timeOut = new Date(timeIn);
+    timeOut.setHours(timeOut.getHours() + hoursPerWeek); // Assuming 8 hours of work per day for 5 days in a week (40 hours total)
+    
+    await prisma.timeCard.create({
+      data: {
+        employeeId: employee.id,
+        timeIn,
+        timeOut,
+        duration: hoursPerWeek,
+      },
+    });
+  }
+}
 
-        await prisma.timeCard.create({
-          data: {
-            employeeId: employee.id,
-            timeIn,
-            timeOut,
-          },
-        });
-      }
-    }
 
 
   } catch (error) {
