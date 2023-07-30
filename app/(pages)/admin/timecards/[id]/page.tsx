@@ -127,7 +127,7 @@ interface Employee {
     timeIn: string;
     timeOut: string;
     total: string;
-    periodTotal: string;
+ 
   }[];
 }
 
@@ -161,7 +161,6 @@ export default function Details({ params }: { params: { id: string } }) {
               <th className="px-4 py-2">Time In</th>
               <th className="px-4 py-2">Time Out</th>
               <th className="px-4 py-2">Total</th>
-              <th className="px-4 py-2">Period Total</th>
             </tr>
           </thead>
           <tbody>
@@ -171,7 +170,6 @@ export default function Details({ params }: { params: { id: string } }) {
                 <td className="px-4 py-2">{entry.timeIn}</td>
                 <td className="px-4 py-2">{entry.timeOut}</td>
                 <td className="px-4 py-2">{entry.total}</td>
-                <td className="px-4 py-2">{entry.periodTotal}</td>
               </tr>
             ))}
           </tbody>

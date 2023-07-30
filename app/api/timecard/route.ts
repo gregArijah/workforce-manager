@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/authOptions';
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const timeCardId = searchParams.get('timeCardId');
+  const employeeId = searchParams.get('employeeId');
   const toDate = searchParams.get('toDate');
   const fromDate = searchParams.get('fromDate'); 
 
@@ -46,34 +47,20 @@ export async function GET(req: NextRequest) {
                                 lt: convToDate as any,
                                 gte: convFromDate as any
                               }
-                      },
+                         },
                          select: { timeIn: true, timeOut: true, duration: true},
-                        //  where: { 
-                        //     timeIn:{ 
-                        //         lte: toDate as any,
-                        //         gte: fromDate as any
-                        //       } 
-                        //     } 
+                
                         },
            
           },
         });
-        // console.log("to date: " , toDate)
-        // console.log("from date: " , fromDate)
-        
-        // const testtodate = toDate? new Date(toDate) : null;
-        // const testfromdate = fromDate? new Date(fromDate) : null;
-        // console.log("test to date: " , testtodate)
-        // console.log("test from date: " , testfromdate)
-        // const testtime = new Date().toLocaleDateString("en-GB")
-        // console.log("test time: " , testtime)
-        // if (testtodate && testfromdate) console.log(testtodate>=testfromdate)
+
        
 
       return new Response(JSON.stringify(timeCards), { status: 200 });
     }
   } catch (error) {
-    return console.error(error)//new Response('Error retrieving time cards.', { status: 500 });
+    return console.log(error)//new Response('Error retrieving time cards.', { status: 500 });
   }
 }
 
