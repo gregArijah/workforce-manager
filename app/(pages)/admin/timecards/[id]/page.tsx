@@ -150,7 +150,7 @@ export default function Details({ params }: { params: { id: string } }) {
   return (
     <div className="h-screen">
       <Header />
-      <SelectPeriod /> 
+      {/* <SelectPeriod />  */}
       <div className="flex-col">
         <h2 className="text-2xl font-bold mb-4">Details</h2>
         <h3 className="text-lg font-bold mb-2">Name: {employee.name}</h3>

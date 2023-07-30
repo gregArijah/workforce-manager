@@ -64,15 +64,15 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
                     body: JSON.stringify({
                         employeeId: employee.id,
                         timeIn: new Date().toISOString(),
-                        timeOut: null 
+                        //timeOut: null 
                     }),
                 });
                 const json = await clockIn.json();
                 console.log(json);
                 setVisibleComponent('punchConfirm') 
-            }catch(err) {
-                return new Response("error", {status: 500 })
-            }
+            }catch(error) {
+                console.error(error);//return new Response("error", {status: 500 })
+            }   //fex error here, returning "unexpected end of json input"
         }
         //clock out
         if(punchChoice === 'out') {
