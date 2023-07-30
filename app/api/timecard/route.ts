@@ -7,6 +7,10 @@ import { time } from 'console';
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const timeCardId = searchParams.get('timeCardId');
+  const toDate = searchParams.get('toDate');
+  const fromDate = searchParams.get('fromDate'); 
+
+  console.log(searchParams)
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
@@ -30,15 +34,38 @@ export async function GET(req: NextRequest) {
             id: true,
             name: true,
             code: true,
+            companyId: true,
             department: { select: { code: true } },
-            timeCards: { select: { timeIn: true, timeOut: true, duration: true} },
+            timeCards: { 
+                         where: {
+                            timeIn:{
+                                //lte: toDate as any,
+                                // gte: fromDate as any
+                              }
+                      },
+                         select: { timeIn: true, timeOut: true, duration: true},
+                        //  where: { 
+                        //     timeIn:{ 
+                        //         lte: toDate as any,
+                        //         gte: fromDate as any
+                        //       } 
+                        //     } 
+                        },
            
           },
         });
+        console.log("to date: " , toDate)
+        const testtodate = toDate? new Date(toDate) : null;
+        const testfromdate = fromDate? new Date(fromDate) : null;
+        console.log("test date: " , testtodate)
+        const testtime = new Date().toLocaleDateString("en-GB")
+        if (testtodate && testfromdate) console.log(testtodate>=testfromdate)
+        console.log("from date: " , fromDate)
+
       return new Response(JSON.stringify(timeCards), { status: 200 });
     }
   } catch (error) {
-    return new Response('Error retrieving time cards.', { status: 500 });
+    return console.error(error)//new Response('Error retrieving time cards.', { status: 500 });
   }
 }
 

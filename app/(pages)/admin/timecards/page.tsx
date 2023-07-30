@@ -5,51 +5,47 @@ import { useState, useEffect } from "react";
 import Header from "@components/header";
 import { FaEye } from "react-icons/fa";
 import SelectPeriod from "./_components/selectPeriod";
-import { time } from "console";
 
+// const api = '/api/timecard';
 
-
-const api = '/api/timecard';
-
-const getTimecards = async () => {
-  const res = await fetch(api, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  const json = await res.json();
-  return json;
-};
+// const getTimecards = async (fromDate:any, toDate:any) => {
+//   const res = await fetch(`${api}?fromDate${fromDate}=&toDate=${toDate}`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
+//   const json = await res.json();
+//   return json;
+// };
 
 export default function TimeCards() {
   //const [timecards, setTimecards] = useState<{ id: string; name: string; code: string; department: any ; isClockedIn: boolean }[]>([]); // Explicitly specify the type
   const [timecards, setTimecards] = useState<{ id: string, department:any, name: string; code: string, timeCards:any}[]>([]); // Explicitly specify the type
+  const [fromDate, setFromDate] = useState(''); // Explicitly specify the type
+  const [toDate, setToDate] = useState(''); // Explicitly specify the type
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getTimecards();
-      setTimecards(data);
-      console.log(data);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getTimecards(fromDate,toDate);
+  //     setTimecards(data);
+  //     console.log(data);
+  //   };
+  //   fetchData();
+  // }, []);
 
   function sumHours(timecard:any){
     let totalHours = 0;
     for (const line of timecard) {
         totalHours += line.duration;
-        
-        //console.log(timecard.duration)
       }
-    console.log("total: ", totalHours)
     return totalHours.toFixed(3);
     }
  
   return (
     <div className="h-screen">
       <Header />
-      <SelectPeriod />
+      <SelectPeriod setFromDate={setFromDate} setToDate={setToDate} fromDate={fromDate} toDate={toDate} setTimeCards={setTimecards}/>
       <div className="flex-col">
      
 
