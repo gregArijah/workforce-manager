@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface MainProps {
     departments: { name: string; code: string }[];
     setView: (view: any) => void;
@@ -17,7 +19,8 @@ export default function Main({ departments, setView }: MainProps){
         
         <div>
             
-        <div className="border p-4 mb-4">
+        <div className="flex border p-4 mb-4 justify-between">
+          <Link href='/admin' className="bg-blue-500 text-white px-4 py-2 rounded">Back</Link>
           <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
         </div>
         {/* Render each department item */}

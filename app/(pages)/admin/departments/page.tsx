@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Header from '../../_components/header';
 import Main from './_components/main';
-import AddDept from './_components/addDept';
-import ViewDept from './_components/viewDept';
+import AddDept from './_components/add';
+import ViewDept from './_components/view';
 
 const api = '/api/department';
 
