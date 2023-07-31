@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Header from '../../_components/header';
 import Main from './_components/main';
 import AddDept from './_components/addDept';
+import ViewDept from './_components/viewDept';
 
 const api = '/api/department';
 
@@ -35,8 +36,9 @@ export default function Departments() {
 
       <div className="flex-col">
         {view == 'main' && <Main setView={setView} departments={departments}/>}
+        {view == 'view' && <ViewDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
         {view == 'add' && <AddDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
-        
+        {view == 'edit' && <AddDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
       </div>
     </div>
   );
