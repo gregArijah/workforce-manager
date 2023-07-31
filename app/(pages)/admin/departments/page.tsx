@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Header from '../../_components/header';
 import Main from './_components/main';
+import AddDept from './_components/addDept';
 
 const api = '/api/department';
 
@@ -19,7 +20,7 @@ const getDepartments = async () => {
 
 export default function Departments() {
   const [departments, setDepartments] = useState<{ name: string; code: string }[]>([]); // Explicitly specify the type
-
+  const [view, setView] = useState('main'); // Explicitly specify the type
   useEffect(() => {
     const fetchData = async () => {
       const data = await getDepartments();
@@ -33,7 +34,8 @@ export default function Departments() {
       <Header />
 
       <div className="flex-col">
-        <Main departments={departments}/>
+        {view == 'main' && <Main setView={setView} departments={departments}/>}
+        {view == 'add' && <AddDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
         
       </div>
     </div>

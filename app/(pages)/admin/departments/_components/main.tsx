@@ -1,14 +1,20 @@
 interface MainProps {
     departments: { name: string; code: string }[];
+    setView: (view: any) => void;
     }
 
-export default function Main({ departments }: MainProps){
+export default function Main({ departments, setView }: MainProps){
+
+    function handleAdd(view:String){
+        setView(view);
+    }
+
     return (
         
         <div>
             
         <div className="border p-4 mb-4">
-          <button className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
+          <button onClick={()=>handleAdd('add')} className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
         </div>
         {/* Render each department item */}
         {departments.map((department, index) => (
