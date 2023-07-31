@@ -158,44 +158,49 @@ async function seed() {
     });
 
    // Create Time Cards for Employees
-const weeks = 8;
-const hoursPerWeek = 40;
-const startDate = new Date();
-startDate.setDate(startDate.getDate() - weeks * 7);
+   const weeks = 8;
+   const workDaysPerWeek = 5; // Number of work days per week
+   const hoursPerWeek = 40;
+   const startDate = new Date();
+   startDate.setDate(startDate.getDate() - weeks * 7);
 
-const employees = [employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8];
+   const employees = [employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8];
 
-for (const employee of employees) {
-  for (let i = 0; i < weeks; i++) {
-    const timeIn = new Date(startDate);
-    timeIn.setDate(timeIn.getDate() + i * 7);
-    const timeOut = new Date(timeIn);
-    timeOut.setHours(timeOut.getHours() + hoursPerWeek); // Assuming 8 hours of work per day for 5 days in a week (40 hours total)
-    
-    await prisma.timeCard.create({
-      data: {
-        employeeId: employee.id,
-        timeIn,
-        timeOut,
-        duration: hoursPerWeek,
-      },
-    });
-  }
-}
+   for (const employee of employees) {
+     for (let i = 0; i < weeks; i++) {
+       const weekStartDate = new Date(startDate);
+       weekStartDate.setDate(weekStartDate.getDate() + i * 7);
+       const weekEndDate = new Date(weekStartDate);
+       weekEndDate.setDate(weekEndDate.getDate() + workDaysPerWeek - 1); // Subtract 1 to get the last work day of the week
 
+       for (let j = 0; j < workDaysPerWeek; j++) {
+         const timeIn = new Date(weekStartDate);
+         timeIn.setDate(timeIn.getDate() + j);
+         const timeOut = new Date(timeIn);
+         timeOut.setHours(timeOut.getHours() + hoursPerWeek / workDaysPerWeek);
 
-
-  } catch (error) {
-    console.error('Error seeding data:', error);
-  } finally {
-    await prisma.$disconnect();
-  }
+         await prisma.timeCard.create({
+           data: {
+             employeeId: employee.id,
+             timeIn,
+             timeOut,
+             duration: hoursPerWeek / workDaysPerWeek,
+           },
+         });
+       }
+     }
+   }
+ } catch (error) {
+   console.error('Error seeding data:', error);
+ } finally {
+   await prisma.$disconnect();
+ }
 }
 
 seed()
-  .catch((error) => {
-    console.error('Error running seed:', error);
-  })
-  .finally(() => {
-    process.exit(0);
-  });
+ .catch((error) => {
+   console.error('Error running seed:', error);
+ })
+ .finally(() => {
+   process.exit(0);
+ });

@@ -2,15 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
-import { time } from 'console';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const timeCardId = searchParams.get('timeCardId');
+  const employeeId = searchParams.get('employeeId');
   const toDate = searchParams.get('toDate');
   const fromDate = searchParams.get('fromDate'); 
 
-  console.log(searchParams)
+  const convToDate = toDate? new Date(toDate) : null;
+  const convFromDate = fromDate? new Date(fromDate) : null;
+  if (convToDate) convToDate.setDate(convToDate.getDate()+1);
+
+  console.log("to date: " , convToDate)
+  console.log("from date: " , convFromDate)
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
@@ -39,33 +44,23 @@ export async function GET(req: NextRequest) {
             timeCards: { 
                          where: {
                             timeIn:{
-                                //lte: toDate as any,
-                                // gte: fromDate as any
+                                lt: convToDate as any,
+                                gte: convFromDate as any
                               }
-                      },
-                         select: { timeIn: true, timeOut: true, duration: true},
-                        //  where: { 
-                        //     timeIn:{ 
-                        //         lte: toDate as any,
-                        //         gte: fromDate as any
-                        //       } 
-                        //     } 
+                         },
+                         select: { id:true, timeIn: true, timeOut: true, duration: true},
+                
                         },
            
           },
         });
-        console.log("to date: " , toDate)
-        const testtodate = toDate? new Date(toDate) : null;
-        const testfromdate = fromDate? new Date(fromDate) : null;
-        console.log("test date: " , testtodate)
-        const testtime = new Date().toLocaleDateString("en-GB")
-        if (testtodate && testfromdate) console.log(testtodate>=testfromdate)
-        console.log("from date: " , fromDate)
+
+       
 
       return new Response(JSON.stringify(timeCards), { status: 200 });
     }
   } catch (error) {
-    return console.error(error)//new Response('Error retrieving time cards.', { status: 500 });
+    return console.log(error)//new Response('Error retrieving time cards.', { status: 500 });
   }
 }
 

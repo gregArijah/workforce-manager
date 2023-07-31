@@ -11,15 +11,19 @@ interface SelectPeriodProps {
 
 export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, setTimeCards}:SelectPeriodProps) {
 
-    // const [fromDate, setFromDate] = useState("");
-    // const [toDate, setToDate] = useState("");
-    //let toDate: any,fromDate : any;
-
-
     const handleView = (e:any) => {
       const api = '/api/timecard';
 
       const getTimecards = async (fromDate:any, toDate:any) => {
+        if (fromDate === "" || toDate === "") {
+          alert("Please select a date range");
+          return;
+        }
+        if(fromDate > toDate){
+          alert("Invalid date selection");
+          return;
+        }
+       
         const res = await fetch(`${api}?fromDate=${fromDate}&toDate=${toDate}`, {
           method: 'GET',
           headers: {
@@ -29,7 +33,8 @@ export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, s
         const json = await res.json();
         setTimeCards(json);
         return json;
-      };
+
+    }
       getTimecards(fromDate,toDate);
       };
       
