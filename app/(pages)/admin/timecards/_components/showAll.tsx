@@ -1,3 +1,4 @@
+import { time } from "console";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 
@@ -6,17 +7,30 @@ function sumHours(timecard:any){
     for (const line of timecard) {
         totalHours += line.duration;
       }
-    return totalHours.toFixed(3);
+    return totalHours.toFixed(2);
     }
  
+interface ShowAllProps {
+    setView: (view: any) => void;
+    setCard: (code: any) => void;
+    timecards: any;
+    }
 
-export default function TimeCards(timecards:any) {
-    timecards = timecards.timecards;
+export default function ShowAll({ timecards, setView, setCard}: ShowAllProps) {
+    //timecards = timecards.timecards;
     console.log(timecards);
     if (timecards.length === 0) {
-        // For example, you can show a message or return null
         return <p>Select a date range to view timecards</p>;
       }
+
+    function handleClick (timecard:any)  {
+        setView('one');
+        setCard(timecard);
+        console.log("hi")
+        console.log(timecard.code)
+        console.log(timecard)
+        return null ;
+     }
 
 return (
 
@@ -43,11 +57,10 @@ return (
             <td className="px-4 py-2">{timecard.department.code}</td>
             <td className="px-4 py-2">{sumHours(timecard.timeCards)}</td>
             <td className="px-4 py-2">
-                <Link href={`/admin/timecards/${timecard.code}`}>
-                <button className="bg-blue-500 text-white px-2 py-1 rounded">
+                <button className="bg-blue-500 text-white px-2 py-1 rounded" 
+                        onClick={()=>handleClick(timecard)}>
                     <FaEye />
-                </button>
-                </Link>
+                </button>    
             </td>
             </tr>
         ))}

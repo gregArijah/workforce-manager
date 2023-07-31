@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
                                 gte: convFromDate as any
                               }
                          },
-                         select: { timeIn: true, timeOut: true, duration: true},
+                         select: { id:true, timeIn: true, timeOut: true, duration: true},
                 
                         },
            
