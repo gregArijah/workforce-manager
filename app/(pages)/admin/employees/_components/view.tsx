@@ -1,12 +1,12 @@
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
-interface DeptProps {
+interface EmployeeProps {
     setView: (view: any) => void;
     setEmployees: any //(dept: any) => void;
     employees: any;
     }
 
-export default function ViewEmp ({setView, setEmployees, employees}: DeptProps ){
+export default function View ({setView, setEmployees, employees}: EmployeeProps ){
     return (
         <div>
               <div className="border p-4 mb-4">

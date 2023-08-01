@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Header from "../../_components/header";
 import Main from "./_components/main";
 import View from "./_components/view";
+import Add from "./_components/add";
 
 const api = '/api/employee';
 
@@ -35,6 +36,7 @@ export default function Employees() {
       <Header />
       {view == 'main' && <Main employees={employees} setView={setView} />}
       {view == 'view' && <View employees={employees} setView={setView} setEmployees={setEmployees} />}   
+      {view == 'add' && <Add employees={employees} setView={setView} setEmployees={setEmployees} />}   
 
       
     </div>
