@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";  
 import Header from "../../_components/header";
-
 import Main from "./_components/main";
+import View from "./_components/view";
 
 const api = '/api/employee';
 
@@ -33,7 +33,8 @@ export default function Employees() {
   return (
     <div className="h-screen">
       <Header />
-      <Main employees={employees} setView={setView} />    
+      {view == 'main' && <Main employees={employees} setView={setView} />}
+      {view == 'view' && <View employees={employees} setView={setView} setEmployees={setEmployees} />}   
 
       
     </div>
