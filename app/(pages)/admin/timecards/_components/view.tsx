@@ -1,4 +1,5 @@
-interface ShowAllProps {
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+interface ViewProps {
     setView: (view: any) => void;
     setCard: (card: any) => void;
     card: any;
@@ -25,15 +26,18 @@ function readTime(date:any){
 
 
 
-export default function ShowOne({ setView, card, setCard}: ShowAllProps) {
+export default function View({ setView, card, setCard}: ViewProps) {
 
     function goBack(){
-        setView('all');
+        setView('main');
     }
     
     return (
         <div>
-          <div className="flex-col">
+            <div className="border p-4 mb-4">
+                <button onClick={goBack} className="bg-blue-500 text-white px-4 py-2 rounded">Back</button>
+            </div>
+            <div className="flex-col">
                 <h2 className="text-2xl font-bold mb-4">Details</h2>
                 <h3 className="text-lg font-bold mb-2">Name: {card.name}</h3>
                 <table className="w-full">
@@ -43,6 +47,7 @@ export default function ShowOne({ setView, card, setCard}: ShowAllProps) {
                     <th className="px-4 py-2">Time In</th>
                     <th className="px-4 py-2">Time Out</th>
                     <th className="px-4 py-2">Total</th>
+                    <th className="px-4 py-2">Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,16 +57,18 @@ export default function ShowOne({ setView, card, setCard}: ShowAllProps) {
                         <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
                         <td className="px-4 py-2">{readTime(entry.timeOut)}</td>
                         <td className="px-4 py-2">{entry.duration}</td>
+                        <td><button className="bg-green-500 text-white px-2 py-1 rounded">
+                            <FaEdit />
+                        </button>
+                        <button className="bg-red-500 text-white px-2 py-1 rounded">
+                            <FaTrash />
+                        </button></td>
                     </tr>
                     ))}
                 </tbody>
                 </table>
                 <div className="mt-4">
                 <strong>Total Hours: {sumHours(card.timeCards)} </strong>
-                </div>
-                
-                <div className="mt-4">
-                    <button onClick={goBack} className="px-4 py-2 bg-blue-500 text-white rounded">Back</button>
                 </div>
             </div>
                     
