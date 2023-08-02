@@ -46,9 +46,6 @@ export default function Main({ departments, setView }: MainProps){
         setView('add');
     }
 
-    function handleView(){
-        setView('view');
-    }
 
     return (
         
@@ -65,7 +62,7 @@ export default function Main({ departments, setView }: MainProps){
             <h3 className="text-gray-500">{department.code}</h3>
 
             <div className="flex mt-2">
-                <button onClick={handleEdit} className="mr-2 bg-green-500 text-white px-4 py-2 rounded">
+                <button onClick={()=>handleEdit()} className="mr-2 bg-green-500 text-white px-4 py-2 rounded">
                     Edit
                   </button>
                   <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-4 py-2 rounded">
