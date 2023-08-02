@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Header from '../../_components/header';
+import Main from './_components/main';
+import AddDept from './_components/add';
+import EditDept from './_components/edit';
 
 const api = '/api/department';
 
@@ -18,7 +21,7 @@ const getDepartments = async () => {
 
 export default function Departments() {
   const [departments, setDepartments] = useState<{ name: string; code: string }[]>([]); // Explicitly specify the type
-
+  const [view, setView] = useState('main'); // Explicitly specify the type
   useEffect(() => {
     const fetchData = async () => {
       const data = await getDepartments();
@@ -32,30 +35,9 @@ export default function Departments() {
       <Header />
 
       <div className="flex-col">
-        <div className="border p-4 mb-4">
-          <button className="bg-green-500 text-white px-4 py-2 rounded">
-            Add New
-          </button>
-        </div>
-        {/* Render each department item */}
-        {departments.map((department, index) => (
-          <div key={index} className="border p-4 flex space-x-3">
-            <h2 className="font-bold">{department.name}</h2>
-            <h3 className="text-gray-500">{department.code}</h3>
-
-            <div className="flex mt-2">
-              <button className="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
-                View
-              </button>
-              <button className="mr-2 bg-green-500 text-white px-4 py-2 rounded">
-                Edit
-              </button>
-              <button className="bg-red-500 text-white px-4 py-2 rounded">
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
+        {view == 'main' && <Main setView={setView} departments={departments}/>}
+        {view == 'add' && <AddDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
+        {view == 'edit' && <EditDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
       </div>
     </div>
   );

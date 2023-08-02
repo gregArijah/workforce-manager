@@ -5,14 +5,14 @@ import { useState, useEffect } from "react";
 import Header from "@components/header";
 import { FaEye } from "react-icons/fa";
 import SelectPeriod from "./_components/selectPeriod";
-import ShowAll from "./_components/showAll";
-import ShowOne from "./_components/showOne";
+import Main from "./_components/main";
+import View from "./_components/view";
 
 export default function TimeCards() {
   const [timecards, setTimecards] = useState<{ id: string, department:any, name: string; code: string, timeCards:any}[]>([]); // Explicitly specify the type
   const [fromDate, setFromDate] = useState(''); // Explicitly specify the type
   const [toDate, setToDate] = useState(''); // Explicitly specify the type
-  const [view, setView]  = useState('all'); // Explicitly specify the type
+  const [view, setView]  = useState('main'); // Explicitly specify the type
   const [card,setCard] = useState(''); // Explicitly specify the type
   
   console.log(view)
@@ -20,11 +20,10 @@ export default function TimeCards() {
   return (
     <div className="h-screen">
       <Header />
-      <SelectPeriod setFromDate={setFromDate} setToDate={setToDate} fromDate={fromDate} toDate={toDate} setTimeCards={setTimecards}/>
-      
-      {view==='all' && <ShowAll timecards={timecards} setView={setView} setCard={setCard} />}
-      {view==='one' && <ShowOne setView={setView} card={card} setCard={setCard} />}
- 
+      {view== 'main' && <SelectPeriod setFromDate={setFromDate} setToDate={setToDate} fromDate={fromDate} toDate={toDate} setTimeCards={setTimecards}/>}
+      {view==='main' && <Main timecards={timecards} setView={setView} setCard={setCard} />}
+      {view==='view' && <View setView={setView} card={card} setCard={setCard} />}
+
     
     </div>
   );

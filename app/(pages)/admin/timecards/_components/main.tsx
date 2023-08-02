@@ -10,13 +10,13 @@ function sumHours(timecard:any){
     return totalHours.toFixed(2);
     }
  
-interface ShowAllProps {
+interface mainProps {
     setView: (view: any) => void;
     setCard: (code: any) => void;
     timecards: any;
     }
 
-export default function ShowAll({ timecards, setView, setCard}: ShowAllProps) {
+export default function main({ timecards, setView, setCard}: mainProps) {
     //timecards = timecards.timecards;
     console.log(timecards);
     if (timecards.length === 0) {
@@ -24,12 +24,8 @@ export default function ShowAll({ timecards, setView, setCard}: ShowAllProps) {
       }
 
     function handleClick (timecard:any)  {
-        setView('one');
+        setView('view');
         setCard(timecard);
-        console.log("hi")
-        console.log(timecard.code)
-        console.log(timecard)
-        return null ;
      }
 
 return (
