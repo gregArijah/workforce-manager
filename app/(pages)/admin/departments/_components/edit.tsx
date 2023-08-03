@@ -1,14 +1,45 @@
 import { useState } from 'react';
 
+const api = `/api/department`;
+
+const editDepartment = async (department:any) => {
+  
+    const res = await fetch(`${api}?departmentId=${department.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(department),
+    });
+    console.log(res)
+    const json = await res.json();
+    return json;
+  };
+
+
+  const getDepartments = async () => {
+    const res = await fetch(api, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    return json;
+  };
+
 interface DeptProps {
     setView: (view: any) => void;
     setDepartments: (dept: any) => void;
     departments: any;
+    selectedDept: any;
 }
 
-export default function EditDept({ setView, setDepartments, departments }: DeptProps, department: any) {
+export default function EditDept({ setView, setDepartments, departments, selectedDept }: DeptProps) {
+    const department = selectedDept;
+
     const [name, setName] = useState(department.name);
-    const [code, setCode] = useState('');
+    const [code, setCode] = useState(department.code);
 
     console.log(department);
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +50,7 @@ export default function EditDept({ setView, setDepartments, departments }: DeptP
         setCode(event.target.value);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         // Do any additional validation if required
@@ -30,16 +61,21 @@ export default function EditDept({ setView, setDepartments, departments }: DeptP
 
         // Create the department object using the form data
         const newDepartment = {
+            id: department.id,
             name,
             code,
         };
 
-        // Update the state with the new department
-        setDepartments([...departments, newDepartment]);
+        // // Update the state with the new department
+        // setDepartments([...departments, newDepartment]);
+        editDepartment(newDepartment);
 
+        alert('Department updated.');
+        setDepartments(await getDepartments())
         // Optionally, you can reset the form after submission
         setName('');
         setCode('');
+        setView('main');
     };
 
     return (

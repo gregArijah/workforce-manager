@@ -20,11 +20,14 @@ interface MainProps {
     departments: { name: string; code: string }[];
     setDepartments: (dept: any) => void;
     setView: (view: any) => void;
+    setSelectedDept: (dept: any) => void;
     }
 
-export default function Main({ departments, setDepartments, setView }: MainProps){
-    function handleEdit(){
-        setView('edit');
+export default function Main({ departments, setDepartments, setView, setSelectedDept }: MainProps){
+    function handleEdit(department:any){
+      setSelectedDept(department);  
+      setView('edit');
+        console.log(department);
     }
 
     async function handleDelete(department:any){
@@ -68,7 +71,7 @@ export default function Main({ departments, setDepartments, setView }: MainProps
             <h3 className="text-gray-500">{department.code}</h3>
 
             <div className="flex mt-2">
-                <button onClick={()=>handleEdit()} className="mr-2 bg-green-500 text-white px-4 py-2 rounded">
+                <button onClick={()=>handleEdit(department)} className="mr-2 bg-green-500 text-white px-4 py-2 rounded">
                     Edit
                   </button>
                   <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-4 py-2 rounded">
