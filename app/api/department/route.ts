@@ -37,20 +37,26 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { name, code, companyId } = body;
+  const { name, code } = body;
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
+  const companyId = user.id;
 
-  if (companyId != user.Id) return new Response('Error creating the department.', { status: 500 });
-
+  //if (companyId != user.Id) return new Response('Error creating the department.', { status: 500 });
+  console.log("here:",  user)
   try {
     const department = await prisma.department.create({
-      data: { name, code, companyId },
+      data: { 
+              name, 
+              code,
+              company: {connect: { id: companyId } },
+      }
     });
+    console.log(department)
     return new Response(JSON.stringify(department), { status: 200 });
   } catch (error) {
-    return new Response('Error creating the department.', { status: 500 });
+    throw error//return new Response('Error creating the department.', { status: 500 });
   }
 }
 
