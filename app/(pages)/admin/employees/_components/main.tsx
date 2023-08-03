@@ -1,13 +1,47 @@
 import Link from "next/link";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
+const deleteEmployee = async (employee:String) => {
+  
+    const api = `/api/employee/?employeeId=${employee}`;
+  
+    const res = await fetch(api, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    return json;
+  };
 interface MainProps {
     employees: any;//{ name: string; code: string }[];
+    setEmployees: (employee: any) => void;
     setView: (view: any) => void;
     }
 
-export default function Main({ employees, setView }: MainProps){ 
+export default function Main({ employees,setEmployees, setView }: MainProps){ 
 
+    async function handleDelete(employee:any){
+        // setView('delete');
+        console.log(employee);
+        const isConfirm:Boolean = confirm("Are you sure you want to delete this employee?");
+        try{
+           console.log(isConfirm);
+           if (isConfirm){
+               await deleteEmployee(employee.id);
+               console.log("deleted");
+ 
+               const newEmployees = employees.filter((empl:any) => empl.id !== employee.id);
+               setEmployees(newEmployees);
+ 
+ 
+           }
+         }catch(err){
+             console.log(err);
+         }
+ 
+     }
     function handleClick (e:any)  {
         setView('view'); 
     }
@@ -42,6 +76,12 @@ export default function Main({ employees, setView }: MainProps){
                     <div className="flex space-x-2" style={{ width: "20%" }}>
                     <button onClick={handleClick} className="bg-blue-500 text-white px-2 py-1 rounded">
                         <FaEye />
+                    </button>
+                      <button className="bg-green-500 text-white px-2 py-1 rounded">
+                        <FaEdit />
+                    </button>
+                    <button onClick={()=>handleDelete(employee)} className="bg-red-500 text-white px-2 py-1 rounded">
+                        <FaTrash />
                     </button>
                   
                     </div>

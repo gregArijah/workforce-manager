@@ -34,7 +34,7 @@ export default function Employees() {
   return (
     <div className="h-screen">
       <Header />
-      {view == 'main' && <Main employees={employees} setView={setView} />}
+      {view == 'main' && <Main employees={employees} setView={setView} setEmployees={setEmployees}/>}
       {view == 'view' && <View employees={employees} setView={setView} setEmployees={setEmployees} />}   
       {view == 'add' && <Add employees={employees} setView={setView} setEmployees={setEmployees} />}   
 
