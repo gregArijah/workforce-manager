@@ -20,8 +20,9 @@ const getDepartments = async () => {
 };
 
 export default function Departments() {
-  const [departments, setDepartments] = useState<{ name: string; code: string }[]>([]); // Explicitly specify the type
-  const [view, setView] = useState('main'); // Explicitly specify the type
+  const [departments, setDepartments] = useState<{ name: string; code: string }[]>([]); 
+  const [selectedDept, setSelectedDept] = useState({}); 
+  const [view, setView] = useState('main'); 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getDepartments();
@@ -35,9 +36,9 @@ export default function Departments() {
       <Header />
 
       <div className="flex-col">
-        {view == 'main' && <Main setView={setView} departments={departments}/>}
+        {view == 'main' && <Main setView={setView} departments={departments} setDepartments={setDepartments} setSelectedDept={setSelectedDept}/>}
         {view == 'add' && <AddDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
-        {view == 'edit' && <EditDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
+        {view == 'edit' && <EditDept setView={setView} departments={departments} setDepartments={setDepartments} selectedDept={selectedDept}/>}
       </div>
     </div>
   );
