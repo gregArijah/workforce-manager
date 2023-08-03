@@ -18,10 +18,11 @@ const deleteDepartment = async (department:String) => {
 
 interface MainProps {
     departments: { name: string; code: string }[];
+    setDepartments: (dept: any) => void;
     setView: (view: any) => void;
     }
 
-export default function Main({ departments, setView }: MainProps){
+export default function Main({ departments, setDepartments, setView }: MainProps){
     function handleEdit(){
         setView('edit');
     }
@@ -35,6 +36,11 @@ export default function Main({ departments, setView }: MainProps){
           if (isConfirm){
               await deleteDepartment(department.id);
               console.log("deleted");
+
+              const newDepartments = departments.filter((dept:any) => dept.id !== department.id);
+              setDepartments(newDepartments);
+
+
           }
         }catch(err){
             console.log(err);

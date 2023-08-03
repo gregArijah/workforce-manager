@@ -35,7 +35,7 @@ export default function Departments() {
       <Header />
 
       <div className="flex-col">
-        {view == 'main' && <Main setView={setView} departments={departments}/>}
+        {view == 'main' && <Main setView={setView} departments={departments} setDepartments={setDepartments}/>}
         {view == 'add' && <AddDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
         {view == 'edit' && <EditDept setView={setView} departments={departments} setDepartments={setDepartments}/>}
       </div>

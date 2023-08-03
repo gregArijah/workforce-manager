@@ -1,8 +1,20 @@
 import { useState } from 'react';
 
+const api = `/api/department/`;
+
+const getDepartments = async () => {
+    const res = await fetch(api, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    return json;
+  };
+
 const addDepartment = async (department:any) => {
   
-    const api = `/api/department/`;
   
     const res = await fetch(api, {
       method: 'POST',
@@ -55,9 +67,9 @@ export default function AddDept ({setView, setDepartments, departments}: DeptPro
         };
         await addDepartment(newDepartment);
         console.log(newDepartment);
-        
+        alert('Department added successfully');
         // Update the state with the new department
-        setDepartments([...departments, newDepartment]);
+        setDepartments(await getDepartments());
 
         // Optionally, you can reset the form after submission
         setName('');
