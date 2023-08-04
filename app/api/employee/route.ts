@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
           id: true,
           name: true,
           code: true,
-          department: { select: { name: true } },
+          department: { select: { id: true, name: true } },
         },
       });
       return new Response(JSON.stringify(employees), { status: 200 });
@@ -51,12 +51,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { name, code, departmentId, companyId } = body;
+  const { name, code, departmentId } = body;
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
 
-  if (companyId != user.Id) return new Response('Error creating the employee.', { status: 500 });
+  const companyId = user.id;
+
+  //if (companyId != user.Id) return new Response('Error creating the employee.', { status: 500 });
 
   try {
     const employee = await prisma.employee.create({
