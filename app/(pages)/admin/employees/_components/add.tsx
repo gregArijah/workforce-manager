@@ -109,6 +109,7 @@ export default function Add ({setView, setEmployees, employees}: EmployeeProps )
         // Optionally, you can reset the form after submission
         setName('');
         setCode('');
+        setDept('');
     };
 
     return (

@@ -42,6 +42,12 @@ export default function Main({ employees,setEmployees, setView }: MainProps){
          }
  
      }
+
+    function handleEdit (employee:any)  {
+    
+        setView('edit');
+    }
+    
     function handleClick (e:any)  {
         setView('view'); 
     }
@@ -62,7 +68,6 @@ export default function Main({ employees,setEmployees, setView }: MainProps){
                 <h3 style={{ width: "10%" }}>Code</h3>
                 <h3 style={{ width: "20%" }}>Dept</h3>
                 <h3 style={{ width: "10%" }}>Clocked In</h3>
-                <h3 style={{ width: "20%" }}>Details</h3>
                 </div>
 
                 {employees.map((employee:any) => (
@@ -74,12 +79,9 @@ export default function Main({ employees,setEmployees, setView }: MainProps){
                     <p style={{ width: "20%" }}>{employee.department.name}</p>
                     <p style={{ width: "10%" }}>{employee.isClockedIn ? "Yes" : "No"}</p>
                     <div className="flex space-x-2" style={{ width: "20%" }}>
-                    <button onClick={handleClick} className="bg-blue-500 text-white px-2 py-1 rounded">
-                        <FaEye />
-                    </button>
-                      <button className="bg-green-500 text-white px-2 py-1 rounded">
+                    <button onClick={()=>handleEdit(employee)} className="bg-green-500 text-white px-2 py-1 rounded">
                         <FaEdit />
-                    </button>
+                    </button> 
                     <button onClick={()=>handleDelete(employee)} className="bg-red-500 text-white px-2 py-1 rounded">
                         <FaTrash />
                     </button>

@@ -22,6 +22,7 @@ const getEmployees = async () => {
 export default function Employees() {
   const [employees, setEmployees] = useState<{ id: string; name: string; code: string; department: any ; isClockedIn: boolean }[]>([]); // Explicitly specify the type
   const [view, setView]  = useState('main'); // Explicitly specify the type
+  const [selectedEmployee, setSelectedEmployee] = useState<{ id: string; name: string; code: string; department: any ; isClockedIn: boolean } | null>(null); // Explicitly specify the type
 
   useEffect(() => {
     const fetchData = async () => {
