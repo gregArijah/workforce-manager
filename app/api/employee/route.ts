@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
           id: true,
           name: true,
           code: true,
-          department: { select: { name: true } },
+          department: { select: { id: true, name: true } },
         },
       });
       return new Response(JSON.stringify(employees), { status: 200 });

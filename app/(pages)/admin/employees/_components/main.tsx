@@ -18,9 +18,10 @@ interface MainProps {
     employees: any;//{ name: string; code: string }[];
     setEmployees: (employee: any) => void;
     setView: (view: any) => void;
+    setSelectedEmployee: (employee: any) => void;
     }
 
-export default function Main({ employees,setEmployees, setView }: MainProps){ 
+export default function Main({ employees,setEmployees, setView, setSelectedEmployee }: MainProps){ 
 
     async function handleDelete(employee:any){
         // setView('delete');
@@ -44,10 +45,11 @@ export default function Main({ employees,setEmployees, setView }: MainProps){
      }
 
     function handleEdit (employee:any)  {
-    
+        setSelectedEmployee(employee);  
+        console.log(employee);
         setView('edit');
     }
-    
+
     function handleClick (e:any)  {
         setView('view'); 
     }
