@@ -18,12 +18,11 @@ interface mainProps {
 
 export default function main({ timecards, setView, setCard}: mainProps) {
     //timecards = timecards.timecards;
-    console.log(timecards);
-    if (timecards.length === 0) {
+    if (!timecards || timecards.length === 0) {
         return <p>Select a date range to view timecards</p>;
       }
 
-    function handleClick (timecard:any)  {
+    function handleView (timecard:any)  {
         setView('view');
         setCard(timecard);
      }
@@ -54,7 +53,7 @@ return (
             <td className="px-4 py-2">{sumHours(timecard.timeCards)}</td>
             <td className="px-4 py-2">
                 <button className="bg-blue-500 text-white px-2 py-1 rounded" 
-                        onClick={()=>handleClick(timecard)}>
+                        onClick={()=>handleView(timecard)}>
                     <FaEye />
                 </button>    
             </td>

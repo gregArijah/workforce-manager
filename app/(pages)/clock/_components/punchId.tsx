@@ -20,7 +20,6 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(badge || 'no badge' );
         if (badge) clockInAndOut(badge, punchChoice);  
         }
 
@@ -42,7 +41,6 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
         });
         const employee = await getEmployees.json();
         setWhoIs(employee);
-        console.log("employee: ",employee, "punchChoicez: ", punchChoice);
         if(employee.isClockedIn && punchChoice === 'in') {
             alert('already clocked in');
             return;
@@ -64,11 +62,10 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
                     body: JSON.stringify({
                         employeeId: employee.id,
                         timeIn: new Date(),
-                        //timeOut: null 
+                        timeOut: null 
                     }),
                 });
                 const json = await clockIn.json();
-                console.log(json);
                 setVisibleComponent('punchConfirm') 
             }catch(error) {
                 console.error(error);//return new Response("error", {status: 500 })
@@ -83,11 +80,10 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        timeOut: new Date().toISOString(),
+                        timeOut: new Date(),
                     }),
                 });
                 const json = await clockOut.json();
-                console.log(json);
                 setVisibleComponent('punchConfirm') 
             }catch(err) {
                 return new Response("error", {status: 500 })

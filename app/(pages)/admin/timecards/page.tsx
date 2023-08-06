@@ -15,9 +15,7 @@ export default function TimeCards() {
   const [toDate, setToDate] = useState(''); // Explicitly specify the type
   const [view, setView]  = useState('main'); // Explicitly specify the type
   const [card,setCard] = useState(''); // Explicitly specify the type
-  
-  console.log(view)
-  console.log(card)
+
   return (
     <div className="h-screen">
       <Header />
@@ -25,7 +23,7 @@ export default function TimeCards() {
       {view==='main' && <Main timecards={timecards} setView={setView} setCard={setCard} />}
       {view==='view' && <View setView={setView} card={card} setCard={setCard} />}
 
-      {view==='add'  && <Add setView={setView} card={card} setCard={setCard} />}
+      {view==='add'  && <Add setView={setView} card={card} setCard={setCard} setTimecards={setTimecards} fromDate={fromDate} toDate={toDate}  />}
 
     
     </div>

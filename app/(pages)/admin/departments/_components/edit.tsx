@@ -11,7 +11,7 @@ const editDepartment = async (department:any) => {
       },
       body: JSON.stringify(department),
     });
-    console.log(res)
+
     const json = await res.json();
     return json;
   };
@@ -41,7 +41,6 @@ export default function EditDept({ setView, setDepartments, departments, selecte
     const [name, setName] = useState(department.name);
     const [code, setCode] = useState(department.code);
 
-    console.log(department);
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
     };
@@ -55,7 +54,7 @@ export default function EditDept({ setView, setDepartments, departments, selecte
 
         // Do any additional validation if required
         if (!name || !code) {
-            console.log('Please fill in all fields.');
+            alert('Please fill in all fields.');
             return;
         }
 

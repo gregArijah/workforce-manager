@@ -8,9 +8,7 @@ const getDepartments = async () => {
         'Content-Type': 'application/json',
       },
     });
-    const json = await res.json();
-    console.log(json);
-    
+    const json = await res.json();    
     return json;
   };
 
@@ -25,7 +23,6 @@ const editEmployee = async (employee:any) => {
       },
       body: JSON.stringify(employee),
     });
-    console.log(res)
     const json = await res.json();
     return json;
   };
@@ -63,16 +60,10 @@ export default function EditDept({ setView, setEmployees, employees, selectedEmp
             const data = await getDepartments();
             setDeptList(data);
             setDept(employee.department.id);
-            console.log(deptlist);
-            console.log(employee.department.name);
         };
         fetchData();
     }, []);
 
-  
-    console.log("dept", dept);
-    console.log(deptlist);
-    console.log(employee);
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
     };
@@ -90,7 +81,7 @@ export default function EditDept({ setView, setEmployees, employees, selectedEmp
 
         // Do any additional validation if required
         if (!name || !code) {
-            console.log('Please fill in all fields.');
+            alert('Please fill in all fields.');
             return;
         }
 

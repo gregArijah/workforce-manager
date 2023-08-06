@@ -9,7 +9,7 @@ const getDepartments = async () => {
       },
     });
     const json = await res.json();
-    console.log(json);
+
     
     return json;
   };
@@ -38,7 +38,7 @@ const addEmployee = async (employee:any) => {
       },
       body: JSON.stringify(employee),
     });
-    console.log(res)
+ 
     const json = await res.json();
     return json;
   };
@@ -61,12 +61,9 @@ export default function Add ({setView, setEmployees, employees}: EmployeeProps )
         const fetchData = async () => {
             const data = await getDepartments();
             setDeptList(data);
-            console.log(deptlist);
         };
         fetchData();
     }, []);
-
-    console.log(deptlist);
    
   
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,12 +78,7 @@ export default function Add ({setView, setEmployees, employees}: EmployeeProps )
         setDept(event.target.value);
     };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        console.log("dept", dept);
-        console.log("name", name);
-        console.log("code", code);
-    
-        
+        event.preventDefault();        
 
         // Do any additional validation if required
         if (!name || ! code || !dept) {
@@ -101,7 +93,6 @@ export default function Add ({setView, setEmployees, employees}: EmployeeProps )
             departmentId: dept,
         };
         await addEmployee(newEmployee);
-        console.log(newEmployee);
         alert('Employee added successfully');
         // Update the state with the new department
         setEmployees(await getEmployees());
