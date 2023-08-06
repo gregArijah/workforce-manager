@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
   const convToDate = toDate? new Date(toDate) : null;
   const convFromDate = fromDate? new Date(fromDate) : null;
-  if (convToDate) convToDate.setDate(convToDate.getDate()+1);
+  if (convToDate) convToDate.setDate(convToDate.getDate()+1); //add 1 day to toDate to include the whole day
 
   console.log("to date: " , convToDate)
   console.log("from date: " , convFromDate)

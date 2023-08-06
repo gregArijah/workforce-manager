@@ -63,7 +63,7 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
                     },
                     body: JSON.stringify({
                         employeeId: employee.id,
-                        timeIn: new Date().toISOString(),
+                        timeIn: new Date(),
                         //timeOut: null 
                     }),
                 });

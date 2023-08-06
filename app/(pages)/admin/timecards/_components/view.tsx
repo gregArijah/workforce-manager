@@ -32,10 +32,20 @@ export default function View({ setView, card, setCard}: ViewProps) {
         setView('main');
     }
     
+    function handleAdd(){
+        setView('add');
+    }
+
+    function handleEdit(entry:any){
+        setView('edit');
+    }
+
     return (
         <div>
-            <div className="border p-4 mb-4">
+            <div className="border p-4 mb-4 flex justify-between">
                 <button onClick={goBack} className="bg-blue-500 text-white px-4 py-2 rounded">Back</button>
+                <button onClick={handleAdd}className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
+
             </div>
             <div className="flex-col">
                 <h2 className="text-2xl font-bold mb-4">Details</h2>
@@ -57,11 +67,8 @@ export default function View({ setView, card, setCard}: ViewProps) {
                         <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
                         <td className="px-4 py-2">{readTime(entry.timeOut)}</td>
                         <td className="px-4 py-2">{entry.duration}</td>
-                        <td><button className="bg-green-500 text-white px-2 py-1 rounded">
+                        <td><button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
                             <FaEdit />
-                        </button>
-                        <button className="bg-red-500 text-white px-2 py-1 rounded">
-                            <FaTrash />
                         </button></td>
                     </tr>
                     ))}

@@ -48,6 +48,9 @@ export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, s
         setToDate(e.target.value);
 
       };
+
+      const handleAdd = (e:any) => {}
+      
     return(  
         <div>
             <div className="border p-4 mb-4 flex justify-between">
