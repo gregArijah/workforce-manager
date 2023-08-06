@@ -13,6 +13,20 @@ interface SelectPeriodProps {
 export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, setTimeCards}:SelectPeriodProps) {
 
     const handleView = (e:any) => {
+     console.log("from: ", fromDate, "to: ", toDate)
+      const isoToDate = new Date(toDate);
+      const isoFromDate = new Date(fromDate);
+      const offset = isoFromDate.getTimezoneOffset()	;
+
+      console.log("offset: ", offset)
+      console.log("iso from: ", isoFromDate, "iso to: ", isoToDate);
+
+      isoFromDate.setMinutes(isoFromDate.getMinutes() + offset);
+      isoToDate.setMinutes(isoToDate.getMinutes() + offset + 1440);
+
+      console.log("iso from: ", isoFromDate, "iso to: ", isoToDate); 
+    
+
       const api = '/api/timecard';
 
       const getTimecards = async (fromDate:any, toDate:any) => {
@@ -25,7 +39,7 @@ export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, s
           return;
         }
        
-        const res = await fetch(`${api}?fromDate=${fromDate}&toDate=${toDate}`, {
+        const res = await fetch(`${api}?fromDate=${isoFromDate}&toDate=${isoToDate}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -46,6 +60,8 @@ export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, s
 
       const handleToDateChange = (e:any) => {
         setToDate(e.target.value);
+        const check = new Date(e.target.value);
+        console.log(check);
 
       };
 
