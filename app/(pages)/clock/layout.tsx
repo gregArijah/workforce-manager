@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default async function ClockLayout({
     children,
   }: {
@@ -5,7 +7,7 @@ export default async function ClockLayout({
   }) {
     return (
         <div className="bg-cover bg-center h-screen" style={{ backgroundImage: "url('/vecteezy.jpg')"}}>
-          <section>
+          <section className='p-2 md:p-6'>
               {children}
           </section>
         </div>
