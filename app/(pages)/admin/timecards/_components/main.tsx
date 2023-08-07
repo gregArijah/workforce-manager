@@ -25,7 +25,6 @@ export default function main({ timecards, setView, setCard}: mainProps) {
     function handleView (timecard:any)  {
         setView('view');
         setCard(timecard);
-        console.log("timecard", timecard);
      }
 
 return (

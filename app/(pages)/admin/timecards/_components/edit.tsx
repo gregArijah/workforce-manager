@@ -1,95 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useState } from "react";
 
-// const getDepartments = async () => {
-//     const api = `/api/department/`;
-//     const res = await fetch(api, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     const json = await res.json();
-//     console.log(json);
-    
-//     return json;
-//   };
-
-  
-// const api = `/api/employee`;
-
-// const getEmployees = async () => {
-//     const res = await fetch(api, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     const json = await res.json();
-//     return json;
-//   };
-
-// const addEmployee = async (employee:any) => {
-  
-  
-//     const res = await fetch(api, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(employee),
-//     });
-//     console.log(res)
-//     const json = await res.json();
-//     return json;
-//   };
- 
-  const addTimecard = async (timecard:any) => {
-   const api = `/api/timecard`;
-    const res = await fetch(api, {
-        method: 'POST',
+async function updateTimecard(updatedEntry:any){
+    const {id} = updatedEntry;
+    const api = '/api/timecard';
+    const res = await fetch(`${api}?timecardId=${id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(timecard),
-        });
-        const json = await res.json();
-        return json;
-  }
-
-  const getTimecards = async (fromDate:any, toDate:any, employeeId:any) => {
-    
-    const isoToDate = new Date(toDate);
-    const isoFromDate = new Date(fromDate);
-    const api = `/api/timecard`;
-    
-    const res = await fetch(`${api}?employeeId=${employeeId}&fromDate=${isoFromDate}&toDate=${isoToDate}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        body: JSON.stringify(updatedEntry),
     });
     const json = await res.json();
     return json;
 
 
+
 }
 
-interface TimecardProps {
-    setView: (view: any) => void; 
-    card: any;
-    setCard: (card: any) => void;
-    setTimecards: (timecards: any) => void;
-    fromDate: any;
-    toDate: any;
-    }
+async function getCard(id:string){
+    
+    const api = `/api/timecard?employeeId=${id}`;
+    const res = await fetch(api, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const json = await res.json();
+    return json;
 
-export default function Add ({setView, card, setCard, setTimecards, fromDate, toDate}: TimecardProps ){
+}
+
+interface EditProps {
+    setView: (view:string) => void;
+    card: any;
+    setCard: (card:any) => void;
+    editEntry: any;
+    setEditEntry: (editEntry:any) => void;
+}
+
+export default function Edit({setView, setCard, card, editEntry, setEditEntry}:EditProps) {
+
     
+    let time1 = new Date(editEntry.timeIn);
+    let time2 = (editEntry.timeOut)? new Date(editEntry.timeOut) : null;
+    
+    const timezoneOffset = time1.getTimezoneOffset();
+    time1.setMinutes(time1.getMinutes() - timezoneOffset);
+    time2?.setMinutes(time2.getMinutes() - timezoneOffset)
+    
+    console.log("time1", time1.toISOString().slice(0, 16));
+    console.log("time2", time2);
+    console.log("timezoneOffset", timezoneOffset);
+
     const [name, setName] = useState(card.name);
-    const [timeIn, setTimeIn] = useState('');
-    const [timeOut, setTimeOut] = useState('');
-    const [duration, setDuration] = useState<number>(0);
-    
+    const [timeIn, setTimeIn] = useState(time1.toISOString().slice(0, 16));
+    const [timeOut, setTimeOut] = useState(time2?.toISOString().slice(0, 16)|| "");
+    const [duration, setDuration] = useState(editEntry.duration || 0 );
+
+    console.log("timeIn", timeIn);
+    console.log("timeOut", timeOut);
 
     const handleTimeInChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTimeIn = new Date(event.target.value);
@@ -129,42 +99,48 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
 
         return;
     }
-  
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
+    async function handleSubmit(event:any) {    
         event.preventDefault();
-
-
-        if (timeIn == "") {
-            alert("Please select a time in");
+        
+        // Do any additional validation if required
+        if (!timeIn) {
+            alert('Time In is required');
             return;
         }
-
-        //Create the entry using the form data
-        const newEntry = {
-            employeeId:card.id,
-            timeIn: new Date(timeIn),
-            timeOut: timeOut==""? null : new Date(timeOut),
-            duration : duration==0? null : duration,
-        };
-
-        await addTimecard(newEntry);
-        const refreshTimecards = await getTimecards(fromDate, toDate, card.id);
-        setCard(await refreshTimecards);
-   
-
-       
-        alert('Timecard entry successful');
-    //  Update the state with the new department
-    //  setTimecards(await getTimecards());
-
-        // Optionally, you can reset the form after submission
+        console.log("editEntry", editEntry)
         
-        setTimeIn('');
-        setTimeOut('');
-        setDuration(0); 
-        
+        const updatedEntry = {
+            ...editEntry,
+            timeIn: new Date(timeIn).toISOString(),
+            timeOut: timeOut? new Date(timeOut).toISOString() : null,
+            duration: duration? duration : null,
+        }
+
+        await updateTimecard(updatedEntry);
+
+        console.log("updatedEntry", updatedEntry);
+        // setCard(await getCard(card.id));
+        // iterate through the timecards and update the entry
+        const newCard = {
+            ...card,
+            timeCards: card.timeCards.map((tc:any) => {
+                if (tc.id === updatedEntry.id){
+                    return updatedEntry;
+                }
+                return tc;
+            }),
+        }
+
+        console.log("newCard", newCard);
+        //console.log("updatedEntry", updatedEntry);
+
+
+        alert("Entry updated successfully");
+        setCard(newCard);
+        setView('view');
         return;
-    };
+    }
 
     return (
         <div>
@@ -172,7 +148,7 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
           <button onClick={()=>setView('view')} className="bg-blue-500 text-white px-4 py-2 rounded">Back</button>
           
         </div>
-            <h1 className="font-bold pb-2"> Add a timecard entry</h1>
+            <h1 className="font-bold pb-2"> Edit timecard entry</h1>
         
             <div>
                 <form className="flex flex-col space-y-2" onSubmit={handleSubmit}>
@@ -184,6 +160,7 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
                             defaultValue={card.name}  
                             className="bg-gray-100 text-gray-600 border-gray-300 cursor-not-allowed"
                             disabled={true}
+                            
 
                         />
                     </label>
@@ -213,7 +190,7 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
                         <input 
                             type="text" 
                             name="duration" 
-                            value={duration.toFixed(2) + (duration == 1? " hour" : " hours")} 
+                            value={duration? (duration.toFixed(2) + (duration == 1? " hour" : " hours")): 0} 
                             onChange={()=>{return}} 
                             className="bg-gray-100 text-gray-600 border-gray-300 cursor-not-allowed"
                         />

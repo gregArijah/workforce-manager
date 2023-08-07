@@ -3,10 +3,10 @@ interface ViewProps {
     setView: (view: any) => void;
     setCard: (card: any) => void;
     card: any;
+    setEditEntry: (entry: any) => void;
     }
 
 function sumHours(timecard:any){
-    console.log("timecard", timecard);
     let totalHours = 0;
     for (const line of timecard) {
         totalHours += line.duration;
@@ -37,9 +37,8 @@ async function deleteTimecard(id:any){
 }
 
 
-export default function View({ setView, card, setCard}: ViewProps) {
+export default function View({ setView, card, setCard, setEditEntry}: ViewProps) {
 
-    console.log("card", card);
     const entries = card.timeCards;
 
     function goBack(){
@@ -51,6 +50,8 @@ export default function View({ setView, card, setCard}: ViewProps) {
     }
 
     function handleEdit(entry:any){
+        setEditEntry(entry);
+        console.log("entry", entry);
         setView('edit');
     }
 
@@ -64,7 +65,6 @@ export default function View({ setView, card, setCard}: ViewProps) {
                 ...card,
                 timeCards: card.timeCards.filter((tc:any) => tc.id !== entry.id),
                }    
-               console.log("newCard", newCard);
                setCard(newCard);
       
             
