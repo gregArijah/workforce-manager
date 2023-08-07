@@ -94,18 +94,20 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>enter badge/id</label>
+            <form onSubmit={handleSubmit} className="space-y-3">
+                <div className="space-x-2">
+                    <label className="md:text-4xl">Enter badge/id:</label>
                     <input type="text" 
                            name="badge"
                            value={badge}
-                           onChange={handleInputChange}      
+                           onChange={handleInputChange}   
+                           className="border-2 border-gray-300/90 md:text-2xl p-4 rounded-md w-24 md:w-60"
+                              
                     />
                 </div>
-                <div className="space-x-2 mb-16">
-                    <button type="button" onClick={handleCancel} className="bg-red-300 p-4 rounded w-24">cancel</button> 
-                    <button type="submit"  className="bg-green-300 p-4 rounded w-24">submit</button>
+                <div className="space-x-3 flex md:justify-center">
+                    <button type="button" onClick={handleCancel} className="bg-gray-300/90 border-2 border-red-600  md:text-4xl p-4 rounded-md w-24 md:w-60">cancel</button> 
+                    <button type="submit"  className="bg-gray-300/90 border-2 border-green-700  md:text-4xl p-4 rounded-md w-24 md:w-60">submit</button>
                 </div> 
             </form>
         </div>
