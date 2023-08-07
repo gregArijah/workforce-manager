@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
+import { time } from 'console';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -20,13 +21,11 @@ export async function GET(req: NextRequest) {
   //if (convToDate) convToDate.setMinutes(convToDate.getDate()+1440); //add 1 day to toDate to include the whole day
   //if (convToDate) convToDate.setDate(convToDate.getDate()+1); //add 1 day to toDate to include the whole day
 
-
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
-  console.log("outside reading here")
+
   try {
     if (employeeId) {
-      console.log("reading here")
       const timeCards = await prisma.employee.findUnique({
         where: { id: employeeId,
                   companyId: user.id
@@ -148,44 +147,62 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  //const timeCardId = searchParams.get('timeCardId');
+  const timecardId = searchParams.get('timecardId');
   const employeeId = searchParams.get('employeeId');
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
 
   //if (!timeCardId) return new Response('Missing timeCardId', { status: 400 });
-  if (!employeeId) return new Response('Missing employeeId', { status: 400 });
+  if ((!employeeId && !timecardId)) return new Response('Missing search identifier', { status: 400 });
   
-  const timeIn = await prisma.timeCard.findMany({
-    where: { employeeId: employeeId, //? employeeId : undefined,
-              timeOut: null,
-            },
-    select: { timeIn: true },
-  });
-  if (!timeIn) return new Response('Error updating the time card.', { status: 500 });
-  const thistime = timeIn[0].timeIn;
-  const duration = (new Date().getTime()-thistime.getTime())/(1000*60*60);
+  if(employeeId){
+      const timeIn = await prisma.timeCard.findMany({
+        where: { employeeId: employeeId, //? employeeId : undefined,
+                  timeOut: null,
+                },
+        select: { timeIn: true },
+      });
+      if (!timeIn) return new Response('Error updating the time card.', { status: 500 });
+      const thistime = timeIn[0].timeIn;
+      const duration = (new Date().getTime()-thistime.getTime())/(1000*60*60);
 
-  const body = await req.json();
-  //add duration to body
-  body.duration = duration;
+      const body = await req.json();
+      //add duration to body
+      body.duration = duration;
 
-  try {
-    const timeCard = await prisma.timeCard.updateMany({
-      where: { employeeId: employeeId, //? employeeId : undefined,
-               timeOut: null,
-             },
-      data: body,
-    });
-    const employee = await prisma.employee.update({
-      where: { id: employeeId },
-      data: { isClockedIn: false },
-    });
-    return new Response(JSON.stringify(timeCard), { status: 200 });
-  } catch (error) {
-    return new Response('Error updating the time card.', { status: 500 });
-  }
+      try {
+        const timeCard = await prisma.timeCard.updateMany({
+          where: { employeeId: employeeId, //? employeeId : undefined,
+                  timeOut: null,
+                },
+          data: body,
+        });
+        const employee = await prisma.employee.update({
+          where: { id: employeeId },
+          data: { isClockedIn: false },
+        });
+        return new Response(JSON.stringify(timeCard), { status: 200 });
+      } catch (error) {
+        return new Response('Error updating the time card.', { status: 500 });
+      }
+    }else
+    if(timecardId){
+      console.log("timecardId we reach here");
+      const body = await req.json();
+      try {
+        const timeCard = await prisma.timeCard.update({
+          where: { id: timecardId,
+                   employee: {
+                      companyId: user.id
+                    }},
+          data: body,
+        });
+        return new Response(JSON.stringify(timeCard), { status: 200 });
+      } catch (error) {
+        return new Response('Error updating the time card.', { status: 500 });
+      }
+    }
 }
 
 export async function DELETE(req: NextRequest) {
