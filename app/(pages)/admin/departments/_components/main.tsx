@@ -36,8 +36,7 @@ export default function Main({ departments, setDepartments, setView, setSelected
     
           if (isConfirm){
               await deleteDepartment(department.id);
-            
-
+          
               const newDepartments = departments.filter((dept:any) => dept.id !== department.id);
               setDepartments(newDepartments);
 

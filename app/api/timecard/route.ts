@@ -190,7 +190,7 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const timeCardId = searchParams.get('timeCardId');
+  const timeCardId = searchParams.get('timecardId');
 
   const session = await getServerSession(authOptions);
   const user:any = session?.user;
@@ -204,8 +204,8 @@ export async function DELETE(req: NextRequest) {
                   companyId: user.id
                 }},
     });
-    return new Response(JSON.stringify(timeCard), { status: 200 });
+    return new Response (JSON.stringify(timeCard), { status: 200 });
   } catch (error) {
-    return new Response('Error deleting the time card.', { status: 500 });
+    throw error//new Response('Error deleting the time card.', { status: 500 });
   }
 }

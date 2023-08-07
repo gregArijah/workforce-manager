@@ -6,6 +6,7 @@ interface ViewProps {
     }
 
 function sumHours(timecard:any){
+    console.log("timecard", timecard);
     let totalHours = 0;
     for (const line of timecard) {
         totalHours += line.duration;
@@ -22,11 +23,24 @@ function readTime(date:any){
     return convDate.toLocaleTimeString("en-GB");
 }
 
+async function deleteTimecard(id:any){
+    const api = '/api/timecard';
+    const res = await fetch(`${api}?timecardId=${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const json = await res.json();
+    return json;
 
-
+}
 
 
 export default function View({ setView, card, setCard}: ViewProps) {
+
+    console.log("card", card);
+    const entries = card.timeCards;
 
     function goBack(){
         setView('main');
@@ -38,6 +52,28 @@ export default function View({ setView, card, setCard}: ViewProps) {
 
     function handleEdit(entry:any){
         setView('edit');
+    }
+
+    async function handleDelete(entry:any){
+        const isConfirm:Boolean = confirm("Are you sure you want to delete this record?");
+        try{
+           if (isConfirm){
+               await deleteTimecard(entry.id);
+
+               const newCard = {
+                ...card,
+                timeCards: card.timeCards.filter((tc:any) => tc.id !== entry.id),
+               }    
+               console.log("newCard", newCard);
+               setCard(newCard);
+      
+            
+               
+           }
+         }catch(err){
+             console.log(err);
+         }
+ 
     }
 
     return (
@@ -61,21 +97,26 @@ export default function View({ setView, card, setCard}: ViewProps) {
                     </tr>
                 </thead>
                 <tbody>
-                    {card.timeCards.map((entry:any) => (
+                    {card.timeCards?.map((entry:any) => (
                     <tr key={entry.id}>
                         <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
                         <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
-                        <td className="px-4 py-2">{readTime(entry.timeOut)}</td>
+                        <td className="px-4 py-2">{entry.timeOut? readTime(entry.timeOut):null}</td>
                         <td className="px-4 py-2">{entry.duration}</td>
-                        <td><button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
-                            <FaEdit />
-                        </button></td>
+                        <td>
+                            <button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
+                                <FaEdit />
+                            </button>
+                            <button onClick={()=>handleDelete(entry)} className="bg-red-500 text-white px-2 py-1 rounded">
+                                <FaTrash />
+                            </button>  
+                        </td>
                     </tr>
                     ))}
                 </tbody>
                 </table>
                 <div className="mt-4">
-                <strong>Total Hours: {sumHours(card.timeCards)} </strong>
+                <strong>Total Hours: {sumHours(entries)} </strong>
                 </div>
             </div>
                     

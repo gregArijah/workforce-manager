@@ -136,6 +136,7 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
 
         if (timeIn == "") {
             alert("Please select a time in");
+            console.log("time out", timeOut);
             return;
         }
 
@@ -160,9 +161,10 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
     //  setTimecards(await getTimecards());
 
         // Optionally, you can reset the form after submission
-        setName('');
+        
         setTimeIn('');
-        setTimeOut(''); 
+        setTimeOut('');
+        setDuration(0); 
         
         return;
     };
