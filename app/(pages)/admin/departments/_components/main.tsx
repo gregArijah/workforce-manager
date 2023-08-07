@@ -27,19 +27,16 @@ export default function Main({ departments, setDepartments, setView, setSelected
     function handleEdit(department:any){
       setSelectedDept(department);  
       setView('edit');
-        console.log(department);
     }
 
     async function handleDelete(department:any){
-       // setView('delete');
-       console.log(department);
+       // setView('delete')
        const isConfirm:Boolean = confirm("Are you sure you want to delete this department?");
        try{
-          console.log(isConfirm);
+    
           if (isConfirm){
               await deleteDepartment(department.id);
-              console.log("deleted");
-
+          
               const newDepartments = departments.filter((dept:any) => dept.id !== department.id);
               setDepartments(newDepartments);
 

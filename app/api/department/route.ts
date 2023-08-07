@@ -44,7 +44,6 @@ export async function POST(req: NextRequest) {
   const companyId = user.id;
 
   //if (companyId != user.Id) return new Response('Error creating the department.', { status: 500 });
-  console.log("here:",  user)
   try {
     const department = await prisma.department.create({
       data: { 
@@ -53,7 +52,6 @@ export async function POST(req: NextRequest) {
               company: {connect: { id: companyId } },
       }
     });
-    console.log(department)
     return new Response(JSON.stringify(department), { status: 200 });
   } catch (error) {
     throw error//return new Response('Error creating the department.', { status: 500 });

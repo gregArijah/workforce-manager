@@ -80,13 +80,7 @@ async function seed() {
       } as EmployeeCreateInput,
     });
 
-    console.log('Created Company 1:', company1);
-    console.log('Created Department 1:', department1);
-    console.log('Created Department 2:', department2);
-    console.log('Created Employee 1:', employee1);
-    console.log('Created Employee 2:', employee2);
-    console.log('Created Employee 3:', employee3);
-    console.log('Created Employee 4:', employee4);
+ 
 
     // Create Company 2
     const company2 = await prisma.company.create({

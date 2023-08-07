@@ -13,6 +13,13 @@ interface SelectPeriodProps {
 export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, setTimeCards}:SelectPeriodProps) {
 
     const handleView = (e:any) => {
+      const isoToDate = new Date(toDate);
+      const isoFromDate = new Date(fromDate);
+      const offset = isoFromDate.getTimezoneOffset()	;
+
+      // isoFromDate.setMinutes(isoFromDate.getMinutes() + offset);
+      // isoToDate.setMinutes(isoToDate.getMinutes() + offset + 1440);
+    
       const api = '/api/timecard';
 
       const getTimecards = async (fromDate:any, toDate:any) => {
@@ -25,7 +32,7 @@ export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, s
           return;
         }
        
-        const res = await fetch(`${api}?fromDate=${fromDate}&toDate=${toDate}`, {
+        const res = await fetch(`${api}?fromDate=${isoFromDate}&toDate=${isoToDate}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -46,8 +53,12 @@ export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, s
 
       const handleToDateChange = (e:any) => {
         setToDate(e.target.value);
+        const check = new Date(e.target.value);
 
       };
+
+      const handleAdd = (e:any) => {}
+      
     return(  
         <div>
             <div className="border p-4 mb-4 flex justify-between">

@@ -25,13 +25,11 @@ export default function Main({ employees,setEmployees, setView, setSelectedEmplo
 
     async function handleDelete(employee:any){
         // setView('delete');
-        console.log(employee);
+        
         const isConfirm:Boolean = confirm("Are you sure you want to delete this employee?");
         try{
-           console.log(isConfirm);
            if (isConfirm){
                await deleteEmployee(employee.id);
-               console.log("deleted");
  
                const newEmployees = employees.filter((empl:any) => empl.id !== employee.id);
                setEmployees(newEmployees);
@@ -46,7 +44,6 @@ export default function Main({ employees,setEmployees, setView, setSelectedEmplo
 
     function handleEdit (employee:any)  {
         setSelectedEmployee(employee);  
-        console.log(employee);
         setView('edit');
     }
 

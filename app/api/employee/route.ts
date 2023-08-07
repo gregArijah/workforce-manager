@@ -40,6 +40,7 @@ export async function GET(req: NextRequest) {
           name: true,
           code: true,
           department: { select: { id: true, name: true } },
+          isClockedIn: true,
         },
       });
       return new Response(JSON.stringify(employees), { status: 200 });

@@ -23,7 +23,6 @@ const addDepartment = async (department:any) => {
       },
       body: JSON.stringify(department),
     });
-    console.log(res)
     const json = await res.json();
     return json;
   };
@@ -37,8 +36,6 @@ interface DeptProps {
 
 
 export default function AddDept ({setView, setDepartments, departments}: DeptProps ){
-
-    console.log(departments);
     
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
@@ -66,7 +63,6 @@ export default function AddDept ({setView, setDepartments, departments}: DeptPro
             code,
         };
         await addDepartment(newDepartment);
-        console.log(newDepartment);
         alert('Department added successfully');
         // Update the state with the new department
         setDepartments(await getDepartments());
