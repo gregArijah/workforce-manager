@@ -94,7 +94,7 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
 
     return (
         <div>
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-8">
                 <div className="space-x-2">
                     <label className="md:text-4xl">Enter badge/id:</label>
                     <input type="text" 

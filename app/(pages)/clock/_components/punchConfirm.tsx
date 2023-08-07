@@ -15,19 +15,24 @@ export default function PunchConfirm( {punchChoice, setVisibleComponent, whoIs}:
     return( 
         <div>
             {punchChoice == 'in' &&
-                <div>
-                    <p>Hello {name}, You are now punched in</p>
-                    <p>your punch in time is: {date}</p>
+                <div className="text-4xl">
+                    <p>Hello {name},</p>
+                    <p>You are now clocked in.</p>
+                    <br/>
+                    <p>The time is: {date}</p>
+                    <br/>
                 </div>
             }
             {punchChoice == 'out' &&
-                <div>
-                    <p>You are now punched out</p>
-                    <p>your punch out time is: {date}</p>
+                <div className="text-4xl">
+                    <p>You are now clocked out.</p>
+                    <p>The time is: {date}</p>
+                    <br/>
                     <p>Goodbye {name}</p>
+                    <br/>
                 </div>
             }
-            <button type="button" onClick={() => setVisibleComponent('punchSelect')} className="bg-green-300 p-4 rounded w-24">OK</button>
+            <button type="button" onClick={() => setVisibleComponent('punchSelect')} className="bg-gray-300/90 border-2 border-green-700  md:text-4xl p-4 rounded-md w-24 md:w-60">OK</button>
         </div>
     )
 }
