@@ -20,17 +20,21 @@ export default function Clock(): JSX.Element {
       </div>
 
       {visibleComponent === "punchSelect" && (
-        <PunchSelect
-          setPunchChoice={setPunchChoice}
-          setVisibleComponent={setVisibleComponent}
-        />
+        <div className="flex flex-col space-y-2 md:pl-10 md:pt-20">
+          <PunchSelect
+            setPunchChoice={setPunchChoice}
+            setVisibleComponent={setVisibleComponent}
+          />
+        </div>
       )}
       {visibleComponent === "punchId" && (
-        <PunchId 
-          punchChoice={punchChoice}
-          setVisibleComponent={setVisibleComponent} 
-          setWhoIs={setWhoIs}
-        />
+        <div className="flex flex-col space-y-2 md:pl-10 md:pt-20">
+          <PunchId 
+            punchChoice={punchChoice}
+            setVisibleComponent={setVisibleComponent} 
+            setWhoIs={setWhoIs}
+          />
+        </div>
       )}
       {visibleComponent === "punchConfirm" && (
         <PunchConfirm
