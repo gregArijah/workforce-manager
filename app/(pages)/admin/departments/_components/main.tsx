@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 
 
@@ -67,16 +68,13 @@ export default function Main({ departments, setDepartments, setView, setSelected
             <h2 className="font-bold">{department.name}</h2>
             <h3 className="text-gray-500">{department.code}</h3>
 
-            <div className="flex mt-2">
-                <button onClick={()=>handleEdit(department)} className="mr-2 bg-green-500 text-white px-4 py-2 rounded">
-                    Edit
+            <div className="flex space-x-1">
+                <button onClick={()=>handleEdit(department)} className="bg-green-500 text-white px-2 py-1 rounded">
+                    <FaEdit />
                   </button>
-                  <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-4 py-2 rounded">
-                    Delete
+                  <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-2 py-1 rounded">
+                    <FaTrash />
                   </button>
-                  {/* <button onClick={handleView}className="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
-                    View
-                  </button> */}
                   
             </div>
           </div>
