@@ -213,7 +213,7 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
                         <input 
                             type="text" 
                             name="duration" 
-                            value={duration.toFixed(2) + (duration == 1? " hour" : " hours")} 
+                            value={duration? (duration.toFixed(2) + (duration == 1? " hour" : " hours")): 0}
                             onChange={()=>{return}} 
                             className="bg-gray-100 text-gray-600 border-gray-300 cursor-not-allowed"
                         />

@@ -13,37 +13,37 @@ interface SelectPeriodProps {
 export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, setTimeCards}:SelectPeriodProps) {
 
     const handleView = (e:any) => {
-      const isoToDate = new Date(toDate);
-      const isoFromDate = new Date(fromDate);
-      const offset = isoFromDate.getTimezoneOffset()	;
+        const isoToDate = new Date(toDate);
+        const isoFromDate = new Date(fromDate);
+        const offset = isoFromDate.getTimezoneOffset()	;
 
-      // isoFromDate.setMinutes(isoFromDate.getMinutes() + offset);
-      // isoToDate.setMinutes(isoToDate.getMinutes() + offset + 1440);
-    
-      const api = '/api/timecard';
+        // isoFromDate.setMinutes(isoFromDate.getMinutes() + offset);
+        // isoToDate.setMinutes(isoToDate.getMinutes() + offset + 1440);
+      
+        const api = '/api/timecard';
 
-      const getTimecards = async (fromDate:any, toDate:any) => {
-        if (fromDate === "" || toDate === "") {
-          alert("Please select a date range");
-          return;
-        }
-        if(fromDate > toDate){
-          alert("Invalid date selection");
-          return;
-        }
-       
-        const res = await fetch(`${api}?fromDate=${isoFromDate}&toDate=${isoToDate}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const json = await res.json();
-        setTimeCards(json);
-        return json;
+        const getTimecards = async (fromDate:any, toDate:any) => {
+          if (fromDate === "" || toDate === "") {
+            alert("Please select a date range");
+            return;
+          }
+          if(fromDate > toDate){
+            alert("Invalid date selection");
+            return;
+          }
+        
+          const res = await fetch(`${api}?fromDate=${isoFromDate}&toDate=${isoToDate}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          const json = await res.json();
+          setTimeCards(json);
+          return json;
 
-    }
-      getTimecards(fromDate,toDate);
+      }
+        getTimecards(fromDate,toDate);
       };
       
       const handleFromDateChange = (e:any) => {
