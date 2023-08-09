@@ -33,7 +33,20 @@ export default function Main({ departments, setDepartments, setView, setSelected
         { field: 'Department', headerName: 'Department', width: 250 },
         { field: 'Code', headerName: 'Code', width: 150 },
         { field: 'Employees', headerName: 'Employees', width: 150 },
-        { field: 'Actions', headerName: 'Actions', width: 150 },
+        { field: 'Actions', headerName: 'Actions', width: 150, 
+        renderCell: (cellValues) => {
+            const department = cellValues.row;
+            return (
+                <div className="space-x-1">
+                    <button onClick={()=>handleEdit(department)} className="bg-blue-500 text-white p-1.5  rounded">
+                        <FaEdit />
+                    </button>
+                    <button onClick={()=>handleDelete(department)} className="bg-blue-500 text-white p-1.5 rounded">
+                        <FaTrash />
+                    </button>   
+                </div>
+            );
+          } },
       ];
     
     const rows: GridRowsProp = departments.map((department:any) => (
@@ -42,16 +55,6 @@ export default function Main({ departments, setDepartments, setView, setSelected
             Department: department.name, 
             Code: department.code, 
             Employees: department.employees.length,
-            Actions: ()=> ( 
-                        <div className="px-4 py-2 space-x-1">
-                            <button onClick={()=>handleEdit(department)} className="bg-green-500 text-white px-2 py-1 rounded">
-                                <FaEdit />
-                            </button>
-                            <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-2 py-1 rounded">
-                                <FaTrash />
-                            </button>   
-                        </div> 
-                    )
         }
     ));
 
@@ -93,13 +96,13 @@ export default function Main({ departments, setDepartments, setView, setSelected
           <Link href='/admin' className="bg-blue-500 text-white px-4 py-2 rounded">Back</Link>
           <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
         </div>
-        <table className="w-full">
+        {/* <table className="w-full">
         <thead>
         <tr>
             <th className="px-4 py-2">Department</th>
             <th className="px-4 py-2">Code</th>
             <th className="px-4 py-2">Employees</th>
-            <th className="px-4 py-2"></th>
+            <th className="px-4 py-2">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -125,10 +128,12 @@ export default function Main({ departments, setDepartments, setView, setSelected
     <hr />
     <hr />
     <br />
+    <p className="text-xl underline text-red-500">The table style below will replace the table style above on all pages, once i figure out how to include those buttons!!</p>
     <hr />
-    <hr />
+    <hr /> */}
 
-    <div style={{ height: 300, width: '100%' }}>
+    {/* <div style={{ height: max-content, width: '100%' }}> */}
+    <div className="h-full">
       <DataGrid rows={rows} columns={columns} />
     </div>
     
