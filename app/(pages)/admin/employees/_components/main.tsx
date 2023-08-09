@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 
 const deleteEmployee = async (employee:String) => {
   
@@ -22,6 +23,40 @@ interface MainProps {
     }
 
 export default function Main({ employees,setEmployees, setView, setSelectedEmployee }: MainProps){ 
+    console.log("employees", employees);
+
+  
+    
+    const columns: GridColDef[] = [
+        { field: 'Name', headerName: 'Name', width: 250 },
+        { field: 'Code', headerName: 'Code', width: 150 },
+        { field: 'Department', headerName: 'Department', width: 150 },
+        { field: 'Clocked In', headerName: 'Clocked In', width: 150 },
+        { field: 'Actions', headerName: 'Actions', width: 150, 
+        renderCell: (cellValues) => {
+            const employee = cellValues.row;
+            return (
+                <div className="space-x-1">
+                    <button onClick={()=>handleEdit(employee)} className="bg-blue-500 text-white p-1.5  rounded">
+                        <FaEdit />
+                    </button>
+                    <button onClick={()=>handleDelete(employee)} className="bg-blue-500 text-white p-1.5 rounded">
+                        <FaTrash />
+                    </button>   
+                </div>
+            );
+          } },
+      ];
+
+    const rows: GridRowsProp = employees.map((employee:any) => (
+        { 
+            id: employee.id, 
+            Name: employee.name, 
+            Code: employee.code, 
+            Department: employee.department.code,
+            "Clocked In": employee.isClockedIn ? "Yes" : "No",
+        } 
+    ));      
 
     async function handleDelete(employee:any){
         // setView('delete');
@@ -62,14 +97,14 @@ export default function Main({ employees,setEmployees, setView, setSelectedEmplo
                     <Link href='/admin' className="bg-blue-500 text-white px-4 py-2 rounded">Back</Link>
                     <button onClick={handleAdd}className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
                 </div>
-                <div className="border p-4 flex space-x-3 font-bold">
+                {/* <div className="border p-4 flex space-x-3 font-bold">
                 <h2 style={{ width: "20%" }}>Name</h2>
                 <h3 style={{ width: "10%" }}>Code</h3>
                 <h3 style={{ width: "20%" }}>Dept</h3>
                 <h3 style={{ width: "10%" }}>Clocked In</h3>
-                </div>
+                </div> */}
 
-                {employees.map((employee:any) => (
+                {/* {employees.map((employee:any) => (
                 <div key={employee.id} className="border p-4 flex space-x-3 items-center">
                     <h2 style={{ width: "20%" }}>
                     {employee.name}
@@ -85,9 +120,14 @@ export default function Main({ employees,setEmployees, setView, setSelectedEmplo
                         <FaTrash />
                     </button>
                   
-                    </div>
+                    </div>  
+                    
                 </div>
-                ))}
+                
+                ))} */}
+                <div className="h-full">
+                    <DataGrid rows={rows} columns={columns} />
+                </div>
             </div>
     )
 }
