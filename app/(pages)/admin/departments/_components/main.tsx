@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 
 
@@ -15,15 +17,45 @@ const deleteDepartment = async (department:String) => {
   const json = await res.json();
   return json;
 };
+  
 
 interface MainProps {
-    departments: { name: string; code: string }[];
+    departments: { name: string; code: string, employees:any[] }[];
     setDepartments: (dept: any) => void;
     setView: (view: any) => void;
     setSelectedDept: (dept: any) => void;
     }
 
 export default function Main({ departments, setDepartments, setView, setSelectedDept }: MainProps){
+    console.log("departments", departments);
+
+    const columns: GridColDef[] = [
+        { field: 'Department', headerName: 'Department', width: 250 },
+        { field: 'Code', headerName: 'Code', width: 150 },
+        { field: 'Employees', headerName: 'Employees', width: 150 },
+        { field: 'Actions', headerName: 'Actions', width: 150 },
+      ];
+    
+    const rows: GridRowsProp = departments.map((department:any) => (
+        { 
+            id: department.id, 
+            Department: department.name, 
+            Code: department.code, 
+            Employees: department.employees.length,
+            Actions: ()=> ( 
+                        <div className="px-4 py-2 space-x-1">
+                            <button onClick={()=>handleEdit(department)} className="bg-green-500 text-white px-2 py-1 rounded">
+                                <FaEdit />
+                            </button>
+                            <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-2 py-1 rounded">
+                                <FaTrash />
+                            </button>   
+                        </div> 
+                    )
+        }
+    ));
+
+
     function handleEdit(department:any){
       setSelectedDept(department);  
       setView('edit');
@@ -31,7 +63,7 @@ export default function Main({ departments, setDepartments, setView, setSelected
 
     async function handleDelete(department:any){
        // setView('delete')
-       const isConfirm:Boolean = confirm("Are you sure you want to delete this department?");
+       const isConfirm:Boolean = confirm(`This action will delete all associated employees.\nAre you sure you want to continue?`);
        try{
     
           if (isConfirm){
@@ -61,26 +93,45 @@ export default function Main({ departments, setDepartments, setView, setSelected
           <Link href='/admin' className="bg-blue-500 text-white px-4 py-2 rounded">Back</Link>
           <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
         </div>
-        {/* Render each department item */}
+        <table className="w-full">
+        <thead>
+        <tr>
+            <th className="px-4 py-2">Department</th>
+            <th className="px-4 py-2">Code</th>
+            <th className="px-4 py-2">Employees</th>
+            <th className="px-4 py-2"></th>
+        </tr>
+        </thead>
+        <tbody>
         {departments.map((department, index) => (
-          <div key={index} className="border p-4 flex space-x-3">
-            <h2 className="font-bold">{department.name}</h2>
-            <h3 className="text-gray-500">{department.code}</h3>
-
-            <div className="flex mt-2">
-                <button onClick={()=>handleEdit(department)} className="mr-2 bg-green-500 text-white px-4 py-2 rounded">
-                    Edit
-                  </button>
-                  <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-4 py-2 rounded">
-                    Delete
-                  </button>
-                  {/* <button onClick={handleView}className="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
-                    View
-                  </button> */}
-                  
-            </div>
-          </div>
+            <tr key={department.code}>
+            <td className="px-4 py-2">{department.name}</td>
+            <td className="px-4 py-2">{department.code}</td>
+            <td className="px-4 py-2">{department.employees.length}</td>
+        
+            
+            <td className="px-4 py-2 space-x-1">
+                <button onClick={()=>handleEdit(department)} className="bg-green-500 text-white px-2 py-1 rounded">
+                    <FaEdit />
+                </button>
+                <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-2 py-1 rounded">
+                    <FaTrash />
+                </button>   
+            </td>
+            </tr>
         ))}
+        </tbody>
+    </table>
+    <hr />
+    <hr />
+    <br />
+    <hr />
+    <hr />
+
+    <div style={{ height: 300, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} />
+    </div>
+    
         </div>
     )
 }

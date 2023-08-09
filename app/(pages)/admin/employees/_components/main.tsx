@@ -37,7 +37,7 @@ export default function Main({ employees,setEmployees, setView, setSelectedEmplo
  
            }
          }catch(err){
-             console.log(err);
+             throw err;
          }
  
      }

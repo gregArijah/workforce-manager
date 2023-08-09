@@ -102,7 +102,7 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
                         <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
                         <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
                         <td className="px-4 py-2">{entry.timeOut? readTime(entry.timeOut):null}</td>
-                        <td className="px-4 py-2">{entry.duration}</td>
+                        <td className="px-4 py-2">{entry.duration? (entry.duration).toFixed(2):0}</td>
                         <td>
                             <button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
                                 <FaEdit />

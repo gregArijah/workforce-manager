@@ -85,6 +85,7 @@ export async function GET(req: NextRequest) {
             id: true,
             name: true,
             code: true,
+            isClockedIn: true,
             companyId: true,
             department: { select: { code: true } },
             timeCards: { 
@@ -188,7 +189,7 @@ export async function PUT(req: NextRequest) {
       }
     }else
     if(timecardId){
-      console.log("timecardId we reach here");
+      console.log("running line 191");
       const body = await req.json();
       try {
         const timeCard = await prisma.timeCard.update({
@@ -198,6 +199,18 @@ export async function PUT(req: NextRequest) {
                     }},
           data: body,
         });
+        if (body.timeOut==null){
+          const employee = await prisma.employee.update({
+            where: { id: timeCard.employeeId },
+            data: { isClockedIn: true },
+          });
+        }else{
+          const employee = await prisma.employee.update({
+            where: { id: timeCard.employeeId },
+            data: { isClockedIn: false },
+          });
+        }
+
         return new Response(JSON.stringify(timeCard), { status: 200 });
       } catch (error) {
         return new Response('Error updating the time card.', { status: 500 });

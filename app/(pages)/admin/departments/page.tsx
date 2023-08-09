@@ -20,7 +20,7 @@ const getDepartments = async () => {
 };
 
 export default function Departments() {
-  const [departments, setDepartments] = useState<{ name: string; code: string }[]>([]); 
+  const [departments, setDepartments] = useState<{ name: string; code: string; employees: any[]; }[]>([]); 
   const [selectedDept, setSelectedDept] = useState({}); 
   const [view, setView] = useState('main'); 
   useEffect(() => {

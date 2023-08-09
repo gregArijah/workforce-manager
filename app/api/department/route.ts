@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     } else {
       const departments = await prisma.department.findMany({
         where:   { companyId: user.id },
-        // include: { company: true },
+        include: { employees: true },
         },
       );
       return new Response(JSON.stringify(departments), { status: 200 });

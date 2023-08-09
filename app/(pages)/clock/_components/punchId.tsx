@@ -41,6 +41,11 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
         });
         const employee = await getEmployees.json();
         setWhoIs(employee);
+        //if employee not found
+        if(!employee) {
+            alert('ID not found');
+            return;
+        }
         if(employee.isClockedIn && punchChoice === 'in') {
             alert('already clocked in');
             return;
