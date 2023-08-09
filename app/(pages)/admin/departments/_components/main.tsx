@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 
 
@@ -16,6 +17,7 @@ const deleteDepartment = async (department:String) => {
   const json = await res.json();
   return json;
 };
+  
 
 interface MainProps {
     departments: { name: string; code: string, employees:any[] }[];
@@ -26,6 +28,33 @@ interface MainProps {
 
 export default function Main({ departments, setDepartments, setView, setSelectedDept }: MainProps){
     console.log("departments", departments);
+
+    const columns: GridColDef[] = [
+        { field: 'Department', headerName: 'Department', width: 250 },
+        { field: 'Code', headerName: 'Code', width: 150 },
+        { field: 'Employees', headerName: 'Employees', width: 150 },
+        { field: 'Actions', headerName: 'Actions', width: 150 },
+      ];
+    
+    const rows: GridRowsProp = departments.map((department:any) => (
+        { 
+            id: department.id, 
+            Department: department.name, 
+            Code: department.code, 
+            Employees: department.employees.length,
+            Actions: ()=> ( 
+                        <div className="px-4 py-2 space-x-1">
+                            <button onClick={()=>handleEdit(department)} className="bg-green-500 text-white px-2 py-1 rounded">
+                                <FaEdit />
+                            </button>
+                            <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-2 py-1 rounded">
+                                <FaTrash />
+                            </button>   
+                        </div> 
+                    )
+        }
+    ));
+
 
     function handleEdit(department:any){
       setSelectedDept(department);  
@@ -67,9 +96,9 @@ export default function Main({ departments, setDepartments, setView, setSelected
         <table className="w-full">
         <thead>
         <tr>
-            <th className="px-4 py-2">Name</th>
+            <th className="px-4 py-2">Department</th>
             <th className="px-4 py-2">Code</th>
-            <th className="px-4 py-2"># Employees</th>
+            <th className="px-4 py-2">Employees</th>
             <th className="px-4 py-2"></th>
         </tr>
         </thead>
@@ -93,6 +122,15 @@ export default function Main({ departments, setDepartments, setView, setSelected
         ))}
         </tbody>
     </table>
+    <hr />
+    <hr />
+    <br />
+    <hr />
+    <hr />
+
+    <div style={{ height: 300, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} />
+    </div>
     
         </div>
     )
