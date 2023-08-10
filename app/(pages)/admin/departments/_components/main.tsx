@@ -36,7 +36,8 @@ export default function Main({ departments, setDepartments, setView, setSelected
         { field: 'Actions', headerName: 'Actions', width: 150, 
         renderCell: (cellValues) => {
             const department = cellValues.row;
-    ;        return (
+            console.log("department", department);
+            return (
                 <div className="space-x-1">
                     <button onClick={()=>handleEdit(department)} className="bg-blue-500 text-white p-1.5  rounded">
                         <FaEdit />

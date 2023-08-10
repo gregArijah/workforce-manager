@@ -48,10 +48,11 @@ interface EmployeeProps {
 
 export default function EditDept({ setView, setEmployees, employees, selectedEmployee }: EmployeeProps) {
     const employee = selectedEmployee;
+    console.log	("employee", employee);
 
-    const [name, setName] = useState(employee.name);
-    const [code, setCode] = useState(employee.code);
-    const [dept, setDept] = useState(employee.department.name);
+    const [name, setName] = useState(employee.Name);
+    const [code, setCode] = useState(employee.Code);
+    const [dept, setDept] = useState(employee.DepartmentId);
     const [deptlist, setDeptList] = useState([]); // Explicitly specify the type
     
 
@@ -59,7 +60,7 @@ export default function EditDept({ setView, setEmployees, employees, selectedEmp
         const fetchData = async () => {
             const data = await getDepartments();
             setDeptList(data);
-            setDept(employee.department.id);
+            setDept(employee.DepartmentId);
         };
         fetchData();
     }, []);

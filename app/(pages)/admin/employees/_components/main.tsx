@@ -55,6 +55,7 @@ export default function Main({ employees,setEmployees, setView, setSelectedEmplo
             Code: employee.code, 
             Department: employee.department.code,
             "Clocked In": employee.isClockedIn ? "Yes" : "No",
+            DepartmentId: employee.department.id,
         } 
     ));      
 

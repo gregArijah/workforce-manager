@@ -38,8 +38,8 @@ interface DeptProps {
 export default function EditDept({ setView, setDepartments, departments, selectedDept }: DeptProps) {
     const department = selectedDept;
 
-    const [name, setName] = useState(department.name);
-    const [code, setCode] = useState(department.code);
+    const [name, setName] = useState(department.Department);
+    const [code, setCode] = useState(department.Code);
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
