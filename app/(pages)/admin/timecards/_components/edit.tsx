@@ -54,6 +54,7 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
     console.log("time1", time1)//.toISOString().slice(0, 16));
     console.log("time2", time2);
     console.log("timezoneOffset", timezoneOffset);
+    console.log(card)
     
 
     const [name, setName] = useState(card.Name);

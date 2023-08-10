@@ -153,7 +153,8 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
         await addTimecard(newEntry);
         const newCard = await getTimecards(fromDate, toDate, card.id);
         setCard ({
-            ...newCard,
+            ...card,
+            newCard,
             Timecards: newCard.Timecards?  newCard.Timecards: newCard.timeCards 
            }) 
         //setCard(await refreshTimecards);
