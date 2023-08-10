@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
           id: true,
           name: true,
           code: true,
-          department: { select: { id: true, name: true } },
+          department: { select: { id: true, name: true, code: true } },
           isClockedIn: true,
         },
       });

@@ -1,4 +1,7 @@
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+
+
 interface ViewProps {
     setView: (view: any) => void;
     setCard: (card: any) => void;
@@ -7,6 +10,7 @@ interface ViewProps {
     }
 
 function sumHours(timecard:any){
+    console.log("timecardinview", timecard);
     let totalHours = 0;
     for (const line of timecard) {
         totalHours += line.duration;
@@ -39,7 +43,73 @@ async function deleteTimecard(id:any){
 
 export default function View({ setView, card, setCard, setEditEntry}: ViewProps) {
 
-    const entries = card.timeCards;
+    //console.log("card", card )
+
+    const entries = card.Timecards;
+    console.log("entries", entries);
+
+//     <thead>
+//     <tr>
+//     <th className="px-4 py-2">Date</th>
+//     <th className="px-4 py-2">Time In</th>
+//     <th className="px-4 py-2">Time Out</th>
+//     <th className="px-4 py-2">Total</th>
+//     <th className="px-4 py-2">Details</th>
+//     </tr>
+// </thead>
+    const columns: GridColDef[] = [
+        { field: 'Date', headerName: 'Date', width: 200 },
+        { field: 'Time In', headerName: 'Time In', width: 150 },
+        { field: 'Time Out', headerName: 'Time Out', width: 150 },
+        { field: 'Total Hours', headerName: 'Total Hours', width: 150},
+        { field: 'Actions', headerName: 'Actions', width: 150,
+        renderCell: (cellValues) => {
+            const entry = cellValues.row;
+            //console.log("entry", entry);
+            return (
+                <div className="space-x-1">
+                    <button onClick={()=>handleEdit(entry)} className="bg-blue-500 text-white px-2 py-1 rounded">
+                        <FaEdit />
+                    </button>
+                    <button onClick={()=>handleDelete(entry)} className="bg-blue-500 text-white px-2 py-1 rounded">
+                        <FaTrash />
+                    </button>                 
+                </div>
+            );
+          } },
+      ]
+    //   </thead>
+    //   <tbody>
+    //       {entries?.map((entry:any) => (
+    //       <tr key={entry.id}>
+    //           <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
+    //           <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
+    //           <td className="px-4 py-2">{entry.timeOut? readTime(entry.timeOut):null}</td>
+    //           <td className="px-4 py-2">{entry.duration? (entry.duration).toFixed(2):0}</td>
+    //           <td>
+    //               <button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
+    //                   <FaEdit />
+    //               </button>
+    //               <button onClick={()=>handleDelete(entry)} className="bg-red-500 text-white px-2 py-1 rounded">
+    //                   <FaTrash />
+    //               </button>  
+    //           </td>
+    //       </tr>
+    //       ))}
+    //   </tbody>
+    const rows: GridRowsProp = entries.map((entry:any) => (
+        { 
+            id: entry.id, 
+            Date: readDate(entry.timeIn),
+            "Time In": readTime(entry.timeIn), 
+            "Time Out": entry.timeOut? readTime(entry.timeOut):null,
+            "Total Hours": entry.duration? (entry.duration).toFixed(2):0, 
+            timeIn: entry.timeIn,
+            timeOut: entry.timeOut,
+            duration: entry.duration,
+
+        }
+    ));
 
     function goBack(){
         setView('main');
@@ -56,14 +126,18 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
     }
 
     async function handleDelete(entry:any){
+        console.log("entryid", entry.id);
         const isConfirm:Boolean = confirm("Are you sure you want to delete this record?");
         try{
            if (isConfirm){
+                
                await deleteTimecard(entry.id);
+               console.log("entry helloe world");
+               console.log("card", card)
 
                const newCard = {
                 ...card,
-                timeCards: card.timeCards.filter((tc:any) => tc.id !== entry.id),
+                Timecards: card.Timecards.filter((tc:any) => tc.id !== entry.id),
                }    
                setCard(newCard);
       
@@ -85,39 +159,14 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
             </div>
             <div className="flex-col">
                 <h2 className="text-2xl font-bold mb-4">Details</h2>
-                <h3 className="text-lg font-bold mb-2">Name: {card.name}</h3>
-                <table className="w-full">
-                <thead>
-                    <tr>
-                    <th className="px-4 py-2">Date</th>
-                    <th className="px-4 py-2">Time In</th>
-                    <th className="px-4 py-2">Time Out</th>
-                    <th className="px-4 py-2">Total</th>
-                    <th className="px-4 py-2">Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {card.timeCards?.map((entry:any) => (
-                    <tr key={entry.id}>
-                        <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
-                        <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
-                        <td className="px-4 py-2">{entry.timeOut? readTime(entry.timeOut):null}</td>
-                        <td className="px-4 py-2">{entry.duration? (entry.duration).toFixed(2):0}</td>
-                        <td>
-                            <button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
-                                <FaEdit />
-                            </button>
-                            <button onClick={()=>handleDelete(entry)} className="bg-red-500 text-white px-2 py-1 rounded">
-                                <FaTrash />
-                            </button>  
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
-                </table>
+                <h3 className="text-lg font-bold mb-2">Name: {card.Name}</h3>
+                
                 <div className="mt-4">
                 <strong>Total Hours: {sumHours(entries)} </strong>
                 </div>
+            </div>
+            <div className="h-full">
+                <DataGrid rows={rows} columns={columns} />
             </div>
                     
         </div>
@@ -125,3 +174,34 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
     )
 
 }
+
+
+// <table className="w-full">
+//                 <thead>
+//                     <tr>
+//                     <th className="px-4 py-2">Date</th>
+//                     <th className="px-4 py-2">Time In</th>
+//                     <th className="px-4 py-2">Time Out</th>
+//                     <th className="px-4 py-2">Total</th>
+//                     <th className="px-4 py-2">Details</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {entries?.map((entry:any) => (
+//                     <tr key={entry.id}>
+//                         <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
+//                         <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
+//                         <td className="px-4 py-2">{entry.timeOut? readTime(entry.timeOut):null}</td>
+//                         <td className="px-4 py-2">{entry.duration? (entry.duration).toFixed(2):0}</td>
+//                         <td>
+//                             <button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
+//                                 <FaEdit />
+//                             </button>
+//                             <button onClick={()=>handleDelete(entry)} className="bg-red-500 text-white px-2 py-1 rounded">
+//                                 <FaTrash />
+//                             </button>  
+//                         </td>
+//                     </tr>
+//                     ))}
+//                 </tbody>
+//                 </table>

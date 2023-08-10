@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 async function updateTimecard(updatedEntry:any){
+    console.log("updatedEntry", updatedEntry);
     const {id} = updatedEntry;
     const api = '/api/timecard';
     const res = await fetch(`${api}?timecardId=${id}`, {
@@ -49,18 +50,20 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
     time1.setMinutes(time1.getMinutes() - timezoneOffset);
     time2?.setMinutes(time2.getMinutes() - timezoneOffset)
     
-    console.log("time1", time1.toISOString().slice(0, 16));
+    console.log("editEntry", editEntry);
+    console.log("time1", time1)//.toISOString().slice(0, 16));
     console.log("time2", time2);
     console.log("timezoneOffset", timezoneOffset);
+    
 
-    const [name, setName] = useState(card.name);
+    const [name, setName] = useState(card.Name);
     const [timeIn, setTimeIn] = useState(time1.toISOString().slice(0, 16));
     const [timeOut, setTimeOut] = useState(time2?.toISOString().slice(0, 16)|| "");
     const [duration, setDuration] = useState(editEntry.duration || 0 );
 
     console.log("timeIn", timeIn);
     console.log("timeOut", timeOut);
-
+    console.log("name", name)
     const handleTimeInChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTimeIn = new Date(event.target.value);
         if ((newTimeIn > new Date()) || (timeOut && newTimeIn > new Date(timeOut))) {
@@ -111,7 +114,7 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
         console.log("editEntry", editEntry)
         
         const updatedEntry = {
-            ...editEntry,
+            id: editEntry.id,
             timeIn: new Date(timeIn).toISOString(),
             timeOut: timeOut? new Date(timeOut).toISOString() : null,
             duration: duration? duration : null,
@@ -120,11 +123,12 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
         await updateTimecard(updatedEntry);
 
         console.log("updatedEntry", updatedEntry);
+        console.log("card", card)
         // setCard(await getCard(card.id));
         // iterate through the timecards and update the entry
         const newCard = {
             ...card,
-            timeCards: card.timeCards.map((tc:any) => {
+            Timecards: card.Timecards.map((tc:any) => {
                 if (tc.id === updatedEntry.id){
                     return updatedEntry;
                 }
@@ -132,13 +136,12 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
             }),
         }
 
-        console.log("newCard", newCard);
-        //console.log("updatedEntry", updatedEntry);
-
+       
 
         alert("Entry updated successfully");
         setCard(newCard);
         setView('view');
+        console.log("newCard", newCard);
         return;
     }
 
@@ -157,7 +160,7 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
                         <input 
                             type="text"
                             name="name" 
-                            defaultValue={card.name}  
+                            defaultValue={name}  
                             className="bg-gray-100 text-gray-600 border-gray-300 cursor-not-allowed"
                             disabled={true}
                             
