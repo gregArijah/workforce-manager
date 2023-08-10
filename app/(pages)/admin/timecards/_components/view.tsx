@@ -126,14 +126,18 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
     }
 
     async function handleDelete(entry:any){
+        console.log("entryid", entry.id);
         const isConfirm:Boolean = confirm("Are you sure you want to delete this record?");
         try{
            if (isConfirm){
+                
                await deleteTimecard(entry.id);
+               console.log("entry helloe world");
+               console.log("card", card)
 
                const newCard = {
                 ...card,
-                timeCards: card.timeCards.filter((tc:any) => tc.id !== entry.id),
+                Timecards: card.Timecards.filter((tc:any) => tc.id !== entry.id),
                }    
                setCard(newCard);
       
