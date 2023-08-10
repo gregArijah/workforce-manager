@@ -7,6 +7,7 @@ interface ViewProps {
     }
 
 function sumHours(timecard:any){
+    console.log("timecardinview", timecard);
     let totalHours = 0;
     for (const line of timecard) {
         totalHours += line.duration;
@@ -39,7 +40,9 @@ async function deleteTimecard(id:any){
 
 export default function View({ setView, card, setCard, setEditEntry}: ViewProps) {
 
-    const entries = card.timeCards;
+    //console.log("card", card )
+
+    const entries = card.Timecards;
 
     function goBack(){
         setView('main');
@@ -85,7 +88,7 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
             </div>
             <div className="flex-col">
                 <h2 className="text-2xl font-bold mb-4">Details</h2>
-                <h3 className="text-lg font-bold mb-2">Name: {card.name}</h3>
+                <h3 className="text-lg font-bold mb-2">Name: {card.Name}</h3>
                 <table className="w-full">
                 <thead>
                     <tr>
@@ -97,7 +100,7 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
                     </tr>
                 </thead>
                 <tbody>
-                    {card.timeCards?.map((entry:any) => (
+                    {entries?.map((entry:any) => (
                     <tr key={entry.id}>
                         <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
                         <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
