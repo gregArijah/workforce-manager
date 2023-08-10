@@ -32,7 +32,7 @@ export default function main({ timecards, setView, setCard}: mainProps) {
         { field: 'Actions', headerName: 'Actions', width: 150, 
         renderCell: (cellValues) => {
             const timecard = cellValues.row;
-            console.log("timecard", timecard);
+            console.log("timecard35", timecard);
             return (
                 <div className="space-x-1">
                     <button onClick={()=>handleView(timecard)} className="bg-blue-500 text-white p-1.5  rounded">
@@ -60,6 +60,7 @@ export default function main({ timecards, setView, setCard}: mainProps) {
 
     function handleView (timecard:any)  {
         setView('view');
+        console.log("timecard63", timecard)
         setCard(timecard);
      }
 
@@ -79,35 +80,3 @@ return (
     </div>
 )
 }  
-
-
-{/* <table className="w-full">
-        <thead>
-        <tr>
-            <th className="px-4 py-2">Name</th>
-            <th className="px-4 py-2">Code</th>
-            <th className="px-4 py-2">Department</th>
-            <th className="px-4 py-2">Total Hours</th>
-            <th className="px-4 py-2">Clocked In</th>          
-            <th className="px-4 py-2">Details</th>
-        </tr>
-        </thead>
-        <tbody>
-        {timecards.map((timecard:any) => (
-            <tr key={timecard.id}>
-            <td className="px-4 py-2">{timecard.name}</td>
-            <td className="px-4 py-2">{timecard.code}</td>
-            <td className="px-4 py-2">{timecard.department.code}</td>
-            <td className="px-4 py-2">{sumHours(timecard.timeCards)}</td>
-            <td className="px-4 py-2">{timecard.isClockedIn ? "Yes" : "No"}</td>
-            
-            <td className="px-4 py-2">
-                <button className="bg-blue-500 text-white px-2 py-1 rounded" 
-                        onClick={()=>handleView(timecard)}>
-                    <FaEye />
-                </button>    
-            </td>
-            </tr>
-        ))}
-        </tbody>
-    </table> */}

@@ -85,10 +85,13 @@ interface TimecardProps {
 
 export default function Add ({setView, card, setCard, setTimecards, fromDate, toDate}: TimecardProps ){
     
-    const [name, setName] = useState(card.name);
+    const [name, setName] = useState(card.Name);
     const [timeIn, setTimeIn] = useState('');
     const [timeOut, setTimeOut] = useState('');
     const [duration, setDuration] = useState<number>(0);
+
+      
+    console.log(card)
     
 
     const handleTimeInChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,8 +151,12 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
         };
 
         await addTimecard(newEntry);
-        const refreshTimecards = await getTimecards(fromDate, toDate, card.id);
-        setCard(await refreshTimecards);
+        const newCard = await getTimecards(fromDate, toDate, card.id);
+        setCard ({
+            ...newCard,
+            Timecards: newCard.Timecards?  newCard.Timecards: newCard.timeCards 
+           }) 
+        //setCard(await refreshTimecards);
    
 
        
@@ -181,7 +188,7 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
                         <input 
                             type="text"
                             name="name" 
-                            defaultValue={card.name}  
+                            defaultValue={name}  
                             className="bg-gray-100 text-gray-600 border-gray-300 cursor-not-allowed"
                             disabled={true}
 
