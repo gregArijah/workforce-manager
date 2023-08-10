@@ -104,12 +104,10 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
             "Time In": readTime(entry.timeIn), 
             "Time Out": entry.timeOut? readTime(entry.timeOut):null,
             "Total Hours": entry.duration? (entry.duration).toFixed(2):0, 
+            timeIn: entry.timeIn,
+            timeOut: entry.timeOut,
+            duration: entry.duration,
 
-            Name: entry.name, 
-            Code: entry.code, 
-            Department: entry.Department,
-            "Clocked In": entry.isClockedIn ? "Yes" : "No",	
-            Timecards: entry.timeCards,
         }
     ));
 
@@ -158,35 +156,7 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
             <div className="flex-col">
                 <h2 className="text-2xl font-bold mb-4">Details</h2>
                 <h3 className="text-lg font-bold mb-2">Name: {card.Name}</h3>
-                <table className="w-full">
-                <thead>
-                    <tr>
-                    <th className="px-4 py-2">Date</th>
-                    <th className="px-4 py-2">Time In</th>
-                    <th className="px-4 py-2">Time Out</th>
-                    <th className="px-4 py-2">Total</th>
-                    <th className="px-4 py-2">Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {entries?.map((entry:any) => (
-                    <tr key={entry.id}>
-                        <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
-                        <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
-                        <td className="px-4 py-2">{entry.timeOut? readTime(entry.timeOut):null}</td>
-                        <td className="px-4 py-2">{entry.duration? (entry.duration).toFixed(2):0}</td>
-                        <td>
-                            <button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
-                                <FaEdit />
-                            </button>
-                            <button onClick={()=>handleDelete(entry)} className="bg-red-500 text-white px-2 py-1 rounded">
-                                <FaTrash />
-                            </button>  
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
-                </table>
+                
                 <div className="mt-4">
                 <strong>Total Hours: {sumHours(entries)} </strong>
                 </div>
@@ -200,3 +170,34 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
     )
 
 }
+
+
+// <table className="w-full">
+//                 <thead>
+//                     <tr>
+//                     <th className="px-4 py-2">Date</th>
+//                     <th className="px-4 py-2">Time In</th>
+//                     <th className="px-4 py-2">Time Out</th>
+//                     <th className="px-4 py-2">Total</th>
+//                     <th className="px-4 py-2">Details</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {entries?.map((entry:any) => (
+//                     <tr key={entry.id}>
+//                         <td className="px-4 py-2">{readDate(entry.timeIn)}</td>
+//                         <td className="px-4 py-2">{readTime(entry.timeIn)}</td>
+//                         <td className="px-4 py-2">{entry.timeOut? readTime(entry.timeOut):null}</td>
+//                         <td className="px-4 py-2">{entry.duration? (entry.duration).toFixed(2):0}</td>
+//                         <td>
+//                             <button onClick={()=>handleEdit(entry)} className="bg-green-500 text-white px-2 py-1 rounded">
+//                                 <FaEdit />
+//                             </button>
+//                             <button onClick={()=>handleDelete(entry)} className="bg-red-500 text-white px-2 py-1 rounded">
+//                                 <FaTrash />
+//                             </button>  
+//                         </td>
+//                     </tr>
+//                     ))}
+//                 </tbody>
+//                 </table>

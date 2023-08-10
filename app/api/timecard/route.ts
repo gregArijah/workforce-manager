@@ -213,7 +213,8 @@ export async function PUT(req: NextRequest) {
 
         return new Response(JSON.stringify(timeCard), { status: 200 });
       } catch (error) {
-        return new Response('Error updating the time card.', { status: 500 });
+        //return new Response('Error updating the time card.', { status: 500 });
+        throw error;
       }
     }
 }
