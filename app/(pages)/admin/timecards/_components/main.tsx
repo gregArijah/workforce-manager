@@ -55,7 +55,7 @@ export default function main({ timecards, setView, setCard}: mainProps) {
     ));
    
     if (!timecards || timecards.length === 0) {
-        return <p>Select a date range to view timecards</p>;
+        return <div className="flex justify-center py-10 text-xl">Select a date range to view timecards</div>;
       }
 
     function handleView (timecard:any)  {
@@ -70,7 +70,18 @@ return (
 
     <div className="border p-4">
     <h2>Employee Hours</h2>
-    {/* <table className="w-full">
+ 
+  
+    </div>
+        <div className="h-full">
+            <DataGrid rows={rows} columns={columns} />
+        </div>
+    </div>
+)
+}  
+
+
+{/* <table className="w-full">
         <thead>
         <tr>
             <th className="px-4 py-2">Name</th>
@@ -100,11 +111,3 @@ return (
         ))}
         </tbody>
     </table> */}
-  
-    </div>
-        <div className="h-full">
-            <DataGrid rows={rows} columns={columns} />
-        </div>
-    </div>
-)
-}
