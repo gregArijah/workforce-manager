@@ -169,6 +169,7 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
         setTimeIn('');
         setTimeOut('');
         setDuration(0); 
+        setView('view');
         
         return;
     };
