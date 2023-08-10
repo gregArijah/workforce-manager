@@ -27,7 +27,6 @@ interface MainProps {
     }
 
 export default function Main({ departments, setDepartments, setView, setSelectedDept }: MainProps){
-    console.log("departments", departments);
 
     const columns: GridColDef[] = [
         { field: 'Department', headerName: 'Department', width: 250 },
@@ -36,7 +35,6 @@ export default function Main({ departments, setDepartments, setView, setSelected
         { field: 'Actions', headerName: 'Actions', width: 150, 
         renderCell: (cellValues) => {
             const department = cellValues.row;
-            console.log("department", department);
             return (
                 <div className="space-x-1">
                     <button onClick={()=>handleEdit(department)} className="bg-blue-500 text-white p-1.5  rounded">
@@ -97,43 +95,7 @@ export default function Main({ departments, setDepartments, setView, setSelected
           <Link href='/admin' className="bg-blue-500 text-white px-4 py-2 rounded">Back</Link>
           <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2 rounded">Add New</button>
         </div>
-        {/* <table className="w-full">
-        <thead>
-        <tr>
-            <th className="px-4 py-2">Department</th>
-            <th className="px-4 py-2">Code</th>
-            <th className="px-4 py-2">Employees</th>
-            <th className="px-4 py-2">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {departments.map((department, index) => (
-            <tr key={department.code}>
-            <td className="px-4 py-2">{department.name}</td>
-            <td className="px-4 py-2">{department.code}</td>
-            <td className="px-4 py-2">{department.employees.length}</td>
-        
-            
-            <td className="px-4 py-2 space-x-1">
-                <button onClick={()=>handleEdit(department)} className="bg-green-500 text-white px-2 py-1 rounded">
-                    <FaEdit />
-                </button>
-                <button onClick={()=>handleDelete(department)} className="bg-red-500 text-white px-2 py-1 rounded">
-                    <FaTrash />
-                </button>   
-            </td>
-            </tr>
-        ))}
-        </tbody>
-    </table>
-    <hr />
-    <hr />
-    <br />
-    <p className="text-xl underline text-red-500">The table style below will replace the table style above on all pages, once i figure out how to include those buttons!!</p>
-    <hr />
-    <hr /> */}
-
-    {/* <div style={{ height: max-content, width: '100%' }}> */}
+       
     <div className="h-full">
       <DataGrid rows={rows} columns={columns} />
     </div>

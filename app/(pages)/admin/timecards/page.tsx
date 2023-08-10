@@ -21,14 +21,12 @@ export default function TimeCards() {
   return (
     <div className="h-screen">
       <Header />
-      {view== 'main' && <SelectPeriod setFromDate={setFromDate} setToDate={setToDate} fromDate={fromDate} toDate={toDate} setTimeCards={setTimecards}/>}
+      {view== 'main' && <SelectPeriod card={card} setFromDate={setFromDate} setToDate={setToDate} fromDate={fromDate} toDate={toDate} setTimeCards={setTimecards}/>}
       {view==='main' && <Main timecards={timecards} setView={setView} setCard={setCard} />}
       {view==='view' && <View setView={setView} card={card} setCard={setCard} setEditEntry={setEditEntry} />}
       {view==='add'  && <Add setView={setView} card={card} setCard={setCard} setTimecards={setTimecards} fromDate={fromDate} toDate={toDate}  />}
       {view==='edit'  && <Edit setView={setView} card={card} setCard={setCard} editEntry={editEntry} setEditEntry={setEditEntry}/>}  
-      {/* setTimecards={setTimecards} fromDate={fromDate} toDate={toDate}   />} */}
-
-    
+       
     </div>
   );
 }

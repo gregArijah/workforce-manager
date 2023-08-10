@@ -1,47 +1,4 @@
 import { useState, useEffect } from 'react';
-
-// const getDepartments = async () => {
-//     const api = `/api/department/`;
-//     const res = await fetch(api, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     const json = await res.json();
-//     console.log(json);
-    
-//     return json;
-//   };
-
-  
-// const api = `/api/employee`;
-
-// const getEmployees = async () => {
-//     const res = await fetch(api, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     const json = await res.json();
-//     return json;
-//   };
-
-// const addEmployee = async (employee:any) => {
-  
-  
-//     const res = await fetch(api, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(employee),
-//     });
-//     console.log(res)
-//     const json = await res.json();
-//     return json;
-//   };
  
   const addTimecard = async (timecard:any) => {
    const api = `/api/timecard`;
@@ -89,10 +46,6 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
     const [timeIn, setTimeIn] = useState('');
     const [timeOut, setTimeOut] = useState('');
     const [duration, setDuration] = useState<number>(0);
-
-      
-    console.log(card)
-    
 
     const handleTimeInChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTimeIn = new Date(event.target.value);

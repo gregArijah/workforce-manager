@@ -189,7 +189,6 @@ export async function PUT(req: NextRequest) {
       }
     }else
     if(timecardId){
-      console.log("running line 191");
       const body = await req.json();
       try {
         const timeCard = await prisma.timeCard.update({

@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 async function updateTimecard(updatedEntry:any){
-    console.log("updatedEntry", updatedEntry);
     const {id} = updatedEntry;
     const api = '/api/timecard';
     const res = await fetch(`${api}?timecardId=${id}`, {
@@ -50,21 +49,11 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
     time1.setMinutes(time1.getMinutes() - timezoneOffset);
     time2?.setMinutes(time2.getMinutes() - timezoneOffset)
     
-    console.log("editEntry", editEntry);
-    console.log("time1", time1)//.toISOString().slice(0, 16));
-    console.log("time2", time2);
-    console.log("timezoneOffset", timezoneOffset);
-    console.log(card)
-    
-
     const [name, setName] = useState(card.Name);
     const [timeIn, setTimeIn] = useState(time1.toISOString().slice(0, 16));
     const [timeOut, setTimeOut] = useState(time2?.toISOString().slice(0, 16)|| "");
     const [duration, setDuration] = useState(editEntry.duration || 0 );
 
-    console.log("timeIn", timeIn);
-    console.log("timeOut", timeOut);
-    console.log("name", name)
     const handleTimeInChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTimeIn = new Date(event.target.value);
         if ((newTimeIn > new Date()) || (timeOut && newTimeIn > new Date(timeOut))) {
@@ -112,7 +101,6 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
             alert('Time In is required');
             return;
         }
-        console.log("editEntry", editEntry)
         
         const updatedEntry = {
             id: editEntry.id,
@@ -123,10 +111,6 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
 
         await updateTimecard(updatedEntry);
 
-        console.log("updatedEntry", updatedEntry);
-        console.log("card", card)
-        // setCard(await getCard(card.id));
-        // iterate through the timecards and update the entry
         const newCard = {
             ...card,
             Timecards: card.Timecards.map((tc:any) => {
@@ -142,7 +126,6 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
         alert("Entry updated successfully");
         setCard(newCard);
         setView('view');
-        console.log("newCard", newCard);
         return;
     }
 

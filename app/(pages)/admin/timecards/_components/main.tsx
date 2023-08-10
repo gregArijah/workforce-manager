@@ -32,7 +32,6 @@ export default function main({ timecards, setView, setCard}: mainProps) {
         { field: 'Actions', headerName: 'Actions', width: 150, 
         renderCell: (cellValues) => {
             const timecard = cellValues.row;
-            console.log("timecard35", timecard);
             return (
                 <div className="space-x-1">
                     <button onClick={()=>handleView(timecard)} className="bg-blue-500 text-white p-1.5  rounded">
@@ -60,7 +59,6 @@ export default function main({ timecards, setView, setCard}: mainProps) {
 
     function handleView (timecard:any)  {
         setView('view');
-        console.log("timecard63", timecard)
         setCard(timecard);
      }
 
