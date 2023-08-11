@@ -2,6 +2,7 @@ import Navbar from "./_components/navbar";
 import Header from "../_components/header"	;
 import Coolstuff from "./_components/coolstuff";
 import Slides from "./_components/slides";
+import SplitButton from "./_components/splitbutton";
 
 export default function Landing(): JSX.Element {
  
@@ -9,7 +10,9 @@ export default function Landing(): JSX.Element {
     <div className='h-screen p-6'>     
       <div className="flex justify-between items-center">
         <Header />
-        <Navbar />      
+        <Navbar /> 
+        <SplitButton />
+
       </div>
       <Slides />
       <Coolstuff />    
