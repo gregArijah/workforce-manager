@@ -10,7 +10,6 @@ interface ViewProps {
     }
 
 function sumHours(timecard:any){
-    console.log("timecardinview", timecard);
     let totalHours = 0;
     for (const line of timecard) {
         totalHours += line.duration;
@@ -43,20 +42,8 @@ async function deleteTimecard(id:any){
 
 export default function View({ setView, card, setCard, setEditEntry}: ViewProps) {
 
-    //console.log("card", card )
-
     const entries = card.Timecards;
-    console.log("entries", entries);
 
-//     <thead>
-//     <tr>
-//     <th className="px-4 py-2">Date</th>
-//     <th className="px-4 py-2">Time In</th>
-//     <th className="px-4 py-2">Time Out</th>
-//     <th className="px-4 py-2">Total</th>
-//     <th className="px-4 py-2">Details</th>
-//     </tr>
-// </thead>
     const columns: GridColDef[] = [
         { field: 'Date', headerName: 'Date', width: 200 },
         { field: 'Time In', headerName: 'Time In', width: 150 },
@@ -65,7 +52,6 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
         { field: 'Actions', headerName: 'Actions', width: 150,
         renderCell: (cellValues) => {
             const entry = cellValues.row;
-            //console.log("entry", entry);
             return (
                 <div className="space-x-1">
                     <button onClick={()=>handleEdit(entry)} className="bg-blue-500 text-white px-2 py-1 rounded">
@@ -121,19 +107,15 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
 
     function handleEdit(entry:any){
         setEditEntry(entry);
-        console.log("entry", entry);
         setView('edit');
     }
 
     async function handleDelete(entry:any){
-        console.log("entryid", entry.id);
         const isConfirm:Boolean = confirm("Are you sure you want to delete this record?");
         try{
            if (isConfirm){
                 
                await deleteTimecard(entry.id);
-               console.log("entry helloe world");
-               console.log("card", card)
 
                const newCard = {
                 ...card,

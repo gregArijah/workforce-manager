@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface SelectPeriodProps {
@@ -7,18 +7,16 @@ interface SelectPeriodProps {
   toDate: any;
   fromDate: any;
   setTimeCards: (timecards: any) => void;
+  card: any;
 }
 
 
-export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, setTimeCards}:SelectPeriodProps) {
+export default function SelectPeriod({card,setFromDate,setToDate, fromDate, toDate, setTimeCards}:SelectPeriodProps) {
 
-    const handleView = (e:any) => {
+    const handleView = () => {
         const isoToDate = new Date(toDate);
         const isoFromDate = new Date(fromDate);
         const offset = isoFromDate.getTimezoneOffset()	;
-
-        // isoFromDate.setMinutes(isoFromDate.getMinutes() + offset);
-        // isoToDate.setMinutes(isoToDate.getMinutes() + offset + 1440);
       
         const api = '/api/timecard';
 
@@ -48,16 +46,11 @@ export default function SelectPeriod({setFromDate,setToDate, fromDate, toDate, s
       
       const handleFromDateChange = (e:any) => {
         setFromDate(e.target.value);
-  
       };
 
       const handleToDateChange = (e:any) => {
         setToDate(e.target.value);
-        const check = new Date(e.target.value);
-
       };
-
-      const handleAdd = (e:any) => {}
       
     return(  
         <div>
