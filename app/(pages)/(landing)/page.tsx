@@ -1,3 +1,5 @@
+import Session from "@/app/utils/serverSession";
+
 import Navbar from "./_components/navbar";
 import Header from "../_components/header"	;
 import Coolstuff from "./_components/coolstuff";
@@ -5,21 +7,18 @@ import Slides from "./_components/slides";
 import LoginButton from "./_components/loginbutton";
 import LogoutButton from "./_components/logoutbutton";
 
-import { useSession } from "next-auth/react";
+export default async function Landing(): Promise<JSX.Element> {
 
-const {data: session, status}= useSession();
+  const session = await Session();
+  console.log(!!session);
 
-export default function Landing(): JSX.Element {
- 
   return (
-    <div className='h-screen p-6'>     
+    <div className='h-full p-6'>     
       <div className="flex justify-between items-center">
-        <Header />
-        <Navbar /> 
-        <LoginButton />
-        <LogoutButton />
-
-
+          <Header />
+          {/* <Navbar />  */}
+          {!session? <LoginButton />: null}
+          {!!session? <LogoutButton />: null}
       </div>
       <Slides />
       <Coolstuff />    
