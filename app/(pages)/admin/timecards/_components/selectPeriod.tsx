@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import Link from "next/link";
 
 interface SelectPeriodProps {
@@ -59,7 +60,7 @@ export default function SelectPeriod({card,setFromDate,setToDate, fromDate, toDa
             </div>
         <div className="p-4">
           <h2 className="mb-2">Select Period</h2>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-end">
               <div className="flex flex-col">
                   <label htmlFor="fromDate" className="mb-2">
                   From:
