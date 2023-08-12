@@ -55,7 +55,7 @@ export default function LoginButton() {
 
   return (
     <React.Fragment>
-      <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+      <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
         <Button onClick={handleClick}>Login</Button>
         <Button
           size="small"

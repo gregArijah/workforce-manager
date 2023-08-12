@@ -6,8 +6,10 @@ export default async function ClockLayout({
     children: React.ReactNode
   }) {
     return (
-        <div className="bg-cover bg-center h-screen" style={{ backgroundImage: "url('/vecteezy.jpg')"}}>
-          <section className='p-2 md:p-6'>
+        // <div className="bg-cover bg-center h-screen" style={{ backgroundImage: "url('/vecteezy.jpg')"}}>
+        <div>
+          {/* <section className='p-2 md:p-12'> */}
+            <section>
               {children}
           </section>
         </div>
