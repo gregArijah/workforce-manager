@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+
+    const api = `/api/timecard`;
+
  
   const addTimecard = async (timecard:any) => {
    const api = `/api/timecard`;
@@ -31,6 +34,27 @@ import { useState, useEffect } from 'react';
 
 }
 
+
+    
+
+const getAllTimecards = async (fromDate:any, toDate:any) => {
+    const isoToDate = new Date(toDate);
+    const isoFromDate = new Date(fromDate);
+    const offset = isoFromDate.getTimezoneOffset()	;
+    
+    const res = await fetch(`${api}?fromDate=${isoFromDate}&toDate=${isoToDate}`, {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+    });
+    const json = await res.json();
+    //setTimeCards(json);
+    return json;
+
+}
+
+ 
 interface TimecardProps {
     setView: (view: any) => void; 
     card: any;
@@ -113,7 +137,8 @@ export default function Add ({setView, card, setCard, setTimecards, fromDate, to
         //setCard(await refreshTimecards);
    
 
-       
+        setTimecards(await getAllTimecards(fromDate,toDate));
+
         alert('Timecard entry successful');
     //  Update the state with the new department
     //  setTimecards(await getTimecards());
