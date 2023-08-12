@@ -19,7 +19,7 @@ export default function TimeCards() {
   const [editEntry, setEditEntry] = useState(''); // Explicitly specify the type
 
   return (
-    <div className="h-screen">
+    <div className="h-screen p-2 md:p-12">
       <Header />
       {view== 'main' && <SelectPeriod card={card} setFromDate={setFromDate} setToDate={setToDate} fromDate={fromDate} toDate={toDate} setTimeCards={setTimecards}/>}
       {view==='main' && <Main timecards={timecards} setView={setView} setCard={setCard} />}

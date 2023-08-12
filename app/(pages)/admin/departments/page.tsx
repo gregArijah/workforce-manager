@@ -32,7 +32,7 @@ export default function Departments() {
   }, []);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen p-2 md:p-12">
       <Header />
 
       <div className="flex-col">

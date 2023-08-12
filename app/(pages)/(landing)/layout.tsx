@@ -7,7 +7,7 @@ export default async function ClockLayout({
   }) {
     return (
         <div className="bg-cover bg-center h-screen" style={{ backgroundImage: "url('/vecteezy.jpg')"}}>
-          <section className='p-2 md:p-6'>
+          <section className='p-2 md:p-12'>
               {children}
           </section>
         </div>

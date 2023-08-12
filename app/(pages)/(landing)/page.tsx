@@ -13,7 +13,7 @@ export default async function Landing(): Promise<JSX.Element> {
   console.log(!!session);
 
   return (
-    <div className='h-full p-6'>     
+    <div className='h-full'>     
       <div className="flex justify-between items-center">
           <Header />
           {/* <Navbar />  */}
