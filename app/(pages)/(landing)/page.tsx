@@ -2,7 +2,12 @@ import Navbar from "./_components/navbar";
 import Header from "../_components/header"	;
 import Coolstuff from "./_components/coolstuff";
 import Slides from "./_components/slides";
-import SplitButton from "./_components/splitbutton";
+import LoginButton from "./_components/loginbutton";
+import LogoutButton from "./_components/logoutbutton";
+
+import { useSession } from "next-auth/react";
+
+const {data: session, status}= useSession();
 
 export default function Landing(): JSX.Element {
  
@@ -11,7 +16,9 @@ export default function Landing(): JSX.Element {
       <div className="flex justify-between items-center">
         <Header />
         <Navbar /> 
-        <SplitButton />
+        <LoginButton />
+        <LogoutButton />
+
 
       </div>
       <Slides />

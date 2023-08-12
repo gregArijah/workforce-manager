@@ -1,8 +1,8 @@
-'use client'
+'use client' 
 
-import { useState, useRef } from 'react';
 import * as React from 'react';
-import { signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation'
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -14,18 +14,21 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 
-const login = () => {signIn(undefined,{ callbackUrl:'/admin'})}
+const logout = () => {signOut({callbackUrl:'/'})}
 
-const options = ['Register'];
+const options = ['Logout'];
 
-export default function SplitButton() {
+export default function LogoutButton() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const router= useRouter();
 
   const handleClick = () => {
-    login();
+    //url redirct to /admin
+    
     console.info(`You clicked ${options[selectedIndex]}`);
+    router.push('/admin');
   };
 
   const handleMenuItemClick = (
@@ -33,7 +36,7 @@ export default function SplitButton() {
     index: number,
   ) => {
     //setSelectedIndex(index);
-    alert('Please await production website for registration.')
+    logout();
     setOpen(false);
     console.log(index, options[index]);
   };
@@ -56,12 +59,12 @@ export default function SplitButton() {
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <Button onClick={handleClick}>Login</Button>
+        <Button onClick={handleClick}>Enter App</Button>
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}
-          aria-label="login or register"
+          aria-label="logout or register"
           aria-haspopup="menu"
           onClick={handleToggle}
         >
