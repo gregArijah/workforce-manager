@@ -25,7 +25,7 @@ export default function TimeCards() {
       {view==='main' && <Main timecards={timecards} setView={setView} setCard={setCard} />}
       {view==='view' && <View setView={setView} card={card} setCard={setCard} setEditEntry={setEditEntry} />}
       {view==='add'  && <Add setView={setView} card={card} setCard={setCard} setTimecards={setTimecards} fromDate={fromDate} toDate={toDate}  />}
-      {view==='edit'  && <Edit setView={setView} card={card} setCard={setCard} editEntry={editEntry} setEditEntry={setEditEntry}/>}  
+      {view==='edit'  && <Edit setView={setView} card={card} setCard={setCard} setTimecards={setTimecards} editEntry={editEntry} setEditEntry={setEditEntry} fromDate={fromDate} toDate={toDate}/>}  
        
     </div>
   );

@@ -37,9 +37,30 @@ interface EditProps {
     setCard: (card:any) => void;
     editEntry: any;
     setEditEntry: (editEntry:any) => void;
+    setTimecards: (timecards:any) => void;
+    fromDate: any;
+    toDate: any;
 }
 
-export default function Edit({setView, setCard, card, editEntry, setEditEntry}:EditProps) {
+const getAllTimecards = async (fromDate:any, toDate:any) => {
+    const isoToDate = new Date(toDate);
+    const isoFromDate = new Date(fromDate);
+    const offset = isoFromDate.getTimezoneOffset()	;
+    const api = '/api/timecard';
+    
+    const res = await fetch(`${api}?fromDate=${isoFromDate}&toDate=${isoToDate}`, {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+    });
+    const json = await res.json();
+    //setTimeCards(json);
+    return json;
+
+}
+
+export default function Edit({setView, setCard, card, editEntry, setTimecards, fromDate, toDate}:EditProps) {
 
     
     let time1 = new Date(editEntry.timeIn);
@@ -121,7 +142,7 @@ export default function Edit({setView, setCard, card, editEntry, setEditEntry}:E
             }),
         }
 
-       
+        setTimecards(await getAllTimecards(fromDate,toDate));
 
         alert("Entry updated successfully");
         setCard(newCard);
