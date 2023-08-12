@@ -5,9 +5,9 @@ function HowItWorksSection() {
     <section className="bg-gray-100 py-16">
       <div className="container mx-auto text-center">
         <h2 className="text-3xl font-semibold mb-4">It&apos;s As Easy As</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Step 1 */}
-          <div className="p-4">
+          <div className="p-4 flex flex-col justify-center items-center">
             <div className="rounded-full bg-blue-500 text-white w-16 h-16 flex items-center justify-center mb-4">
               1
             </div>
@@ -16,7 +16,7 @@ function HowItWorksSection() {
           </div>
 
           {/* Step 2 */}
-          <div className="p-4">
+          <div className="p-4 flex flex-col justify-center items-center">
             <div className="rounded-full bg-blue-500 text-white w-16 h-16 flex items-center justify-center mb-4">
               2
             </div>
@@ -25,7 +25,7 @@ function HowItWorksSection() {
           </div>
 
           {/* Step 3 */}
-          <div className="p-4">
+          <div className="p-4 flex flex-col justify-center items-center">
             <div className="rounded-full bg-blue-500 text-white w-16 h-16 flex items-center justify-center mb-4">
               3
             </div>
