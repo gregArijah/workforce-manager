@@ -10,7 +10,7 @@ function TestimonialsSection() {
           <div className="p-4 border rounded-lg shadow-md">
             <div className="text-xl font-semibold mb-2">John Doe</div>
             <p className="text-gray-600 mb-4">
-              &quot;Using the punch clock app has made tracking my work hours a breeze. It&apos;s so simple and convenient.&quot;
+              &quot;Switching to this app from the old punch card system was an absolute game-changer! 10 out of 10!&quot;
             </p>
             <div className="text-blue-500 font-semibold">Read More</div>
           </div>
@@ -19,7 +19,7 @@ function TestimonialsSection() {
           <div className="p-4 border rounded-lg shadow-md">
             <div className="text-xl font-semibold mb-2">Jane Smith</div>
             <p className="text-gray-600 mb-4">
-              &quot;I love the flexibility this app offers. Whether I&apos;m in the office or working remotely, I can easily clock in and out.&quot;
+              &quot;No more lost cards, no more chaos. This app should be a no-brainer for any team still using physical punch cards.&quot;
             </p>
             <div className="text-blue-500 font-semibold">Read More</div>
           </div>

@@ -22,8 +22,8 @@ export default async function Landing(): Promise<JSX.Element> {
   return (
     <div className='h-full'>     
     
-      <HeaderSection session={session}/>
-      <HeroSection />
+      {/* <HeaderSection session={session}/> */}
+      <HeroSection session={session}/>
       <FeaturesSection />
       <HowItWorksSection />
       <TestimonialsSection />

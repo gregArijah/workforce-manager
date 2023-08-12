@@ -9,7 +9,7 @@ function FeaturesSection() {
           {/* Feature 1 */}
           <div className="p-4">
             <div className="text-2xl mb-2">Easy Time Tracking</div>
-            <p className="text-gray-600">Effortlessly track your work hours with our intuitive punch clock system.</p>
+            <p className="text-gray-600">Effortlessly track attendance with our intuitive admin interface.</p>
           </div>
 
           {/* Feature 2 */}

@@ -58,7 +58,7 @@ export default function LogoutButton() {
 
   return (
     <React.Fragment>
-      <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+      <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
         <Button onClick={handleClick}>Enter App</Button>
         <Button
           size="small"
