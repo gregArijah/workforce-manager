@@ -6,7 +6,7 @@ import LogoutButton from './logoutbutton';
 
 function HeaderSection({ session }: { session: any }) {
   return (
-    <header className="bg-gray-900 text-white px-12 pt-12 flex justify-between items-center">
+    <header className="bg-gray-900 text-white px-3 py-4 md:py-0 md:px-12 md:pt-12 flex justify-between items-center">
       <Header />
       {/* <Navbar /> */}
       {!session ? <LoginButton /> : null}
