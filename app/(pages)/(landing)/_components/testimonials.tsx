@@ -12,7 +12,7 @@ function TestimonialsSection() {
             <p className="text-gray-600 mb-4">
               &quot;Switching to this app from the old punch card system was an absolute game-changer! 10 out of 10!&quot;
             </p>
-            <div className="text-blue-500 font-semibold">Read More</div>
+            <div className="text-blue-500 font-semibold">⭐⭐⭐⭐⭐</div>
           </div>
 
           {/* Testimonial 2 */}
@@ -21,7 +21,7 @@ function TestimonialsSection() {
             <p className="text-gray-600 mb-4">
               &quot;No more lost cards, no more chaos. This app should be a no-brainer for any team still using physical punch cards.&quot;
             </p>
-            <div className="text-blue-500 font-semibold">Read More</div>
+            <div className="text-blue-500 font-semibold">⭐⭐⭐⭐⭐</div>
           </div>
 
           {/* Testimonial 3 */}
@@ -30,7 +30,7 @@ function TestimonialsSection() {
             <p className="text-gray-600 mb-4">
               &quot;The punch clock system has improved our team&apos;s time management and accountability. Highly recommended!&quot;
             </p>
-            <div className="text-blue-500 font-semibold">Read More</div>
+            <div className="text-blue-500 font-semibold">⭐⭐⭐⭐⭐</div>
           </div>
 
           {/* Add more testimonials as needed */}
