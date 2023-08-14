@@ -26,8 +26,7 @@ export default function LogoutButton() {
 
   const handleClick = () => {
     //url redirct to /admin
-    
-    console.info(`You clicked ${options[selectedIndex]}`);
+  
     router.push('/admin');
   };
 
@@ -38,7 +37,6 @@ export default function LogoutButton() {
     //setSelectedIndex(index);
     logout();
     setOpen(false);
-    console.log(index, options[index]);
   };
 
   const handleToggle = () => {

@@ -17,7 +17,6 @@ import Footer from "./_components/footer";
 export default async function Landing(): Promise<JSX.Element> {
 
   const session = await Session();
-  console.log(!!session);
 
   return (
     <div className='h-full'>     

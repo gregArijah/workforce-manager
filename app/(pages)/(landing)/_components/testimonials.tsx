@@ -5,7 +5,7 @@ function TestimonialsSection() {
     <section className="bg-white py-16">
       <div className="container mx-auto text-center">
         <h2 className="text-3xl font-semibold mb-4">What Our Users Say</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8 px-2 md:px-0">
           {/* Testimonial 1 */}
           <div className="p-4 border rounded-lg shadow-md">
             <div className="text-xl font-semibold mb-2">John Doe</div>
