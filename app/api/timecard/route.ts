@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
-import { time } from 'console';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

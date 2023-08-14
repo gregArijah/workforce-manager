@@ -25,7 +25,6 @@ export default function LoginButton() {
 
   const handleClick = () => {
     login();
-    console.info(`You clicked ${options[selectedIndex]}`);
   };
 
   const handleMenuItemClick = (
@@ -35,7 +34,6 @@ export default function LoginButton() {
     //setSelectedIndex(index);
     alert('Please await production website for registration.')
     setOpen(false);
-    console.log(index, options[index]);
   };
 
   const handleToggle = () => {

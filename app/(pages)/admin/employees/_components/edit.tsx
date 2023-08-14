@@ -48,7 +48,6 @@ interface EmployeeProps {
 
 export default function EditDept({ setView, setEmployees, employees, selectedEmployee }: EmployeeProps) {
     const employee = selectedEmployee;
-    console.log	("employee", employee);
 
     const [name, setName] = useState(employee.Name);
     const [code, setCode] = useState(employee.Code);
