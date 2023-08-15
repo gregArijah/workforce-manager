@@ -9,10 +9,12 @@ import Session from "@/app/utils/serverSession";
 import HeroSection from "./_components/herosection";
 import HeaderSection from "./_components/header";
 import FeaturesSection from "./_components/features";
+import ScreenCaptureSection from "./_components/screencaptures";
 import HowItWorksSection from "./_components/howitworks";
 import TestimonialsSection from "./_components/testimonials";
 import ContactSection from "./_components/contact";
 import Footer from "./_components/footer";
+
 
 export default async function Landing(): Promise<JSX.Element> {
 
@@ -24,6 +26,7 @@ export default async function Landing(): Promise<JSX.Element> {
       {/* <HeaderSection session={session}/> */}
       <HeroSection session={session}/>
       <FeaturesSection />
+      <ScreenCaptureSection />
       <HowItWorksSection />
       <TestimonialsSection />
       <ContactSection />

@@ -13,7 +13,7 @@ export default function Clock(): JSX.Element {
   const [whoIs, setWhoIs] = useState({})
 
   return (
-    <div className="h-screen space-y-16 p-6">
+    <div className="h-screen space-y-16 p-2 md:p-12">
       <div className="flex justify-between">
         <Header />
         <ClockDisplay />
