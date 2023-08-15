@@ -2,7 +2,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+  //previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
@@ -26,7 +26,7 @@ model Department {
   id        String     @id @default(cuid())
   name      String
   code      String     @unique
-  company   Company    @relation(fields: [companyId], references: [id])
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId String
   employees Employee[]
 }
@@ -35,20 +35,19 @@ model Employee {
   id           String     @id @default(cuid())
   name         String
   code         String     @unique
-  department   Department @relation(fields: [departmentId], references: [id])
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
   departmentId String
-  company      Company    @relation(fields: [companyId], references: [id])
+  company      Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId    String
   isClockedIn  Boolean    @default(false)
-  timeCard     TimeCard[]
+  timeCards    TimeCard[]
 }
 
 model TimeCard {
   id         String     @id @default(cuid())
-  employee   Employee   @relation(fields: [employeeId], references: [id])
-  employeeId String     @unique
+  employee   Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId String    
   timeIn     DateTime
-  timeOut    DateTime
-  createdAt  DateTime   @default(now()) @map(name: "created_at")
-  updatedAt  DateTime   @updatedAt @map(name: "updated_at")
+  timeOut    DateTime?
+  duration   Float?
 }

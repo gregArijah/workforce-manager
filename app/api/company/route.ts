@@ -1,18 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/app/lib/prisma';
+import prisma from '@/lib/prisma';
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
+
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const  id  = searchParams.get("id")||null;
-    console.log(id);
+
+    const session = await getServerSession(authOptions);
+    const user:any = session?.user;
     
     try {
       if(id) {
         const company = await prisma.company.findUnique({
-          where: { id: typeof id === 'string' ? id : undefined },
+          where: { id : user.id},
           include: { departments: true, employees: true },
         });
-        console.log(company);
         return new Response(JSON.stringify(company),{
           status: 200	
         })
@@ -20,12 +25,12 @@ export async function GET(req: NextRequest) {
         
       else {
         const companies = await prisma.company.findMany({
+          where: { id: user.id },
           select: {
             name: true,
             code: true,
           },
         });
-        console.log(companies);
         return new Response(JSON.stringify(companies),{
           status: 200
         })
@@ -66,8 +71,13 @@ export async function PUT(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const  id  = searchParams.get("id")||null;
-  
+
+  const session = await getServerSession(authOptions);
+  const user:any = session?.user;
+
   if (!id) return new Response('Missing id', { status: 400 });
+
+  if (id != user.id) return new Response('Error updating the company.', { status: 500 });
 
   const body = await req.json();
 
@@ -93,8 +103,13 @@ export async function PUT(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const  id  = searchParams.get("id")||null;
+
+  const session = await getServerSession(authOptions);  
+  const user:any = session?.user;
   
   if (!id) return new Response('Missing id', { status: 400 });
+
+  if (id != user.id) return new Response('Error deleting the company.', { status: 500 });
 
   try {
       
