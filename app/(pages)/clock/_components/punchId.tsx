@@ -104,9 +104,10 @@ export default function PunchId( {setVisibleComponent, punchChoice, setWhoIs}: P
                     <input type="text" 
                            name="badge"
                            value={badge}
+                           placeholder="e.g 1000"
                            onChange={handleInputChange}   
                            className="border-2 border-gray-300/90 md:text-2xl p-4 rounded-md w-24 md:w-60"
-                              
+                           inputMode="numeric"   
                     />
                 </div>
                 <div className="space-x-3 flex md:justify-center">

@@ -11,8 +11,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const body = await req.json();
     const { name, email, message :msg} = body;
 
-    console.log( "name: " + name + " email: " + email + " msg: " + msg);
-   
     const htmlOut = `
                     <p>You have a new contact request</p>
                     <h3>Contact details</h3>

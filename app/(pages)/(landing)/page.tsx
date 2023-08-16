@@ -26,7 +26,7 @@ export default async function Landing(): Promise<JSX.Element> {
       {/* <HeaderSection session={session}/> */}
       <HeroSection session={session}/>
       <FeaturesSection />
-      <ScreenCaptureSection />
+      {/* <ScreenCaptureSection /> */}
       <HowItWorksSection />
       <TestimonialsSection />
       <ContactSection />
