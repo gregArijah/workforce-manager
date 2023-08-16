@@ -13,7 +13,6 @@ const sendEmail = async (formData:any) => {
         method: 'POST',
       });
       const text = await res.text();
-      console.log(text)
 } catch(err){
       throw err
 }
@@ -33,8 +32,6 @@ function ContactSection() {
     // Perform form submission logic here
     try{
       const req = await sendEmail(formData);
-      console.log(req)
-      console.log('Form submitted:', formData);
       setFormData({
         name: '',
         email: '',
