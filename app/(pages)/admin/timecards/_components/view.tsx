@@ -45,7 +45,16 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
     const entries = card.Timecards;
 
     const columns: GridColDef[] = [
-        { field: 'Date', headerName: 'Date', width: 200 },
+        { field: 'Date', type:'date', headerName: 'Date', width: 150, 
+          valueGetter: ({ value }) => value && (new Date(value)),
+        // renderCell: (cellValues) => {
+        //     const entry = cellValues.row;
+        //     console.log(entry.timeIn)
+        //     return (entry.timeIn)
+
+        // }
+
+    },
         { field: 'Time In', headerName: 'Time In', width: 150 },
         { field: 'Time Out', headerName: 'Time Out', width: 150 },
         { field: 'Total Hours', headerName: 'Total Hours', width: 150},
@@ -148,7 +157,11 @@ export default function View({ setView, card, setCard, setEditEntry}: ViewProps)
                 </div>
             </div>
             <div className="h-full">
-                <DataGrid rows={rows} columns={columns} />
+                <DataGrid rows={rows} columns={columns} initialState={{
+                    sorting: {
+                    sortModel: [{ field: 'Date', sort: 'asc' }],
+                    },
+                }} />
             </div>
                     
         </div>
