@@ -8,7 +8,7 @@ function TestimonialsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8 px-2 md:px-0">
           {/* Testimonial 1 */}
           <div className="p-4 border rounded-lg shadow-md">
-            <div className="text-xl font-semibold mb-2">John Doe</div>
+            <div className="text-xl font-semibold mb-2">Jonathon Doere</div>
             <p className="text-gray-600 mb-4">
               &quot;Switching to this app from the old punch card system was an absolute game-changer! 10 out of 10!&quot;
             </p>
