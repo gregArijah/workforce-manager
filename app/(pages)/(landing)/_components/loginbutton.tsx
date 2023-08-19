@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import * as React from 'react';
 import { signIn, signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -14,6 +15,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 
+
 const login = () => {signIn(undefined,{ callbackUrl:'/admin'})}
 
 const options = ['Register'];
@@ -22,6 +24,7 @@ export default function LoginButton() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const router= useRouter();
 
   const handleClick = () => {
     login();
@@ -32,8 +35,10 @@ export default function LoginButton() {
     index: number,
   ) => {
     //setSelectedIndex(index);
-    alert('Please await production website for registration.')
+    
+    //alert('Please await production website for registration.')
     setOpen(false);
+    router.push('/register');
   };
 
   const handleToggle = () => {

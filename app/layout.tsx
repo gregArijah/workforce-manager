@@ -5,7 +5,7 @@ import { NextAuthProvider } from "./providers";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: "Veleron - Time and attendance",
+  title: "Veleron | Time and attendance",
   description: "Time and attendance simplified.",
 };
 

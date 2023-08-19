@@ -58,11 +58,12 @@ export async function POST(req: NextRequest) {
       status: 200
     })
   } catch (error) {
-    return new Response( 'Error creating the company',{
-      status: 500
-    }
+      throw error;
+    // return new Response( 'Error creating the company',{
+    //   status: 500
+    // }
 
-    );
+    // );
   }
 }
 
