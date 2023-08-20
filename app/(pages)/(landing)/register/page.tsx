@@ -2,7 +2,12 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import bcrypt from 'bcryptjs';
 
+//const bcrypt = require('bcryptjs'); 
+const saltRounds = 10;
+
+//console.log(bcrypt);
 const addCompany = async (company:any) => {
   const api = `/api/company/`;
   try{
@@ -32,16 +37,23 @@ function RegistrationForm() {
     e.preventDefault();
     // Here you can handle the form submission, e.g., send the data to an API
 
-    await addCompany({name: newName, password: newPassword, adminPassword: newAdminPassword});
+    
+    const hash = await bcrypt.hash(newPassword, saltRounds);
+    const adminHash = await bcrypt.hash(newAdminPassword, saltRounds);
+    const company = {name: newName, password: hash, adminPassword: adminHash};
+    console.log(company);
+
+    await addCompany(company);
+    // await addCompany({name: newName, password: newPassword, adminPassword: newAdminPassword});
     alert(`Hello ${newName}, Welcome to Veleron!`);
 
     console.log('Company Name:', newName);
-    console.log('Password:', newPassword);
-    console.log('Admin Password:', newAdminPassword);
+    console.log('Password:', hash);
+    console.log('Admin Password:', adminHash);
     setNewName('');
     setNewPassword('');
     setNewAdminPassword('');
-    //router.push('/login');
+    router.push('/admin');
 
   };
 
