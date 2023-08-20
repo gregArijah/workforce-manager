@@ -1,6 +1,10 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
+import bcrypt from "bcryptjs";
+
+const saltRounds = 10;	
+
 
 export const authOptions: NextAuthOptions = {
     
@@ -10,8 +14,8 @@ export const authOptions: NextAuthOptions = {
         name: "Admin Credentials",
         type: "credentials",
         credentials: {
-          name: { label: "Company", type: "text", defaultValue: "Company 1" },
-          password: { label: "Password", type: "password", defaultValue: "company1adminpass" }
+          name: { label: "Company", type: "text", defaultValue: "Demo Account" },
+          password: { label: "Password", type: "password", defaultValue: "adminpassword" }
         },
         async authorize(credentials, req) {
   
@@ -20,14 +24,20 @@ export const authOptions: NextAuthOptions = {
           const company = await prisma.company.findUnique({
             where: { name },
           })
-  
-          if (company && company.password == password){
+          if (!company) return null;
+
+          const validAdmin = await bcrypt.compare(password, company.adminPassword);
+          const validEmployee = await bcrypt.compare(password, company.password);
+          console.log("validAdmin", validAdmin, "validEmployee",  validEmployee);
+          //if (company.password == password){
+          if (validEmployee){
             return { id: company.id,
                      name: company.name,
                      role: "employee",
             }
           }
-          if (company && company.adminPassword == password){
+          //if (company.adminPassword == password){
+          if (validAdmin){
             return { id: company.id,
                      name: company.name, 
                      role: "admin",
@@ -38,12 +48,12 @@ export const authOptions: NextAuthOptions = {
       }),
 
       CredentialsProvider({
-        id: "credentials_staff",
+        id: "credentials2",
         name: "Staff Credentials",
         type: "credentials",
         credentials: {
-          name: { label: "Company", type: "text", defaultValue: "Company 1" },
-          password: { label: "Password", type: "password", defaultValue: "company1pass" }
+          name: { label: "Company", type: "text", defaultValue: "Demo Account" },
+          password: { label: "Password", type: "password", defaultValue: "staffpassword" }
         },
         async authorize(credentials, req) {
   
@@ -52,14 +62,20 @@ export const authOptions: NextAuthOptions = {
           const company = await prisma.company.findUnique({
             where: { name },
           })
-  
-          if (company && company.password == password){
+          if (!company) return null;
+
+          const validAdmin = await bcrypt.compare(password, company.adminPassword);
+          const validEmployee = await bcrypt.compare(password, company.password);
+          console.log("validAdmin", validAdmin, "validEmployee",  validEmployee);
+          //if (company.password == password){
+          if (validEmployee){
             return { id: company.id,
                      name: company.name,
                      role: "employee",
             }
           }
-          if (company && company.adminPassword == password){
+          //if (company.adminPassword == password){
+          if (validAdmin){
             return { id: company.id,
                      name: company.name, 
                      role: "admin",
@@ -67,7 +83,9 @@ export const authOptions: NextAuthOptions = {
           }
           return null;  
         }
-      })
+      }),
+
+      
   
     ],
     session: {
