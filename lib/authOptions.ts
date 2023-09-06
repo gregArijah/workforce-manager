@@ -67,14 +67,14 @@ export const authOptions: NextAuthOptions = {
           const validAdmin = await bcrypt.compare(password, company.adminPassword);
           const validEmployee = await bcrypt.compare(password, company.password);
           console.log("validAdmin", validAdmin, "validEmployee",  validEmployee);
-          //if (company.password == password){
+          //if (company && company.password == password){
           if (validEmployee){
             return { id: company.id,
                      name: company.name,
                      role: "employee",
             }
           }
-          //if (company.adminPassword == password){
+          //if (company && company.adminPassword == password){
           if (validAdmin){
             return { id: company.id,
                      name: company.name, 
