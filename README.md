@@ -30,9 +30,13 @@ This project is licensed under the terms of the [MIT License](https://choosealic
 
 ## Badges
 
-badges
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white) ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![NextAuth](https://img.shields.io/badge/nextauth-%23005C0F.svg?style=for-the-badge&logo=AdGuard&logoColor=white)![MaterialUI](https://img.shields.io/badge/MaterialUI-%23D90007.svg?style=for-the-badge&logo=Monero&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 ## Features
 
-features
-
+- Uses Nextauth for user authentication
+- Backend authorization checks for every request
+- BCrypt user password encryption 
+- Ability to login at muliple locations
+- PostgreSQL database with Prisma ORM
+- Nodemailer used to send email via contact form
