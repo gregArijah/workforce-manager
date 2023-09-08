@@ -30,6 +30,12 @@ function ContactSection() {
   const handleSubmit = async(e:any) => {
     e.preventDefault();
     // Perform form submission logic here
+    // if form is incomplete, alert user
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Please fill out all fields');
+      return;
+    }
+
     try{
       const req = await sendEmail(formData);
       setFormData({
@@ -105,7 +111,6 @@ function ContactSection() {
               <button
                 type="submit"
                 className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 disabled:bg-gray-400"
-                disabled={!formData.name || !formData.email || !formData.message}
               >
                 Send Message
               </button>
