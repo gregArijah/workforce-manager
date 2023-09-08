@@ -34,5 +34,9 @@ This project is licensed under the terms of the [MIT License](https://choosealic
 
 ## Features
 
-features
-
+- Uses Nextauth for user authentication
+- Backend authorization checks for every request
+- BCrypt user password encryption 
+- Ability to login at muliple locations
+- PostgreSQL database with Prisma ORM
+- Nodemailer used to send email via contact form
